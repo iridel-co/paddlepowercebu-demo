@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc",
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-no-unsupported-browser-features"],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "apply",
+          "layer",
+          "config",
+          "theme",
+          "custom-variant",
+          "import"
+        ]
+      }
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["theme", "oklch", "var"]
+      }
+    ],
+    "import-notation": null,
+    "no-descending-specificity": null,
+
+    "comment-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+
+    "color-no-hex": [
+      true,
+      {
+        "message": "Use CSS custom properties (tokens) instead of hex colors. See DESIGN_SYSTEM.md",
+        "severity": "warning"
+      }
+    ],
+
+    "color-named": [
+      "never",
+      {
+        "message": "Use CSS custom properties (tokens) instead of named colors. See DESIGN_SYSTEM.md",
+        "severity": "warning"
+      }
+    ],
+
+    "declaration-property-value-disallowed-list": {
+      "/^background/": ["/^#/", "/^rgb/", "/^hsl/"],
+      "/^color/": ["/^#/", "/^rgb/", "/^hsl/"],
+      "/^border/": ["/^#/", "/^rgb/", "/^hsl/"],
+      "/^outline/": ["/^#/", "/^rgb/", "/^hsl/"],
+      "/^fill/": ["/^#/", "/^rgb/", "/^hsl/"],
+      "/^stroke/": ["/^#/", "/^rgb/", "/^hsl/"]
+    },
+
+    "length-zero-no-unit": true,
+    "shorthand-property-no-redundant-values": true,
+    "declaration-block-no-redundant-longhand-properties": true,
+
+    "selector-class-pattern": null,
+    "custom-property-pattern": null
+  },
+  "ignoreFiles": ["node_modules/**", ".next/**", "out/**", "build/**"]
+}

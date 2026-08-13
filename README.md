@@ -1,202 +1,238 @@
-# Iridel Demo Template
+# Paddle Power Cebu — Demo Site
 
-A warm, minimal, accessibility-first Next.js starter for building client-facing demos fast.
+Single-page teaser site for Paddle Power Cebu: premium indoor pickleball courts,
+solar-powered, open 24/7, two branches (AS Fortuna and Talisay). Booking is handled
+externally by Onda Fit — this site's job is to get a visitor to the right branch's
+booking link in one tap.
 
-**Stack:** Next.js · React 19 · Tailwind CSS 4 · TypeScript · Radix UI · Lucide React
+Built by Iridel from `PRD.md` and the Claude Design files. **This is a demo build being
+handed off — it is not production-ready. See [Handoff status](#handoff-status).**
 
----
-
-## Workflow
-
-The fastest path from "new client" to "delivered demo":
-
-### 1. Fill in the PRD
-
-Open `PRD.md` and fill in every field — client name, slug, brand color, story, stats,
-testimonials, assets. This is the source of truth Claude reads before touching any code.
-
-If you don't have all the details yet, give Claude what you do have and tell it which
-fields to treat as placeholders:
-
-```
-Client: Meridian Health, slug meridian-health.
-Brand: teal.
-About: Healthcare analytics for hospital systems.
-Story: Cuts manual reporting by 80%.
-Stats: placeholder for now.
-Assets: none yet — use Unsplash placeholders.
-```
-
-Claude will generate a complete filled-in PRD for you to review before building.
-
-### 2. Get your photos
-
-You need at least a hero image before the demo looks real. Two options:
-
-**Option A — Unsplash (fast, dev only)**
-
-Find a photo on [unsplash.com](https://unsplash.com), grab the ID from the URL:
-
-```
-https://unsplash.com/photos/3Mhgvrk4tjM
-                              ↑ this is the photo ID
-```
-
-Use it in `page.tsx` as a placeholder:
-
-```ts
-import { placeholderImg } from "@/lib/images"
-placeholderImg("3Mhgvrk4tjM", 1600, 700)
-```
-
-**Must be replaced before delivery.** Run `grep -r "placeholderImg" src/` — must return nothing.
-
-**Option B — Nano Banana (real assets)**
-
-Download images from nano banana manually, then drop them flat into:
-
-```
-public/
-  images/
-    hero.jpg
-    feature-1.jpg
-    feature-2.jpg
-```
-
-Reference them in your section files:
-
-```ts
-import { localClientImg } from "@/lib/images"
-localClientImg("client-slug", "hero.jpg")
-// → "/images/hero.jpg"
-```
-
-### 3. Build the demo
-
-With the PRD filled and assets in place, prompt Claude:
-
-```
-PRD is filled. Assets are in public/images/. Build the demo.
-```
-
-Claude will update `globals.css` (brand tokens), `layout.tsx` (metadata), create section
-files in `src/app/_sections/`, and wire them in `page.tsx`.
-
-### 4. Iterate
-
-Make changes with targeted prompts — describe what changes, not what stays:
-
-```
-Change the hero heading to "Cut reporting time by 80%". Keep everything else.
-```
-
-```
-Replace the FeatureGrid with a second FeatureRow on their AI assistant feature, image right.
-```
-
-### 5. Deliver
-
-```bash
-npm run validate
-grep -r "placeholderImg" src/   # must be empty
-grep -r "TODO" src/             # review all flagged placeholders
-```
-
-Visual check before sending the preview URL:
-
-- Brand color looks right in light mode
-- No cramped sections — whitespace should feel generous
-- CTA banner is the last section
-- Navbar shows the client name
+**Stack:** Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS 4 · TypeScript ·
+Radix UI · GSAP + Motion · Three.js · Lucide
 
 ---
 
-## Setup
+## Quick start
 
 ```bash
 npm install
-npm run dev
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+| Script                            | What it does                                                                           |
+| --------------------------------- | -------------------------------------------------------------------------------------- |
+| `npm run dev`                     | Dev server (Turbopack)                                                                 |
+| `npm run build`                   | Production build                                                                       |
+| `npm run start`                   | Serve the production build                                                             |
+| `npm run validate`                | typecheck + lint + format check — **run before any PR**                                |
+| `npm run typecheck`               | `tsc --noEmit`                                                                         |
+| `npm run lint` / `lint:fix`       | ESLint over `src`                                                                      |
+| `npm run lint:css`                | Stylelint over `src/**/*.css`                                                          |
+| `npm run format` / `format:check` | Prettier                                                                               |
+| `node tools/optimize-assets.mjs`  | Re-encode hero frames + renders to WebP (idempotent)                                   |
+| `node tools/export-renders.mjs`   | Screenshot the 3D review routes to `assets/renders/` (needs a dev server + Playwright) |
 
 ---
 
-## Per-Client Customization
+## Handoff status
 
-Never edit `src/components/`. These paths change per client:
+**Blocked on the client.** Every item below is marked `TODO` in the source. The site
+builds and ships without them, but the booking flow is a dead end until the Onda Fit
+links land.
 
-### `src/app/globals.css` — brand tokens
+| Item                                  | Where                                                                                                    | Current placeholder                                                                                                                                                                    |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onda Fit booking URL — AS Fortuna** | [hero.tsx:406](src/app/_sections/hero.tsx#L406), [locations.tsx:45](src/app/_sections/locations.tsx#L45) | Hero CTA scrolls to `#locations`; the Locations card's `bookingUrl` is `"#"`                                                                                                           |
+| **Onda Fit booking URL — Talisay**    | [hero.tsx:414](src/app/_sections/hero.tsx#L414), [locations.tsx:55](src/app/_sections/locations.tsx#L55) | Same — `#locations` / `"#"`                                                                                                                                                            |
+| Street address — AS Fortuna           | [visit.tsx:58](src/app/_sections/visit.tsx#L58)                                                          | "AS Fortuna Street, Mandaue City" (guess). The Google Maps query is derived from `address`, so the pin fixes with it                                                                   |
+| Street address — Talisay              | [visit.tsx:58](src/app/_sections/visit.tsx#L58)                                                          | "Talisay City, Cebu" (guess)                                                                                                                                                           |
+| Map pins                              | [locations.tsx:47,57](src/app/_sections/locations.tsx#L47)                                               | Maps _search_ URLs, not real place pins                                                                                                                                                |
+| Facebook page URL                     | [visit.tsx:40](src/app/_sections/visit.tsx#L40)                                                          | `facebook.com/paddlepowercebu` — unverified                                                                                                                                            |
+| Phone + email                         | [visit.tsx:25](src/app/_sections/visit.tsx#L25)                                                          | Not shown. Add as `tel:` / `mailto:` rows in `CHANNELS` when supplied                                                                                                                  |
+| Court count                           | [visit.tsx:182](src/app/_sections/visit.tsx#L182)                                                        | The "Courts" row shows hours instead of a count — AS Fortuna floorplan was never confirmed                                                                                             |
+| Solar coverage claim                  | hero, footer, locations meta                                                                             | "Solar-powered" is stated unqualified. Confirm before this goes live as a marketing claim                                                                                              |
+| FAQ copy                              | [faq.tsx:33-62](src/app/_sections/faq.tsx#L33-L62)                                                       | Five Q&As written by us, not the client. Needs sign-off — especially the rental/beginner/group answers                                                                                 |
+| **Official logo files**               | `public/images/paddle-power-*.svg`                                                                       | **Every logo currently in the repo is a generated placeholder**, traced to match the brand guidelines — not the client's real artwork. Swap all of them when the official files arrive |
 
-```css
-:root {
-  --brand: oklch(L C H); /* client brand color */
-  --brand-foreground: oklch(0.985 0 0);
-  --background: oklch(0.985 0.002 H); /* H: ~90 warm, ~0 neutral, ~250 cool */
-  --radius: 0.625rem; /* 0.25rem square → 1rem rounded */
-}
-```
+Once the Onda Fit links arrive, both Hero CTAs and both Locations half-court links should
+point at them directly (`target="_blank"`), and the `#locations` interstitial hop goes away.
 
-Common brand colors in OKLCH:
+### Not yet done (team scope)
 
-| Color  | OKLCH                  | Color  | OKLCH                  |
-| ------ | ---------------------- | ------ | ---------------------- |
-| Indigo | `oklch(0.55 0.22 265)` | Green  | `oklch(0.55 0.16 155)` |
-| Blue   | `oklch(0.55 0.18 240)` | Orange | `oklch(0.62 0.18 55)`  |
-| Teal   | `oklch(0.58 0.14 185)` | Purple | `oklch(0.52 0.22 300)` |
-| Red    | `oklch(0.55 0.20 25)`  | Pink   | `oklch(0.60 0.20 340)` |
+Named out loud so nothing is assumed complete:
 
-Update both `:root` and `.dark` — dark mode uses ~+0.07 lightness for the same hue.
-
-### `src/app/layout.tsx` — metadata and fonts
-
-```ts
-export const metadata = {
-  title: "Client Name — Demo",
-  description: "One sentence about what this demo shows.",
-}
-```
-
-Swap `Libre_Baskerville` for the client's serif if their brand specifies one.
-
-### `src/app/_sections/*.tsx` — one file per section
-
-All content (copy, stats, image paths, labels) lives inline in the section file that renders it.
-Create one file per section: `hero.tsx`, `stats.tsx`, `features.tsx`, `testimonials.tsx`, `cta.tsx`.
-
-### `src/app/page.tsx` — composition only
-
-Imports and renders the section components. No strings or data here.
+- **SEO.** Only `title` + `description` exist, in [layout.tsx](src/app/layout.tsx#L26).
+  Missing: `metadataBase`, canonical URL, Open Graph / Twitter card + OG image,
+  `app/sitemap.ts`, `app/robots.ts`, LocalBusiness / SportsActivityLocation JSON-LD
+  (two branches, hours, geo — high value for "pickleball Cebu" local search), and a real
+  favicon set. Both the OG image and the favicon are blocked on the official logo files —
+  see [Assets](#assets).
+- **Analytics.** None wired.
+- **Performance budget.** Never measured on real hardware. The hero ships 55 WebP frames
+  (~1.3 MB) and the page mounts two WebGL viewers — see [Performance notes](#performance-notes).
+- **Accessibility audit.** `eslint-plugin-jsx-a11y` passes; no screen-reader or contrast
+  pass has been run. The lime-on-white pill CTA in particular should be checked.
+- **Content pass.** All body copy is Iridel-written from the PRD and unreviewed by the client.
+- **Deploy.** No hosting configured. Currently a Vercel preview only.
 
 ---
 
-## Section Components — `src/components/common/`
+## Architecture
 
-| Component                      | Use for                                     |
-| ------------------------------ | ------------------------------------------- |
-| `HeroSection`                  | Page opener — always first after Navbar     |
-| `FeatureRow`                   | Image + text deep-dive, alternate `reverse` |
-| `StatGrid` / `StatItem`        | Key metrics — no card container             |
-| `FeatureGrid` / `FeatureItem`  | Icon + heading + description grid           |
-| `TestimonialCard`              | Pull-quotes with author attribution         |
-| `CtaBanner`                    | Closing CTA — always last section           |
-| `ImageCard`                    | Case studies, resources (16:9 image top)    |
-| `Navbar`                       | Sticky top nav, start / center / end slots  |
-| `DashboardGrid`                | Responsive widget/card grid                 |
-| `EmptyState`                   | Empty list or table placeholder             |
-| `PageContainer` / `PageHeader` | Inner-page shell and title block            |
+Standard Next App Router. One route matters; two others are internal tools.
 
-UI primitives (`Button`, `Card`, `Input`, `Badge`, etc.) live in `src/components/ui/`.
+```
+src/app/
+  layout.tsx        Montserrat (variable) + metadata + SmoothAnchorScroll
+  page.tsx          Composition only — no copy lives here
+  globals.css       Tailwind 4 theme: --color-pp-* brand tokens, --nav-h, keyframes
+  _sections/        One file per section; all copy inline in its own file
+  _ui/              Per-client UI, deliberately outside the shared library
+  ball-3d/          Internal 3D review route (see below)
+  paddle-3d/        Internal 3D review route (see below)
+src/components/     Shared Iridel template library — do not edit per-client
+src/lib/paddle3d/   Procedural Three.js paddle + ball, built in code
+tools/              Asset + render scripts (not part of the build)
+docs/               3D pipeline notes and reference renders
+```
+
+### Page flow
+
+`SiteHeader → Hero → Locations → Coming Soon → FAQ → Visit → Footer`
+
+Note the deliberate overlap in [page.tsx](src/app/page.tsx): everything after the hero
+sits in a `-mt-[70svh]` wrapper so the body slides up over the tail of the hero's scroll
+track while the rally keeps scrubbing underneath. **If you change hero heights, that
+offset has to move with them.**
+
+| Section     | File                                                 | Notes                                                                                                                                                            |
+| ----------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Header      | [site-header.tsx](src/app/_sections/site-header.tsx) | Fixed; transparent white over the hero, cream + blur past 24px. Sheet drawer below `lg`                                                                          |
+| Hero        | [hero.tsx](src/app/_sections/hero.tsx)               | 55-frame scroll-scrubbed rally behind a liquid-glass overlay panel                                                                                               |
+| Locations   | [locations.tsx](src/app/_sections/locations.tsx)     | The two branches _are_ the two halves of one pickleball court. 44:20 at `lg`, stands on its baseline below that. Mounts the 3D paddle + ball on scroll-into-view |
+| Coming Soon | [coming-soon.tsx](src/app/_sections/coming-soon.tsx) | Six items: Memberships, Coaching, Events, Café, Equipment, Partnerships (the only "Live now")                                                                    |
+| FAQ         | [faq.tsx](src/app/_sections/faq.tsx)                 | Chat-bubble accordion; hover/focus opens, click toggles                                                                                                          |
+| Visit       | [visit.tsx](src/app/_sections/visit.tsx)             | Closing CTA on ink. Contact is social link-out only — **the client declined an email/form integration**                                                          |
+| Footer      | [footer.tsx](src/app/_sections/footer.tsx)           | Lockup, section links, IG handles                                                                                                                                |
+
+### Conventions to keep
+
+- **Copy lives in the section that renders it.** No shared `content.ts` / constants file.
+  `page.tsx` holds imports and composition, nothing else.
+- **Never edit `src/components/`** — that's the shared Iridel template library, used by
+  other demos. Client-specific UI goes in `src/app/_ui/`.
+- Tailwind only. No CSS modules, no inline styles unless a value is computed at runtime.
+- TypeScript everywhere; no plain JS.
 
 ---
 
-## Scripts
+## Assets
 
-```bash
-npm run dev           # dev server
-npm run build         # production build
-npm run validate      # typecheck + lint + format check (run before delivery)
-npm run lint          # ESLint
-npm run format        # Prettier (write)
-npm run typecheck     # TypeScript
-```
+**Client asset drive:** https://drive.google.com/drive/folders/1WymbbQGZaF5J_m8QPOqpaCCyDl3zVdMU?usp=sharing
+— brand guidelines, court render, floorplan. Check here first before generating anything.
+
+Everything the site serves is flat in `public/images/` (no subfolders), plus the 55-frame
+hero rally in `public/frames/`.
+
+> ⚠️ **The logos are placeholders.** `paddle-power-horizontal.svg`,
+> `paddle-power-icon.svg`, `paddle-power-icon-black.svg`,
+> `paddle-power-primary-stacked.svg`, `paddle-power-one-color-white.svg`,
+> `paddle-power-one-color-black.svg` and `paddle-power-social.svg` were **generated by us**
+> from the brand guideline PDFs so the build had something to render. They are close, but
+> they are not the client's official artwork — vector paths, kerning and the paddle-in-triangle
+> mark's proportions have not been verified against a source file. We are still waiting on
+> the official logo package from the client. Replace all of them, keeping the same filenames,
+> and re-check the header, footer and Visit lockups at every breakpoint afterwards.
+>
+> The same applies to the favicon — `src/app/favicon.ico` is still the Next.js default and
+> needs the real mark plus a full icon set.
+
+`court-render.webp` is real. `paddle-face-*` / `paddle-grip-*` are PBR maps for the 3D
+model. `pickleball-ball.png` feeds the ball material.
+
+---
+
+## Brand
+
+Tokens are in [globals.css](src/app/globals.css#L23-L55) as `--color-pp-*`, consumed as
+`bg-pp-cream`, `text-pp-ink`, `border-pp-ink/12`, etc.
+
+| Token                        | Hex                   | Role                                                                                                                    |
+| ---------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `pp-cream`                   | `#F7F4EE`             | Page ground                                                                                                             |
+| `pp-tan`                     | `#E8D8C2`             | Warm secondary                                                                                                          |
+| `pp-ink`                     | `#111111`             | Text, dark surfaces                                                                                                     |
+| `pp-charcoal`                | `#2A2824`             | Softer dark                                                                                                             |
+| `pp-ink-wash`                | `#ECE9E3`             | Opaque `ink/5` — FAQ closed bubbles                                                                                     |
+| `pp-lime-light`              | `#C8DC3A`             | **The accent green.** Every display-headline accent word, the primary pill CTA, the locations cards, the FAQ open state |
+| `pp-lime`                    | `#A3B500`             | Darker brand primary — solid fills that need weight only                                                                |
+| `pp-olive`                   | `#7E8C00`             | Focus rings, header link hover                                                                                          |
+| `pp-court` / `pp-court-deep` | `#24512D` / `#0E1E12` | **Surfaces only, never accents**                                                                                        |
+
+`pp-olive-deep` is unused; olives were retired as accents on 2026-08-13. If you're
+reaching for a green, it's `pp-lime-light` unless the fill needs weight.
+
+**Type:** Montserrat exclusively — 900 logo/display, 700 subheads/buttons, 500 labels,
+400 body. No serif anywhere. Loaded as the _variable_ font (no static `weight` list) so
+`VariableWeightText` can animate the `wght` axis continuously — don't pin weights in
+`layout.tsx` or that breaks.
+
+---
+
+## The 3D paddle and ball
+
+`src/lib/paddle3d/` builds the paddle and pickleball procedurally in Three.js — there is
+no `.glb` to hand anyone, the geometry is the code. PBR maps live in `public/images/`
+(`paddle-face-*`, `paddle-grip-*`).
+
+Both viewers are `dynamic(..., { ssr: false })` and share a chunk, so whichever of
+Locations / showcase the visitor reaches first warms the other.
+
+`/paddle-3d` and `/ball-3d` are **internal review routes** — they take size, angle and
+background off the query string and expose `window.__paddle*` / `window.__ball*` hooks
+for `tools/export-renders.mjs`. They are not linked from anywhere.
+
+> **Before launch: decide whether these routes ship.** They're harmless but indexable.
+> Either `noindex` them, gate them behind a non-production check, or delete them along
+> with `tools/export-renders.mjs` and `docs/`.
+
+Pipeline notes and reference renders: [docs/paddle3d/README.md](docs/paddle3d/README.md).
+
+---
+
+## Performance notes
+
+Already handled — don't undo these:
+
+- **Static asset caching.** [next.config.ts](next.config.ts) sets
+  `max-age=31536000, immutable` on `/frames/*` and `/images/*` in production. Without it
+  Next serves `public/` with `max-age=0`, and a refresh becomes ~74 conditional requests
+  that all 304 — no bytes, but a full round-trip each, six at a time, before the hero can
+  paint. Dev uses a 300s window so swapping a frame still shows up.
+- **WebP everywhere.** `tools/optimize-assets.mjs` halves the frame sequence and cuts the
+  court render ~89%. Re-run it after re-extracting frames from the source video (the
+  ffmpeg command is in the header comment of [hero.tsx](src/app/_sections/hero.tsx#L11)).
+- **Smooth anchor scrolling.** [smooth-anchor-scroll.tsx](src/app/_ui/smooth-anchor-scroll.tsx)
+  routes every `href="#id"` through `window.scrollTo` with a post-animation correction.
+  Native fragment nav lands short on iOS Safari (collapsing toolbar) and in Chromium when
+  the Locations WebGL mount janks mid-scroll. Don't "simplify" this back to native.
+
+Still open: no Lighthouse run, no real-device test, no LCP measurement. The frame
+sequence and the two WebGL contexts are the obvious first suspects.
+
+Mobile was verified by hand at 390px and 768px — no horizontal overflow.
+
+---
+
+## Cleaning up the template
+
+This repo started from the Iridel demo template and still carries some of its scaffolding.
+Worth clearing during the production pass:
+
+- `package.json` still says `"name": "iridel-demo-template"` with the template description.
+- [next.config.ts](next.config.ts) whitelists `assets.nanobanana.io` and
+  `images.unsplash.com` as remote image hosts. **Neither is used** — both entries should go.
+- `src/lib/images.ts` exports `placeholderImg`; verify `grep -r "placeholderImg" src/`
+  comes back empty (it currently does).
+- `CLAUDE.md` and `PRD.md` are Iridel working documents, not deliverables.

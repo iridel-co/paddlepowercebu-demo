@@ -1,0 +1,67 @@
+{
+  "model": "paddle-power-pickleball-paddle",
+  "parts": [
+    {
+      "name": "root",
+      "kind": "part",
+      "module": "root",
+      "triangles": 192
+    },
+    {
+      "name": "facePlate",
+      "kind": "part",
+      "module": "facePlate",
+      "triangles": 580
+    },
+    {
+      "name": "edgeGuard",
+      "kind": "part",
+      "module": "edgeGuard",
+      "triangles": 1168
+    },
+    {
+      "name": "handleCore",
+      "kind": "part",
+      "module": "handleCore",
+      "triangles": 224
+    },
+    {
+      "name": "collarRingLower",
+      "kind": "part",
+      "module": "collarRingLower",
+      "triangles": 224
+    },
+    {
+      "name": "collarRingGold",
+      "kind": "part",
+      "module": "collarRingGold",
+      "triangles": 224
+    },
+    {
+      "name": "collarRingUpper",
+      "kind": "part",
+      "module": "collarRingUpper",
+      "triangles": 224
+    },
+    {
+      "name": "gripWrap",
+      "kind": "part",
+      "module": "gripWrap",
+      "triangles": 576
+    },
+    {
+      "name": "gripWrapHelix",
+      "kind": "part",
+      "module": "gripWrapHelix",
+      "triangles": 9576
+    },
+    {
+      "name": "buttCap",
+      "kind": "part",
+      "module": "buttCap",
+      "triangles": 576
+    }
+  ],
+  "unnamedMeshes": 0,
+  "integralMeshes": 10
+}

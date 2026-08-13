@@ -1,9 +1,19 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Libre_Baskerville } from "next/font/google"
+import { Geist_Mono, Montserrat } from "next/font/google"
 import "./globals.css"
+import { SmoothAnchorScroll } from "./_ui/smooth-anchor-scroll"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/**
+ * Paddle Power Cebu uses Montserrat exclusively — Black (900) for the logo and
+ * display headings, Bold (700) for subheads and buttons, Medium (500) for
+ * labels, Regular (400) for body. No serif anywhere.
+ *
+ * Loaded as the variable font (no `weight` list) so the `wght` axis can be
+ * animated continuously — `VariableWeightText` interpolates 400 → 900 rather
+ * than snapping between static cuts.
+ */
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 })
 
@@ -12,17 +22,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-const libreBaskerville = Libre_Baskerville({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-})
-
 export const metadata: Metadata = {
-  title: "Iridel Demo Template",
+  title: "Paddle Power Cebu: Book a Court, 24/7",
   description:
-    "Iridel — build polished, client-ready demos with a warm, minimal, accessibility-first design system.",
+    "Premium indoor pickleball in Cebu. Solar-powered, open around the clock, two branches. Pick yours and book in one tap.",
 }
 
 export default function RootLayout({
@@ -31,10 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased`}
+        className={`${montserrat.variable} ${geistMono.variable} antialiased`}
       >
+        <SmoothAnchorScroll />
         {children}
       </body>
     </html>

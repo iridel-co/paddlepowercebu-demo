@@ -1,14 +1,58 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Tailwind v4 auto-scans the repo for class names. The skill docs in
+   .claude/ contain placeholder classes like `max-[Npx]:` that compile to
+   invalid media queries and warn on every build. Nothing there ships. */
+@source not "../../.claude";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-serif);
+  /* PRD: Montserrat only — no serif in the Paddle Power brand. Any stray
+     `font-serif` from a template component still resolves to Montserrat. */
+  --font-serif: var(--font-montserrat);
+
+  /* ── Paddle Power Cebu brand palette ────────────────────────────────────
+     Straight from the Claude Design file. Used as `bg-pp-cream`,
+     `text-pp-olive`, `border-pp-ink/12`, etc. */
+  --color-pp-cream: #f7f4ee;
+  --color-pp-tan: #e8d8c2;
+  --color-pp-ink: #111111;
+  --color-pp-charcoal: #2a2824;
+  /* `pp-ink/5` flattened onto cream. The FAQ's closed question bubble needs an
+     opaque fill so its message tail (a border-coloured pseudo-element that
+     overlaps the bubble edge) can match it exactly — a translucent bubble
+     would double up its alpha under the tail and leave a seam. */
+  --color-pp-ink-wash: #ece9e3;
+  /* Brand primary. The darker of the two limes — solid fills where the accent
+     has to carry weight (`bg-pp-lime text-pp-ink`): the Coming Soon "Live now"
+     badge, the `lime` pill CTA. Too dark for accent *text* on light. */
+  --color-pp-lime: #a3b500;
+  /* The lifted lime, and the site's accent green everywhere it reads as an
+     accent rather than a fill: display-headline accent words (hero, "Let's
+     build the scene.", "Questions, answered."), the `lime-light` pill CTA
+     (`bg-pp-lime-light text-white`), and the FAQ's open question pill. Works
+     on dark footage and on cream/white alike. */
+  --color-pp-lime-light: #c8dc3a;
+  /* Display-type accent. 3.4:1 on cream — headline sizes only (WCAG large). */
+  --color-pp-olive: #7e8c00;
+  /* Same hue, darkened to clear 4.5:1 on cream. Reserved for olive text under
+     ~24px — eyebrows, meta labels, link hovers. Currently unused: the FAQ was
+     the only caller and moved to `pp-lime-light` (2026-08-13), since the olives
+     read as a different, muddier green from the rest of the page. */
+  --color-pp-olive-deep: #5f6a00;
+  /* Court surface, sampled from the hero rally frames (`public/frames/`) —
+     the site's own court is green with a cream kitchen, so the booking court
+     in `_sections/locations.tsx` has to be the same one. Surface only — the
+     green accents are lime, not court green. */
+  --color-pp-court: #24512d;
+  /* Same hue driven near-black — the panels that sit on the court. */
+  --color-pp-court-deep: #0e1e12;
   --color-surface-overlay: var(--surface-overlay);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
@@ -55,21 +99,37 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.985 0.002 90);
-  --foreground: oklch(0.23 0 0);
-  --card: oklch(0.985 0.002 90);
-  --card-foreground: oklch(0.23 0 0);
-  --popover: oklch(0.985 0.002 90);
-  --popover-foreground: oklch(0.23 0 0);
-  --primary: oklch(0.25 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.25 0 0);
-  --muted: oklch(0.94 0 0);
-  --muted-foreground: oklch(0.35 0 0);
-  --accent: oklch(0.95 0 0);
-  --accent-foreground: oklch(0.25 0 0);
+  /* The brand world is a fixed cream/ink one — there is no theme toggle, so
+     pin the UA to light and stop it darkening form controls and scrollbars. */
+  color-scheme: light;
+  /* Fixed header height — consumed by the header itself and by every
+     `scroll-mt` on an anchor target, so the two can never drift. */
+  --nav-h: 4.5rem;
+  /* Hero scroll track as a multiple of the viewport — more = slower scrub.
+     Lives here rather than in the component so the reduced-motion query below
+     can collapse it; a JS inline style could not be overridden by CSS. */
+  --hero-track: 240svh;
+  /* Pill-shaped buttons and cards throughout — the design has no soft corners
+     between 4px and fully round, so radius is kept tight and pills opt in. */
+  --radius: 0.5rem;
+  /* #F7F4EE cream */
+  --background: oklch(0.968 0.009 85);
+  /* #111111 ink */
+  --foreground: oklch(0.178 0 90);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.178 0 90);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.178 0 90);
+  --primary: oklch(0.178 0 90);
+  --primary-foreground: oklch(0.968 0.009 85);
+  /* #E8D8C2 tan */
+  --secondary: oklch(0.889 0.034 76);
+  --secondary-foreground: oklch(0.178 0 90);
+  --muted: oklch(0.94 0.008 84);
+  /* #2A2824 charcoal, lightened just enough to read as secondary copy */
+  --muted-foreground: oklch(0.44 0.008 85);
+  --accent: oklch(0.889 0.034 76);
+  --accent-foreground: oklch(0.178 0 90);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --success: oklch(0.6 0.145 164);
@@ -78,12 +138,14 @@
   --warning-foreground: oklch(0.25 0 0);
   --info: oklch(0.6 0.155 252.353);
   --info-foreground: oklch(0.985 0 0);
-  --brand: oklch(0.55 0.22 265);
-  --brand-foreground: oklch(0.985 0 0);
-  --surface-overlay: oklch(0.985 0.002 90 / 90%);
-  --border: oklch(0.88 0 0);
-  --input: oklch(0.88 0 0);
-  --ring: oklch(0.72 0 0);
+  /* #A3B500 lime. Foreground is ink, not white — lime is light enough that
+     white type on it fails contrast. */
+  --brand: oklch(0.734 0.169 117);
+  --brand-foreground: oklch(0.178 0 90);
+  --surface-overlay: oklch(0.968 0.009 85 / 92%);
+  --border: oklch(0.87 0.006 85);
+  --input: oklch(0.87 0.006 85);
+  --ring: oklch(0.734 0.169 117);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -122,8 +184,9 @@
   --warning-foreground: oklch(0.141 0.005 285.823);
   --info: oklch(0.621 0.155 243.466);
   --info-foreground: oklch(0.985 0 0);
-  --brand: oklch(0.62 0.22 265);
-  --brand-foreground: oklch(0.985 0 0);
+  /* Lime lifted ~+0.07 L for dark surfaces; foreground stays ink. */
+  --brand: oklch(0.8 0.169 117);
+  --brand-foreground: oklch(0.178 0 90);
   --surface-overlay: oklch(0.205 0 0 / 85%);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -147,8 +210,54 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* `clip`, never `hidden` — `hidden` turns html/body into scroll containers
+     and breaks the hero's `position: sticky` stage. */
+  html,
   body {
-    @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+  /* Single-page site with in-page nav — anchor jumps should read as travel. */
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground w-full;
+  }
+  ::selection {
+    background: var(--color-pp-lime);
+    color: var(--color-pp-ink);
+  }
+}
+
+/* Reduced motion is a request for less travel, not for a dead interface. A
+   blanket `0.01ms !important` also kills the hover, focus, and open/close
+   transitions that tell the user what just changed — so the large, ambient,
+   and looping motion goes, and the short state-change feedback stays. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* The rally no longer scrubs, so the 2.4-viewport scroll track it needed
+     would just be dead space. Collapse the hero to a single screen. */
+  :root {
+    --hero-track: 100svh;
+  }
+  /* Ambient/looping motion off; discrete state changes keep a 120ms cue. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+  }
+  /* Nothing should travel across the screen — only colour and opacity may
+     still transition, and those are already covered by the 120ms above. */
+  *,
+  *::before,
+  *::after {
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, opacity, box-shadow !important;
   }
 }
 
@@ -156,10 +265,63 @@
   .font-serif {
     font-family: var(--font-serif), Georgia, serif;
   }
+  /* Refraction layer of the liquid-glass panels (`_ui/liquid-glass.tsx`) — the
+     id is that component's shared filter def.
+
+     Pointer-coarse devices get the blur, the tint, the bloom and the edge
+     highlights, but not the displacement pass. Chaining an feTurbulence +
+     feDisplacementMap onto a backdrop-filter means the whole filter graph
+     re-runs whenever anything *behind* the panel moves, and behind these
+     panels is the hero's frame canvas scrubbing with the scroll. On a phone
+     that alone cost more per frame than everything else on the page put
+     together; on the panel sizes a phone actually shows, the warp it buys is
+     a few pixels of wobble at the edges. */
+  .pp-glass-bend {
+    filter: url("#pp-liquid-glass-blur");
+  }
+
+  @media (pointer: coarse) {
+    .pp-glass-bend {
+      filter: none;
+    }
+  }
+  /* Hero scroll track — see `--hero-track`. */
+  .pp-hero-track {
+    height: var(--hero-track);
+  }
   .section-padding {
     padding-block: 6rem;
   }
   .section-padding-lg {
     padding-block: 8rem;
+  }
+}
+
+/* Idle drift for the paddle that appears on the hovered court half — it rises
+   and leans on one slow cycle so the thing reads as hanging in the air rather
+   than sitting still. The paddle's own 3D sway runs on a different period, so
+   the two rarely line up. Covered by the reduced-motion block above. */
+@keyframes pp-paddle-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.4deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(1.4deg);
+  }
+}
+
+/* One-shot rise-and-settle for the ball crossing the net — a single up/down
+   swing timed to the same 520ms as the left/top slide in locations.tsx, so
+   the path reads as one smooth arc. Runs once (not infinite) and replaces
+   `pp-paddle-float` for the duration of the crossing, since the two
+   animating on the same element at once is what read as jitter. */
+@keyframes pp-ball-arc {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-34px);
   }
 }

@@ -1,0 +1,554 @@
+{
+  "targetName": "Paddle Power Pickleball Paddle",
+  "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "pickleball paddle (elongated face)",
+      "primaryDomain": "object",
+      "formLanguage": [
+        "geometric",
+        "extruded-planar-profile",
+        "surface-of-revolution",
+        "tangent-continuous-fillet"
+      ],
+      "structureKind": [
+        "rigid-assembly",
+        "bilateral-symmetric",
+        "two-part-join (plate + handle)"
+      ],
+      "motionPotential": [
+        "swing-about-grip",
+        "spin-about-long-axis",
+        "impact-recoil",
+        "hero-turntable"
+      ],
+      "materialFamilies": [
+        "satin-composite-dielectric",
+        "near-black-polymer",
+        "polished-gold-metal",
+        "matte-PU-wrap",
+        "matte-decal-ink"
+      ],
+      "notes": "Front orthographic studio view. Face outline measured as a rounded rectangle W=1032px H=1266px r=366px (r/W=0.355), fit verified at 3 independent rows. Handle is a surface of revolution. Only metal on the object is one gold collar ring."
+    },
+    "complexity": {
+      "tier": "moderate",
+      "scores": {
+        "silhouetteComplexity": 0.45,
+        "componentCount": 0.5,
+        "hierarchyDepth": 0.45,
+        "repetitionDensity": 0.6,
+        "materialLayerCount": 0.5,
+        "localDetailDensity": 0.45,
+        "occlusionRisk": 0.55,
+        "actionReadinessNeed": 0.7
+      },
+      "estimatedCounts": {
+        "macroComponents": 6,
+        "mesoComponents": 8,
+        "microFeatureGroups": 3,
+        "materialLayers": 7,
+        "repetitionSystems": 2
+      },
+      "reasoning": [
+        "Silhouette is simple and analytically fittable (rounded rect + fillet + cylinder) \u2014 low silhouette score.",
+        "Six macro parts (face plate, edge guard, throat, collar, grip, butt cap) with a real parent-child join at the collar \u2014 moderate, not simple.",
+        "Two genuine repetition systems: the grip wrap helix and the grip perforation dot field.",
+        "Seven distinct material layers measured by median RGB, including one true metal.",
+        "Frontal-only view hides the entire Z axis (thickness, edge-guard bead depth, handle cross-section) \u2014 raises occlusion risk.",
+        "Intended for a web demo site: needs a swing pivot at the grip and a pickable/explodable hierarchy."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "moderate",
+      "minimumComponentLevels": ["macro", "meso", "micro"],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Observed structure has six macro parts, two repetition systems (wrap helix, perforation field) and localized surface overrides (perforation dots, edge-guard seam stipple). A macro-only spec would collapse the paddle into a flat plate on a stick and lose every identity feature."
+    },
+    "unknownsToResolveBeforeImplementation": [
+      {
+        "id": "thickness-axis",
+        "question": "Total core/face thickness and edge-guard bead depth.",
+        "status": "undetermined-from-reference",
+        "resolution": "Filled from category convention: 16 mm total head thickness, edge guard 2 mm proud per side. Flagged as inference, not measurement.",
+        "needsView": "side / edge-on view"
+      },
+      {
+        "id": "rear-face-graphic",
+        "question": "Does the rear face carry the same decal?",
+        "status": "hidden",
+        "resolution": "Assumed mirrored front graphic. Many paddles print a different rear.",
+        "needsView": "rear view"
+      },
+      {
+        "id": "handle-cross-section",
+        "question": "Round or octagonal handle core under the wrap?",
+        "status": "undetermined-from-reference",
+        "resolution": "Modelled octagonal (category convention for pickleball handles); the wrap hides it either way.",
+        "needsView": "butt-end view"
+      },
+      {
+        "id": "wrap-helix-pitch",
+        "question": "Exact overwrap pitch and handedness.",
+        "status": "uncertain",
+        "resolution": "Estimated 11 turns over the 120 mm grip, right-handed, from low-contrast ridge spacing.",
+        "needsView": "grip close-up"
+      },
+      {
+        "id": "real-scale",
+        "question": "True overall length.",
+        "status": "not-derivable",
+        "resolution": "Set to 0.42 m from category convention; every other dimension derived from measured pixel ratios so proportions stay faithful even if scale is off.",
+        "needsView": "none \u2014 needs a stated dimension"
+      }
+    ],
+    "detailInventory": {
+      "scanMethod": "component-zones",
+      "targetMinDetails": 6,
+      "note": "Zones scanned from the component decomposition in analysis.md; grid-3x3 crops in ./zones retained as evidence. Every detail maps to a real component.localFeatures or material.localOverrides entry.",
+      "details": [
+        {
+          "id": "face-corner-radius",
+          "kind": "contour",
+          "description": "Face plate outline is a rounded rectangle with corner radius 366px over width 1032px (r/W=0.355). Predicted vs measured half-width agrees at y=141 (428/428.5), y=1101 (464/464), y=1165 (415/415.5).",
+          "region": {
+            "x": 0.246,
+            "y": 0.006,
+            "width": 0.504,
+            "height": 0.618,
+            "units": "normalized"
+          },
+          "scale": "macro",
+          "affects": "silhouette",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "facePlate.cornerRadiusRatio"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.95
+        },
+        {
+          "id": "edge-guard-bead",
+          "kind": "relief",
+          "description": "Continuous bead running the full face perimeter, 12-18px wide inside the silhouette, standing proud of both face skins. Reads as a separate band, not a painted border.",
+          "region": {
+            "x": 0.246,
+            "y": 0.006,
+            "width": 0.504,
+            "height": 0.618,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "edgeGuard.beadProfile"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.85
+        },
+        {
+          "id": "face-graphic-decal",
+          "kind": "inscription",
+          "description": "Triangle mark with negative-space figure, plus 'PADDLE' (green, rgb 173/203/4), 'POWER' and 'PLAY. CONNECT. RECHARGE.' (cream). Matte ink, no sheen difference from the face field.",
+          "region": {
+            "x": 0.34,
+            "y": 0.06,
+            "width": 0.32,
+            "height": 0.36,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "identity",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "faceSkin.decalMap"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.93
+        },
+        {
+          "id": "collar-gold-ring",
+          "kind": "hardware",
+          "description": "Single gold ring, median rgb 182/153/92, spanning y1410-1438. Value varies across its own width, which is the metal cue; the only metallic surface on the object.",
+          "region": {
+            "x": 0.45,
+            "y": 0.688,
+            "width": 0.1,
+            "height": 0.014,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "identity",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "collarRingGold.metalBand"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.9
+        },
+        {
+          "id": "collar-black-rings",
+          "kind": "hardware",
+          "description": "Two near-black polymer rings (median rgb 26/29/33) flanking the gold ring: y1388-1408 above, y1440-1462 below.",
+          "region": {
+            "x": 0.45,
+            "y": 0.677,
+            "width": 0.1,
+            "height": 0.036,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "identity",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "collarRings.blackPair"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.9
+        },
+        {
+          "id": "grip-wrap-helix",
+          "kind": "repetition",
+          "description": "Overwrap ridge running as a continuous helix down the grip barrel, ~11 turns over the 120mm grip length, each turn overlapping the last.",
+          "region": {
+            "x": 0.45,
+            "y": 0.715,
+            "width": 0.1,
+            "height": 0.21,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "surface",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "gripWrap.helixRidge"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.75
+        },
+        {
+          "id": "grip-perforation-dots",
+          "kind": "perforation",
+          "description": "Sparse round perforations across the wrap. Measured dark-pixel fraction 0.036 of grip area \u2014 sparse dots, explicitly NOT a dense knurl or crosshatch.",
+          "region": {
+            "x": 0.45,
+            "y": 0.732,
+            "width": 0.1,
+            "height": 0.19,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "surface",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "gripWrap.perforationField"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.8
+        },
+        {
+          "id": "wrap-terminal-seam",
+          "kind": "seam",
+          "description": "Diagonal cut edge where the wrap terminates near the collar, visible as a short straight tonal break across the helix.",
+          "region": {
+            "x": 0.45,
+            "y": 0.715,
+            "width": 0.1,
+            "height": 0.02,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "surface",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "gripWrap.terminalSeam"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.6
+        },
+        {
+          "id": "butt-cap-flange",
+          "kind": "hardware",
+          "description": "Grip barrel widens from 187px to 217px between y1900 and y2042 \u2014 a flared butt flange, same cream material family as the wrap.",
+          "region": {
+            "x": 0.44,
+            "y": 0.928,
+            "width": 0.12,
+            "height": 0.07,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "buttCap.flangeFlare"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.8
+        },
+        {
+          "id": "throat-fillet-tangency",
+          "kind": "contour",
+          "description": "Throat leaves the face plate's bottom corner arcs tangentially with no shoulder or step: widths at y1229 still sit on the fitted corner arc, y1293 and below depart from it.",
+          "region": {
+            "x": 0.4,
+            "y": 0.6,
+            "width": 0.2,
+            "height": 0.16,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "throat.tangentFillet"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.85
+        },
+        {
+          "id": "edge-guard-seam-stipple",
+          "kind": "relief",
+          "description": "Fine irregular stipple along the outermost edge-guard line, strongest along the upper perimeter. Micro roughness variation, not geometry.",
+          "region": {
+            "x": 0.246,
+            "y": 0.006,
+            "width": 0.504,
+            "height": 0.1,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "surface",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "edgeGuard.seamStipple"
+          },
+          "evidenceRef": "public/images/paddlepower-paddle.jpeg",
+          "confidence": 0.55
+        }
+      ]
+    },
+    "anatomy": {
+      "applies": false,
+      "styleHeads": 0.0,
+      "proportions": {
+        "headUnit": 0.0,
+        "torso": 0.0,
+        "legs": 0.0,
+        "shoulderWidth": 0.0,
+        "hipWidth": 0.0
+      },
+      "pose": {
+        "type": "unassessed",
+        "jointAngles": {}
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.0,
+        "eyeSpacing": 0.0,
+        "noseBase": 0.0,
+        "mouthLine": 0.0,
+        "hairline": 0.0
+      },
+      "features": [],
+      "confidence": 0.0,
+      "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
+    },
+    "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg"
+  },
+  "qualityContract": {
+    "qualityBar": "moderate",
+    "definitionOfDone": [
+      "The rendered model matches the reference silhouette, primary proportions, visible component hierarchy, material response, and most recognizable local features for the selected fidelity tier."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 2,
+      "mesoComponents": 3,
+      "microFeatureGroups": 2,
+      "materialLayers": 2,
+      "repetitionSystems": 0,
+      "reviewViewpoints": 3
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": ["full-object"],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": ["full-object"],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": ["full-object"],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": ["full-object"],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": ["full-object"],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "authoringInstruction": "Fill observed object class, complexity reasoning, featureGroups, visualDeltaChecks, and unknowns before generating or implementing ObjectSculptSpec.",
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Paddle Power Pickleball Paddle extruded rounded rectangle profile bevel satin composite roughness metalness dielectric brushed gold metal ring anisotropy helical wrap tube grip perforation decal texture canvas albedo colorSpace",
+    "index": {
+      "status": "rebuilt",
+      "reason": "missing",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.description-pbr-vocabulary-caption-calibration",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.description_conventions[7]",
+        "score": 14.215311683423,
+        "snippets": [
+          "Embedding a technical material-attribute block (Albedo, Metalness, Roughness, Normals) with measured reflectance ranges directly into the structured description, not just prose. Nh\u00fang m\u1ed9t kh\u1ed1i thu\u1ed9c t\u00ednh v\u1eadt li\u1ec7u k\u1ef9 thu\u1eadt (Albedo, Metalness, ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.description_conventions[7]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.pbr-anisotropy",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[6]",
+        "score": 12.589259841366,
+        "snippets": [
+          "Directional specular stretching seen on brushed or grooved metal, where reflections elongate along the grain direction. Hi\u1ec7n t\u01b0\u1ee3ng ph\u1ea3n x\u1ea1 specular k\u00e9o d\u00e0i theo m\u1ed9t h\u01b0\u1edbng, th\u1ea5y tr\u00ean kim lo\u1ea1i \u0111\u01b0\u1ee3c ch\u1ea3i x\u01b0\u1edbc ho\u1eb7c c\u00f3 r\u00e3nh, ph\u1ea3n x\u1ea1 k\u00e9o d\u00e0i theo ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[6]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.pbr-color-space-srgb-vs-linearnocolorspace",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[11]",
+        "score": 10.502708029553,
+        "snippets": [
+          "... (c\u1ea7n gamma/sRGB) v\u00e0 c\u00e1c b\u1ea3n \u0111\u1ed3 d\u1eef li\u1ec7u to\u00e1n h\u1ecdc (ph\u1ea3i gi\u1eef tuy\u1ebfn t\u00ednh/kh\u00f4ng hi\u1ec7u ch\u1ec9nh). Recognition cues: Base color/albedo and emissive textures are the only ones that should look like natural photographic color; Normal, roughness, ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[11]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      }
+    ]
+  }
+}

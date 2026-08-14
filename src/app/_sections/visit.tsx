@@ -11,7 +11,8 @@ import { VariableWeightText } from "@/components/ui/variable-weight-text"
  *
  * Structured as a two-column "see you on court" closer: the statement and every
  * way to reach the club on the left, the physical facts on the right — a court
- * photo, both branches with their own map and directions link, and hours.
+ * photo and hours. The Talisay branch (address, map, directions link) runs
+ * full width below both columns.
  *
  * Contact is social link-out only (the client declined an email integration),
  * so the channel rows are profiles rather than a form. Partnership enquiries
@@ -43,34 +44,23 @@ const CHANNELS: {
     href: "https://facebook.com/paddlepowercebu",
   },
   {
-    label: "Owner",
-    value: "@michaeljhaye",
-    href: "https://instagram.com/michaeljhaye",
-  },
-  {
     label: "Book",
-    value: "Pick a branch",
+    value: "Book your court",
     href: "#locations",
     internal: true,
   },
 ]
 
-/* TODO: replace `address` with the client's confirmed street addresses — the
-   map query is derived from it, so both fix together. */
-const BRANCHES = [
-  {
-    side: "North Branch",
-    name: "AS Fortuna",
-    address: ["AS Fortuna Street", "Mandaue City, Cebu", "Philippines"],
-    mapQuery: "AS Fortuna Street, Mandaue City, Cebu, Philippines",
-  },
-  {
-    side: "South Branch",
-    name: "Talisay",
-    address: ["Talisay City", "Cebu", "Philippines"],
-    mapQuery: "Talisay City, Cebu, Philippines",
-  },
-] as const
+const BRANCH = {
+  name: "Talisay",
+  address: ["Maghaway Rd", "Talisay City, 6045 Cebu", "Philippines"],
+  /* Plus Code, not a business-name search — the embed's `q=` param treats
+     bare text as a fuzzy place search, and "Paddle Power" isn't a verified
+     Google listing at this address, so it was surfacing a second pin for a
+     similarly-named nearby business. A Plus Code geocodes to exactly one
+     point, so only one pin renders. */
+  mapQuery: "7R59+W5 Talisay, Cebu",
+} as const
 
 /* Keyless Google Maps — the `output=embed` form needs no API key, and the same
    query drives the directions link so the pin and the route always agree. */
@@ -79,10 +69,10 @@ const mapEmbed = (q: string) =>
 const mapLink = (q: string) =>
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`
 
-const LABEL = "text-pp-tan/45 text-[10px] font-bold tracking-[0.16em] uppercase"
+const LABEL = "text-pp-tan/60 text-[10px] font-bold tracking-[0.16em] uppercase"
 const RULE = "border-pp-tan/15"
 
-/* Same weight-sweep headline treatment as the Locations "Two branches. One
+/* Same weight-sweep headline treatment as the Locations "Your court. One
    tap." heading — fast enough to land as one gesture rather than a
    per-letter crawl. Second line's delay lets the sweep read as a single
    continuous pass down from "See you" into "on court." */
@@ -120,9 +110,9 @@ export function DemoVisit() {
               />
             </h2>
             <p className="text-pp-tan/70 m-0 max-w-[46ch] text-base leading-relaxed font-medium lg:text-lg">
-              Reservations run through Ondafit, any hour, either branch, no
-              account needed. For coaching, events, or brand collabs, Instagram
-              is the fastest way to reach us.
+              Reservations run through Ondafit, any hour, no account needed. For
+              coaching, events, or brand collabs, Instagram is the fastest way
+              to reach us.
             </p>
           </div>
 
@@ -199,49 +189,42 @@ export function DemoVisit() {
           </div>
         </div>
 
-        {/* ── Where — full width, side by side, instead of stacked under the
-            image plate: two branches read better as a horizontal pair than
-            as another scroll of vertical cards. ──────────────────────────── */}
+        {/* ── Where — one confirmed branch, so it spreads across the full
+            width as a wide address-plus-map pair instead of a cramped
+            single column. ──────────────────────────────────────────────── */}
         <div className="lg:col-span-12">
-          <div className="grid gap-10 sm:grid-cols-2 lg:gap-16">
-            {BRANCHES.map((branch) => (
-              <div key={branch.name} className="flex flex-col gap-4">
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-pp-cream m-0 text-xl font-black tracking-[-0.015em] lg:text-2xl">
-                    {branch.name}
-                  </h3>
-                  <span className="text-pp-lime-light text-[10px] font-bold tracking-[0.16em] whitespace-nowrap uppercase">
-                    {branch.side}
+          <div className="grid gap-8 lg:grid-cols-[320px_1fr] lg:items-center lg:gap-16">
+            <div className="flex flex-col gap-5">
+              <h3 className="text-pp-cream m-0 text-2xl font-black tracking-[-0.015em] lg:text-3xl">
+                {BRANCH.name}
+              </h3>
+              <address className="text-pp-cream/80 text-base leading-relaxed font-medium not-italic lg:text-lg">
+                {BRANCH.address.map((line) => (
+                  <span key={line} className="block">
+                    {line}
                   </span>
-                </div>
-                <address className="text-pp-cream/80 text-base leading-relaxed font-medium not-italic">
-                  {branch.address.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-                <iframe
-                  src={mapEmbed(branch.mapQuery)}
-                  title={`Map of Paddle Power Cebu: ${branch.name}`}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="border-pp-tan/15 h-[220px] w-full border filter-[grayscale(20%)_invert(92%)_hue-rotate(180deg)_brightness(95%)_contrast(90%)]"
+                ))}
+              </address>
+              <a
+                href={mapLink(BRANCH.mapQuery)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pp-cream hover:text-pp-lime-light focus-visible:outline-pp-lime-light group inline-flex items-center gap-2 self-start text-[10px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                Get directions
+                <ArrowUpRightIcon
+                  className="size-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+                  aria-hidden
                 />
-                <a
-                  href={mapLink(branch.mapQuery)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-pp-cream hover:text-pp-lime-light focus-visible:outline-pp-lime-light group inline-flex items-center gap-2 self-start text-[10px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  Get directions
-                  <ArrowUpRightIcon
-                    className="size-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
-                    aria-hidden
-                  />
-                </a>
-              </div>
-            ))}
+              </a>
+            </div>
+            <iframe
+              src={mapEmbed(BRANCH.mapQuery)}
+              title={`Map of Paddle Power Cebu: ${BRANCH.name}`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="border-pp-tan/15 h-60 w-full border filter-[grayscale(20%)_invert(92%)_hue-rotate(180deg)_brightness(95%)_contrast(90%)] lg:h-80"
+            />
           </div>
         </div>
       </div>

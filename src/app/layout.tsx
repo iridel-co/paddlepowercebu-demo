@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Paddle Power Cebu: Book a Court, 24/7",
   description:
-    "Premium indoor pickleball in Cebu. Solar-powered, open around the clock, two branches. Pick yours and book in one tap.",
+    "Premium indoor pickleball in Talisay, Cebu. Open around the clock. Book in one tap.",
 }
 
 export default function RootLayout({

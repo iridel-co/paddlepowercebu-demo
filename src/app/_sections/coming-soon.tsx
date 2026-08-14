@@ -60,7 +60,7 @@ const BallViewer = dynamic(
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* Same weight-sweep headline treatment as the Locations "Two branches. One
+/* Same weight-sweep headline treatment as the Locations "Your court. One
    tap." heading — fast enough to land as one gesture rather than a
    per-letter crawl. */
 const HEADLINE_STAGGER = 0.014
@@ -92,7 +92,7 @@ const ITEMS = [
     variant: "cafe" as const,
     icon: CoffeeIcon,
     title: "Café",
-    body: "A space to recharge between games, opening at AS Fortuna.",
+    body: "A space to recharge between games, opening at our new branch.",
     live: false,
   },
   {
@@ -635,7 +635,7 @@ export function DemoComingSoon() {
                           >
                             <item.icon className="size-4" aria-hidden />
                           </span>
-                          <span className="text-pp-charcoal/50 font-mono text-[10px] tracking-[0.15em] uppercase">
+                          <span className="text-pp-charcoal/70 font-mono text-[10px] tracking-[0.15em] uppercase">
                             Session Plan
                           </span>
                         </div>
@@ -658,7 +658,7 @@ export function DemoComingSoon() {
                               "radial-gradient(circle 7px at 100% 22%, #e8d8c2 99%, transparent 100%), radial-gradient(circle 7px at 100% 78%, #e8d8c2 99%, transparent 100%)",
                           }}
                         >
-                          <span className="text-pp-charcoal/50 mb-1 block font-mono text-[10px] tracking-[0.15em] uppercase">
+                          <span className="text-pp-charcoal/70 mb-1 block font-mono text-[10px] tracking-[0.15em] uppercase">
                             Event Pass · No. 0217
                           </span>
                           <h3 className="text-pp-ink mb-1.5 text-lg font-bold tracking-[-0.01em] sm:text-xl lg:text-2xl">
@@ -710,7 +710,7 @@ export function DemoComingSoon() {
                           {[4, 5, 6].map((n) => (
                             <span
                               key={n}
-                              className="border-pp-ink/20 text-pp-charcoal/50 flex size-7 items-center justify-center rounded-full border border-dashed text-[11px] font-semibold sm:size-8"
+                              className="border-pp-ink/20 text-pp-charcoal/70 flex size-7 items-center justify-center rounded-full border border-dashed text-[11px] font-semibold sm:size-8"
                             >
                               {n}
                             </span>
@@ -770,7 +770,7 @@ export function DemoComingSoon() {
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               aria-label="Paddle Power Cebu on Facebook"
-                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
+                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
                             >
                               <FacebookIcon className="size-3.5" aria-hidden />
                             </a>
@@ -780,7 +780,7 @@ export function DemoComingSoon() {
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               aria-label="Paddle Power Cebu on Instagram"
-                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
+                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
                             >
                               <InstagramIcon className="size-3.5" aria-hidden />
                             </a>

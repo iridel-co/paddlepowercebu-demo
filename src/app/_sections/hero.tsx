@@ -47,7 +47,7 @@ const FOCUS_SHIFT = 0.05
 const frameSrc = (index: number) =>
   `/frames/frame-${String(index + 1).padStart(3, "0")}.webp`
 
-/* Same weight-sweep headline treatment as the Locations "Two branches. One
+/* Same weight-sweep headline treatment as the Locations "Your court. One
    tap." heading — fast enough to land as one gesture rather than a per-letter
    crawl. Second line's delay lets the sweep read as a single continuous pass
    down from "Your court." into "Anytime." */
@@ -417,28 +417,27 @@ export function DemoHero() {
 
             <div className="flex flex-col gap-3.5 pt-9 pr-8 pb-4 pl-5">
               <p className="m-0 text-center text-[13.5px] leading-relaxed font-medium text-pretty text-white/90 sm:text-left">
-                Premium indoor pickleball in Cebu. Solar-powered, open around
-                the clock, two branches.
+                Premium indoor pickleball in Cebu, open around the clock.
               </p>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Paddle+Power%2C+Maghaway+Rd%2C+Talisay%2C+6045+Cebu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pp-lime-light hover:text-pp-cream focus-visible:outline-pp-olive text-center text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-left"
+              >
+                Maghaway Rd, Talisay
+              </a>
 
               {/* Centered while the panel spans the full width of a phone;
                   left-aligned once it shrinks to the corner card. */}
               <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                {/* TODO: replace with client's Ondafit booking link — AS Fortuna */}
-                <PillLink
-                  href="#locations"
-                  variant="lime-light"
-                  className="px-[18px] py-2.5 text-[13px]"
-                >
-                  Book AS Fortuna
-                </PillLink>
                 {/* TODO: replace with client's Ondafit booking link — Talisay */}
                 <PillLink
                   href="#locations"
-                  variant="white"
-                  className="px-[18px] py-2.5 text-[13px]"
+                  variant="lime-light"
+                  className="min-h-11 px-[18px] py-2.5 text-[13px]"
                 >
-                  Book Talisay
+                  Book Your Court
                 </PillLink>
               </div>
             </div>

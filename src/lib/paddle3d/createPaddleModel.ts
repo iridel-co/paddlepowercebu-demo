@@ -23,6 +23,11 @@ export type ProceduralModelRuntime = {
   destructionGroups: Record<string, THREE.Object3D[]>
 }
 
+// Untyped by design: this mirrors the shape of the generated sculpt-spec JSON
+// (docs/paddle3d/object-sculpt-spec.json), which has no fixed schema across
+// material entries — callers below read whichever optional nested paths a
+// given part's spec happens to define.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SculptMaterialSpec = Record<string, any>
 
 // bevelEnabled defaults to true on THREE.ExtrudeGeometry and rounds every

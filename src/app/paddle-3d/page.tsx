@@ -189,7 +189,5 @@ export default function PaddleReviewPage() {
     }
   }, [])
 
-  return (
-    <div ref={hostRef} id="paddle-review-canvas" className="w-fit" />
-  )
+  return <div ref={hostRef} id="paddle-review-canvas" className="w-fit" />
 }

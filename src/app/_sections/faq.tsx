@@ -7,9 +7,9 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
 
-/* Same two branches as the Locations section. Buttons link to branch
-   selection there, same as the Hero and Visit sections' booking CTAs. */
-const BRANCH_BOOKING = [{ name: "AS Fortuna" }, { name: "Talisay" }] as const
+/* Talisay is the only bookable branch right now — the next branch is under
+   construction. Button links to booking there, same as the Hero and Visit
+   sections' booking CTAs. */
 
 /**
  * FAQ — the chat-bubble accordion from the reference: the question sits left
@@ -33,13 +33,14 @@ const FAQS = [
   {
     id: "booking",
     question: "How do I book a court?",
-    answer: "Book online through Onda. Pick your branch, date, and time.",
+    answer: "Book online through Onda. Pick your date and time.",
     showBookingButtons: true,
   },
   {
     id: "hours",
     question: "What are your opening hours?",
-    answer: "Both branches are open 24/7, including weekends and holidays.",
+    answer:
+      "The Talisay branch is open 24/7, including weekends and holidays. A new branch is coming soon near you.",
   },
   {
     id: "gear",
@@ -59,9 +60,31 @@ const FAQS = [
     answer:
       "Yes. Birthdays, corporate nights, and league play can take several courts at once. Send us a message with your headcount and we'll map out the schedule.",
   },
+  {
+    id: "branches",
+    question: "Do you only have one branch?",
+    answer:
+      "For now, yes, Talisay is our only branch. A new branch is opening soon, so keep an eye out for updates! 👀",
+  },
+  {
+    id: "partnerships",
+    question: "Are you open to partnerships?",
+    answer:
+      "Yes, we're always open to partnering up, especially for events. Reach out to us on our socials below and let's talk.",
+    showSocialLinks: true,
+  },
 ]
 
-/* Same weight-sweep headline treatment as the Locations "Two branches. One
+const SOCIALS = [
+  { href: "https://instagram.com/paddlepowercebu", label: "Instagram" },
+  {
+    /* TODO: confirm Facebook page URL with client */
+    href: "https://facebook.com/paddlepowercebu",
+    label: "Facebook",
+  },
+]
+
+/* Same weight-sweep headline treatment as the Locations "Your court. One
    tap." heading — fast enough to land as one gesture rather than a
    per-letter crawl. Second span's delay lets the sweep read as a single
    continuous pass across the line. */
@@ -194,15 +217,30 @@ export function DemoFaq() {
                       </p>
                       {item.showBookingButtons && (
                         <div className="flex flex-wrap justify-end gap-3">
-                          {BRANCH_BOOKING.map((branch) => (
+                          <Button
+                            variant="brand"
+                            asChild
+                            className="bg-pp-lime-light hover:bg-pp-lime-light/90 min-h-11"
+                          >
+                            <a href="#locations">Book Talisay on Onda</a>
+                          </Button>
+                        </div>
+                      )}
+                      {item.showSocialLinks && (
+                        <div className="flex flex-wrap justify-end gap-3">
+                          {SOCIALS.map((social) => (
                             <Button
-                              key={branch.name}
+                              key={social.href}
                               variant="brand"
                               asChild
-                              className="bg-pp-lime-light hover:bg-pp-lime-light/90"
+                              className="bg-pp-lime-light hover:bg-pp-lime-light/90 min-h-11"
                             >
-                              <a href="#locations">
-                                Book {branch.name} on Onda
+                              <a
+                                href={social.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {social.label}
                               </a>
                             </Button>
                           ))}

@@ -1,9 +1,9 @@
 # Paddle Power Cebu — Demo Site
 
 Single-page teaser site for Paddle Power Cebu: premium indoor pickleball courts,
-solar-powered, open 24/7, two branches (AS Fortuna and Talisay). Booking is handled
-externally by Onda Fit — this site's job is to get a visitor to the right branch's
-booking link in one tap.
+open 24/7 at Maghaway Rd, Talisay, with an AS Fortuna branch marked "under construction"
+until it launches. Booking is handled externally by Onda Fit — this site's job is to get
+a visitor to the Talisay booking link in one tap.
 
 Built by Iridel from `PRD.md` and the Claude Design files. **This is a demo build being
 handed off — it is not production-ready. See [Handoff status](#handoff-status).**
@@ -41,22 +41,18 @@ npm run dev          # http://localhost:3000
 builds and ships without them, but the booking flow is a dead end until the Onda Fit
 links land.
 
-| Item                                  | Where                                                                                                    | Current placeholder                                                                                                                                                                    |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Onda Fit booking URL — AS Fortuna** | [hero.tsx:406](src/app/_sections/hero.tsx#L406), [locations.tsx:45](src/app/_sections/locations.tsx#L45) | Hero CTA scrolls to `#locations`; the Locations card's `bookingUrl` is `"#"`                                                                                                           |
-| **Onda Fit booking URL — Talisay**    | [hero.tsx:414](src/app/_sections/hero.tsx#L414), [locations.tsx:55](src/app/_sections/locations.tsx#L55) | Same — `#locations` / `"#"`                                                                                                                                                            |
-| Street address — AS Fortuna           | [visit.tsx:58](src/app/_sections/visit.tsx#L58)                                                          | "AS Fortuna Street, Mandaue City" (guess). The Google Maps query is derived from `address`, so the pin fixes with it                                                                   |
-| Street address — Talisay              | [visit.tsx:58](src/app/_sections/visit.tsx#L58)                                                          | "Talisay City, Cebu" (guess)                                                                                                                                                           |
-| Map pins                              | [locations.tsx:47,57](src/app/_sections/locations.tsx#L47)                                               | Maps _search_ URLs, not real place pins                                                                                                                                                |
-| Facebook page URL                     | [visit.tsx:40](src/app/_sections/visit.tsx#L40)                                                          | `facebook.com/paddlepowercebu` — unverified                                                                                                                                            |
-| Phone + email                         | [visit.tsx:25](src/app/_sections/visit.tsx#L25)                                                          | Not shown. Add as `tel:` / `mailto:` rows in `CHANNELS` when supplied                                                                                                                  |
-| Court count                           | [visit.tsx:182](src/app/_sections/visit.tsx#L182)                                                        | The "Courts" row shows hours instead of a count — AS Fortuna floorplan was never confirmed                                                                                             |
-| Solar coverage claim                  | hero, footer, locations meta                                                                             | "Solar-powered" is stated unqualified. Confirm before this goes live as a marketing claim                                                                                              |
-| FAQ copy                              | [faq.tsx:33-62](src/app/_sections/faq.tsx#L33-L62)                                                       | Five Q&As written by us, not the client. Needs sign-off — especially the rental/beginner/group answers                                                                                 |
-| **Official logo files**               | `public/images/paddle-power-*.svg`                                                                       | **Every logo currently in the repo is a generated placeholder**, traced to match the brand guidelines — not the client's real artwork. Swap all of them when the official files arrive |
+| Item                                       | Where                                                                                                                                                                                                                | Current placeholder                                                                                                                                                                    |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onda Fit booking URL — Talisay**         | [hero.tsx](src/app/_sections/hero.tsx), [locations.tsx](src/app/_sections/locations.tsx)                                                                                                                             | **Still needed from the client.** Hero CTA scrolls to `#locations`; the Locations card's `bookingUrl` is `"#"`                                                                         |
+| AS Fortuna branch                          | [hero.tsx](src/app/_sections/hero.tsx), [locations.tsx](src/app/_sections/locations.tsx), [visit.tsx](src/app/_sections/visit.tsx), [footer.tsx](src/app/_sections/footer.tsx), [faq.tsx](src/app/_sections/faq.tsx) | Deprioritized for now — shown everywhere as "Under Construction" / "Coming Soon", grayed out, not bookable. Revisit once the client confirms it's launching                            |
+| Facebook page URL                          | [visit.tsx](src/app/_sections/visit.tsx), [footer.tsx](src/app/_sections/footer.tsx)                                                                                                                                 | `facebook.com/paddlepowercebu` — unverified                                                                                                                                            |
+| Phone + email                              | [visit.tsx](src/app/_sections/visit.tsx)                                                                                                                                                                             | Not shown. Add as `tel:` / `mailto:` rows in `CHANNELS` when supplied                                                                                                                  |
+| Court count                                | [visit.tsx](src/app/_sections/visit.tsx)                                                                                                                                                                             | The "Courts" row shows hours instead of a count                                                                                                                                        |
+| FAQ copy                                   | [faq.tsx](src/app/_sections/faq.tsx)                                                                                                                                                                                 | Five Q&As written by us, not the client. Needs sign-off — especially the rental/beginner/group answers                                                                                 |
+| **Official logo files**                    | `public/images/paddle-power-*.svg`                                                                                                                                                                                   | **Every logo currently in the repo is a generated placeholder**, traced to match the brand guidelines — not the client's real artwork. Swap all of them when the official files arrive |
 
-Once the Onda Fit links arrive, both Hero CTAs and both Locations half-court links should
-point at them directly (`target="_blank"`), and the `#locations` interstitial hop goes away.
+Once the Onda Fit link arrives, the Hero CTA and the Talisay half-court link should
+point at it directly (`target="_blank"`), and the `#locations` interstitial hop goes away.
 
 ### Not yet done (team scope)
 
@@ -114,7 +110,7 @@ offset has to move with them.**
 | Coming Soon | [coming-soon.tsx](src/app/_sections/coming-soon.tsx) | Six items: Memberships, Coaching, Events, Café, Equipment, Partnerships (the only "Live now")                                                                    |
 | FAQ         | [faq.tsx](src/app/_sections/faq.tsx)                 | Chat-bubble accordion; hover/focus opens, click toggles                                                                                                          |
 | Visit       | [visit.tsx](src/app/_sections/visit.tsx)             | Closing CTA on ink. Contact is social link-out only — **the client declined an email/form integration**                                                          |
-| Footer      | [footer.tsx](src/app/_sections/footer.tsx)           | Lockup, section links, IG handles                                                                                                                                |
+| Footer      | [footer.tsx](src/app/_sections/footer.tsx)           | Lockup, section links, Instagram + Facebook links                                                                                                                |
 
 ### Conventions to keep
 
@@ -148,8 +144,10 @@ hero rally in `public/frames/`.
 > The same applies to the favicon — `src/app/favicon.ico` is still the Next.js default and
 > needs the real mark plus a full icon set.
 
-`court-render.webp` is real. `paddle-face-*` / `paddle-grip-*` are PBR maps for the 3D
-model. `pickleball-ball.png` feeds the ball material.
+`court-render.webp` and `court-seelction-2k.png` (aerial shot, used in Locations — note
+the filename typo, kept as-is to match what's already referenced in code) are real.
+`paddle-face-*` / `paddle-grip-*` are PBR maps for the 3D model. `pickleball-ball.png`
+feeds the ball material.
 
 ---
 

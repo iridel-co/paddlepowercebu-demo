@@ -14,8 +14,12 @@ const LINKS = [
 ]
 
 const SOCIALS = [
-  { href: "https://instagram.com/paddlepowercebu", label: "@paddlepowercebu" },
-  { href: "https://instagram.com/michaeljhaye", label: "@michaeljhaye" },
+  { href: "https://instagram.com/paddlepowercebu", label: "Instagram" },
+  {
+    /* TODO: confirm Facebook page URL with client */
+    href: "https://facebook.com/paddlepowercebu",
+    label: "Facebook",
+  },
 ]
 
 export function DemoFooter() {
@@ -40,14 +44,14 @@ export function DemoFooter() {
               />
             </a>
             <p className="text-pp-tan/70 m-0 max-w-[38ch] text-sm leading-relaxed font-medium">
-              Premium indoor pickleball in Cebu. Solar-powered, open 24/7,
-              across AS Fortuna and Talisay.
+              Premium indoor pickleball in Cebu. Open 24/7 in Talisay — a new
+              branch is coming soon near you.
             </p>
           </div>
 
           <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
             <nav aria-label="Footer" className="flex flex-col gap-3">
-              <span className="text-pp-tan/45 text-[10px] font-bold tracking-[0.16em] uppercase">
+              <span className="text-pp-tan/60 text-[10px] font-bold tracking-[0.16em] uppercase">
                 Explore
               </span>
               {LINKS.map((link) => (
@@ -62,7 +66,7 @@ export function DemoFooter() {
             </nav>
 
             <div className="flex flex-col gap-3">
-              <span className="text-pp-tan/45 text-[10px] font-bold tracking-[0.16em] uppercase">
+              <span className="text-pp-tan/60 text-[10px] font-bold tracking-[0.16em] uppercase">
                 Follow
               </span>
               {SOCIALS.map((social) => (

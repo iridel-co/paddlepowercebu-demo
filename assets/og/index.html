@@ -113,21 +113,15 @@
         height: auto;
       }
 
+      /* Centred under the lockup, which fills the panel's content width
+         exactly — so centring here reads as centred on the panel too. */
       .strap {
         margin-top: 34px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        text-align: center;
         color: #e8d8c2;
         font-weight: 500;
         font-size: 17px;
         letter-spacing: 0.005em;
-      }
-      .strap .dash {
-        width: 26px;
-        height: 3px;
-        background: #c8dc3a;
-        flex: none;
       }
 
       /* Pinned to the panel's bottom corner rather than sitting in the flow,
@@ -254,8 +248,7 @@
         />
 
         <div class="strap">
-          <span class="dash"></span>
-          <span>Premium indoor pickleball &middot; Talisay, Cebu</span>
+          Premium indoor pickleball &middot; Talisay, Cebu
         </div>
 
         <div class="foot">paddlepowercebu.com</div>

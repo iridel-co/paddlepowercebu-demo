@@ -2,7 +2,8 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 /**
- * Navbar Component
+ * Site header component with slots for branding, section navigation, and
+ * primary actions.
  * @see DESIGN_SYSTEM.md#Navigation
  *
  * UDS specs:
@@ -23,10 +24,9 @@ export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
 
 const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
   ({ start, center, end, className, ...props }, ref) => (
-    <nav
+    <header
       ref={ref}
       data-slot="navbar"
-      aria-label="Main navigation"
       className={cn(
         "border-border bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-40 flex h-16 w-full items-center gap-4 border-b px-4 backdrop-blur",
         className
@@ -38,7 +38,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
         <div className="hidden flex-1 justify-center md:flex">{center}</div>
       )}
       <div className="flex flex-1 items-center justify-end gap-3">{end}</div>
-    </nav>
+    </header>
   )
 )
 Navbar.displayName = "Navbar"

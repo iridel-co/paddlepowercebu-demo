@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useSyncExternalStore } from "react"
 import dynamic from "next/dynamic"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
@@ -190,8 +190,25 @@ const FACEBOOK_URL = "https://facebook.com/paddlepowercebu"
 // Tap/click auto-dismiss for the "Still coming soon!" tooltip — long enough
 // to read, short enough not to linger after the finger lifts.
 const TAP_TOOLTIP_MS = 1800
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)"
+
+const subscribeToReducedMotion = (onStoreChange: () => void) => {
+  const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY)
+  mediaQuery.addEventListener("change", onStoreChange)
+  return () => mediaQuery.removeEventListener("change", onStoreChange)
+}
+
+const getReducedMotionSnapshot = () =>
+  window.matchMedia(REDUCED_MOTION_QUERY).matches
+
+const getServerReducedMotionSnapshot = () => false
 
 export function DemoComingSoon() {
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getServerReducedMotionSnapshot
+  )
   const sectionRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
   const ballTrackRef = useRef<HTMLDivElement>(null)
@@ -231,6 +248,35 @@ export function DemoComingSoon() {
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) {
+        const items = itemRefs.current.filter(
+          (item): item is HTMLElement => item !== null
+        )
+
+        gsap.set(items, {
+          x: 0,
+          y: 0,
+          rotateZ: 0,
+          scale: 1,
+          opacity: 1,
+        })
+        gsap.set("[data-parallax-slow]", { x: 0, y: 0 })
+        gsap.set([ballTrackRef.current, ballRef.current], {
+          x: 0,
+          y: 0,
+          rotation: 0,
+        })
+
+        scrollToItemRef.current = (index) => {
+          itemRefs.current[index]?.scrollIntoView({
+            behavior: "auto",
+            block: "center",
+          })
+        }
+
+        return
+      }
+
       const mm = gsap.matchMedia()
 
       // Both breakpoints run the same ball-travel + active-card machinery;
@@ -454,7 +500,11 @@ export function DemoComingSoon() {
 
       return () => mm.revert()
     },
-    { scope: sectionRef }
+    {
+      scope: sectionRef,
+      dependencies: [prefersReducedMotion],
+      revertOnUpdate: true,
+    }
   )
 
   return (
@@ -510,26 +560,30 @@ export function DemoComingSoon() {
               loops are squeezed flat, so the same fraction covers far more
               vertical ground. Mobile therefore draws a shorter span over the
               same scroll so the tip doesn't run ahead of the ball. */}
-          <SvgFollowScroll
-            target={pinRef}
-            strokeWidth={14}
-            from={0}
-            to={0.62}
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute -top-[50vh] -right-[22%] block h-[calc(100%+100vh)] w-[78%] opacity-25 mix-blend-multiply sm:w-[68%] lg:hidden"
-          />
-          <SvgFollowScroll
-            target={pinRef}
-            strokeWidth={14}
-            from={0}
-            to={0.95}
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute -top-[50vh] -right-[16%] hidden h-[calc(100%+100vh)] w-[58%] opacity-30 mix-blend-multiply lg:block"
-          />
+          {prefersReducedMotion ? null : (
+            <>
+              <SvgFollowScroll
+                target={pinRef}
+                strokeWidth={14}
+                from={0}
+                to={0.62}
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute -top-[50vh] -right-[22%] block h-[calc(100%+100vh)] w-[78%] opacity-25 mix-blend-multiply motion-reduce:hidden sm:w-[68%] lg:hidden"
+              />
+              <SvgFollowScroll
+                target={pinRef}
+                strokeWidth={14}
+                from={0}
+                to={0.95}
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute -top-[50vh] -right-[16%] hidden h-[calc(100%+100vh)] w-[58%] opacity-30 mix-blend-multiply motion-reduce:hidden lg:block"
+              />
+            </>
+          )}
 
           <div
             ref={ballTrackRef}
-            className="pointer-events-none absolute top-0 right-0 left-auto z-10 size-24 will-change-transform sm:size-32 lg:right-auto lg:left-[calc(50%+280px)] lg:size-48"
+            className="pointer-events-none absolute top-0 right-0 left-auto z-10 size-24 will-change-transform motion-reduce:top-[10vh] sm:size-32 lg:right-auto lg:left-[calc(50%+280px)] lg:size-48 lg:motion-reduce:top-[14vh]"
           >
             <div ref={ballRef} className="relative size-full">
               <BallViewer

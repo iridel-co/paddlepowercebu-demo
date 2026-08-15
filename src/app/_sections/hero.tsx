@@ -14,8 +14,9 @@ import { VariableWeightText } from "@/components/ui/variable-weight-text"
  *   ffmpeg -i public/herosection-video-scroll.mp4 -q:v 3 public/frames/frame-%03d.jpg
  *   node tools/optimize-assets.mjs
  *
- * The section is TRACK_VH tall; a sticky viewport-height stage inside it paints
- * the frame matching scroll progress, so the rally scrubs as the user scrolls.
+ * The section uses the `--hero-track` height; a sticky viewport-height stage
+ * inside it paints the frame matching scroll progress, so the rally scrubs as
+ * the user scrolls. Reduced-motion CSS collapses that track to one viewport.
  * The header is a fixed overlay, so the stage pins at y=0 and the content
  * column carries its own top padding to clear it.
  */
@@ -23,8 +24,6 @@ import { VariableWeightText } from "@/components/ui/variable-weight-text"
 const FRAME_COUNT = 55
 const FRAME_WIDTH = 1280
 const FRAME_HEIGHT = 720
-/** Section height as a multiple of the viewport (svh) — more = slower scrub. */
-const TRACK_VH = 240
 /** Per-frame easing toward the scroll target — lower = smoother, laggier. */
 const EASE = 0.12
 /** Below this frame delta the follower snaps and the rAF loop parks. */
@@ -331,8 +330,7 @@ export function DemoHero() {
       id="top"
       ref={sectionRef}
       data-slot="hero"
-      className="bg-pp-cream relative w-full"
-      style={{ height: `${TRACK_VH}svh` }}
+      className="pp-hero-track bg-pp-cream relative w-full"
     >
       <div className="sticky top-0 h-svh w-full overflow-hidden">
         <canvas

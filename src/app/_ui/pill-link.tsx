@@ -16,8 +16,8 @@ import { cn } from "@/lib/utils"
  */
 const VARIANTS = {
   lime: "bg-pp-lime text-pp-ink hover:bg-pp-ink hover:text-pp-cream",
-  /** Hero-only: the lifted lime that matches the headline accent, in white. */
-  "lime-light": "bg-pp-lime-light text-white hover:bg-white hover:text-pp-ink",
+  /** Hero-only: the lifted lime that matches the headline accent. */
+  "lime-light": "bg-pp-lime-light text-pp-ink hover:bg-white",
   ink: "bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink",
   outline:
     "border-pp-ink text-pp-ink hover:bg-pp-ink hover:text-pp-cream border-[1.5px]",

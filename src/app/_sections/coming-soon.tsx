@@ -47,10 +47,9 @@ const BallViewer = dynamic(
  * Partnerships is the one item that's live today, so it carries a lime
  * status tag regardless of which card is active.
  *
- * Cards are clickable: clicking one scrolls the page so that card lands in
- * the ball's active position. Partnerships is the exception — since it's
- * the one live channel, clicking it opens Instagram to start a conversation
- * instead of scrolling.
+ * Coming-soon cards are clickable: clicking one scrolls the page so that card
+ * lands in the ball's active position. Partnerships is the exception — its
+ * live Facebook and Instagram links are the card's only controls.
  *
  * Mobile runs the same choreography at a smaller scale: the ball rides a
  * narrow lane pinned to the right edge (the card list reserves that gutter as
@@ -142,7 +141,7 @@ function StatusPill({
   }
   return (
     <span
-      className={`${base} border-pp-ink/25 text-pp-charcoal/60 border border-dashed`}
+      className={`${base} border-pp-ink/25 text-pp-charcoal border border-dashed`}
     >
       {label}
     </span>
@@ -162,8 +161,6 @@ const DESKTOP_MOTION = {
   activeScale: 1.03,
   minScale: 0.85,
   scalePerStep: 0.05,
-  minOpacity: 0.32,
-  opacityPerStep: 0.16,
   // Fraction of a viewport the ball drifts *past* a pure center-hold across
   // the section. 0 = the desktop behaviour: the ball's travel matches scroll
   // exactly, so it sits still on screen while the cards slide past it.
@@ -179,8 +176,6 @@ const MOBILE_MOTION = {
   activeScale: 1.02,
   minScale: 0.93,
   scalePerStep: 0.025,
-  minOpacity: 0.5,
-  opacityPerStep: 0.12,
   // Mobile cards barely move, so a center-holding ball reads as frozen. It
   // enters a fifth of a viewport high and leaves a fifth low, which shows up
   // as a slow fall down the screen across the section.
@@ -202,7 +197,7 @@ export function DemoComingSoon() {
   const ballTrackRef = useRef<HTMLDivElement>(null)
   const ballRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
+  const itemRefs = useRef<(HTMLElement | null)[]>([])
   const iconRefs = useRef<(HTMLElement | null)[]>([])
   const extraCircleRefs = useRef<(HTMLElement | null)[]>([])
 
@@ -225,10 +220,6 @@ export function DemoComingSoon() {
   })
 
   const handleCardActivate = (index: number) => {
-    if (ITEMS[index].variant === "partnership") {
-      window.open(INSTAGRAM_URL, "_blank", "noopener,noreferrer")
-      return
-    }
     setOpenTipIndex(index)
     if (tipTimeoutRef.current) clearTimeout(tipTimeoutRef.current)
     tipTimeoutRef.current = setTimeout(
@@ -287,10 +278,6 @@ export function DemoComingSoon() {
               scale: isActive
                 ? motion.activeScale
                 : Math.max(motion.minScale, 1 - abs * motion.scalePerStep),
-              opacity: Math.max(
-                motion.minOpacity,
-                1 - abs * motion.opacityPerStep
-              ),
               duration: 0.6,
               ease: "power3.out",
               overwrite: "auto",
@@ -562,38 +549,21 @@ export function DemoComingSoon() {
               className="flex flex-col items-center gap-8 py-[10vh] pr-[88px] sm:gap-10 sm:pr-[124px] lg:gap-14 lg:py-[14vh] lg:pr-0"
             >
               {ITEMS.map((item, i) => {
+                const setItemRef = (element: HTMLElement | null) => {
+                  itemRefs.current[i] = element
+                }
                 const iconBadgeRef = (el: HTMLSpanElement | null) => {
                   iconRefs.current[i] = el
                 }
                 const badgeClass =
                   "flex size-12 shrink-0 items-center justify-center rounded-full bg-pp-ink text-pp-cream"
 
-                const cardBody = (
-                  <div
-                    key={item.title}
-                    ref={(el) => {
-                      itemRefs.current[i] = el
-                    }}
-                    className="w-full max-w-xl cursor-pointer will-change-transform backface-hidden"
-                    role="button"
-                    tabIndex={0}
-                    aria-label={
-                      item.variant === "partnership"
-                        ? `${item.title}: message us on Instagram`
-                        : `Jump to ${item.title}`
-                    }
-                    onClick={() => handleCardActivate(i)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault()
-                        handleCardActivate(i)
-                      }
-                    }}
-                  >
+                const cardContent = (
+                  <>
                     {item.variant === "membership" && (
                       <div className="bg-pp-ink text-pp-cream relative overflow-hidden rounded-3xl p-5 sm:p-6 lg:p-8">
                         <div className="mb-6 flex items-start justify-between">
-                          <span className="text-pp-cream/45 text-[11px] font-bold tracking-[0.16em] uppercase">
+                          <span className="text-pp-cream/60 text-[11px] font-bold tracking-[0.16em] uppercase">
                             Club Member
                           </span>
                           <span ref={iconBadgeRef} className={badgeClass}>
@@ -607,7 +577,7 @@ export function DemoComingSoon() {
                           {item.body}
                         </p>
                         <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
-                          <span className="text-pp-cream/35 font-mono text-[11px] tracking-[0.18em] sm:text-xs sm:tracking-[0.2em]">
+                          <span className="text-pp-cream/60 font-mono text-[11px] tracking-[0.18em] sm:text-xs sm:tracking-[0.2em]">
                             •••• •••• 4471
                           </span>
                           <StatusPill live={item.live} variant="outline" />
@@ -760,9 +730,14 @@ export function DemoComingSoon() {
                           {item.body}
                         </p>
                         <div className="border-pp-ink/15 flex flex-wrap items-center justify-between gap-x-3 gap-y-2.5 border-t border-dashed pt-3.5">
-                          <span className="bg-pp-lime text-pp-ink w-fit shrink-0 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-[0.14em] uppercase">
+                          <a
+                            href={FACEBOOK_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-pp-lime text-pp-ink focus-visible:ring-pp-ink focus-visible:ring-offset-pp-cream w-fit shrink-0 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-[0.14em] uppercase focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                          >
                             Contact Us
-                          </span>
+                          </a>
                           <div className="flex items-center gap-2">
                             <a
                               href={FACEBOOK_URL}
@@ -770,7 +745,7 @@ export function DemoComingSoon() {
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               aria-label="Paddle Power Cebu on Facebook"
-                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
+                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink focus-visible:ring-pp-lime focus-visible:ring-offset-pp-cream flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                             >
                               <FacebookIcon className="size-3.5" aria-hidden />
                             </a>
@@ -780,7 +755,7 @@ export function DemoComingSoon() {
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               aria-label="Paddle Power Cebu on Instagram"
-                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out"
+                              className="bg-pp-ink text-pp-cream hover:bg-pp-lime hover:text-pp-ink focus-visible:ring-pp-lime focus-visible:ring-offset-pp-cream flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                             >
                               <InstagramIcon className="size-3.5" aria-hidden />
                             </a>
@@ -788,10 +763,39 @@ export function DemoComingSoon() {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </>
                 )
 
-                if (item.variant === "partnership") return cardBody
+                if (item.variant === "partnership") {
+                  return (
+                    <article
+                      key={item.title}
+                      ref={setItemRef}
+                      className="w-full max-w-xl will-change-transform backface-hidden"
+                    >
+                      {cardContent}
+                    </article>
+                  )
+                }
+
+                const interactiveCard = (
+                  <div
+                    ref={setItemRef}
+                    className="focus-visible:outline-pp-ink w-full max-w-xl cursor-pointer rounded-3xl will-change-transform backface-hidden focus-visible:outline-2 focus-visible:outline-offset-4"
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${item.title}, coming soon. Activate to highlight this card.`}
+                    onClick={() => handleCardActivate(i)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        handleCardActivate(i)
+                      }
+                    }}
+                  >
+                    {cardContent}
+                  </div>
+                )
 
                 return (
                   <Tooltip
@@ -799,7 +803,7 @@ export function DemoComingSoon() {
                     open={openTipIndex === i}
                     onOpenChange={(open) => setOpenTipIndex(open ? i : null)}
                   >
-                    <TooltipTrigger asChild>{cardBody}</TooltipTrigger>
+                    <TooltipTrigger asChild>{interactiveCard}</TooltipTrigger>
                     <TooltipContent side="top">
                       Still coming soon!
                     </TooltipContent>

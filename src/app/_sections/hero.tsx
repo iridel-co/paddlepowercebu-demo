@@ -419,7 +419,7 @@ export function DemoHero() {
                 as cloth wrapping the panel's corner, not a floating label. */}
             <div className="absolute top-0 right-0 h-20 w-20 overflow-hidden">
               <div className="bg-pp-lime-light absolute top-[15px] -right-8 w-[130px] rotate-45 py-[3px] text-center shadow-[0_1px_3px_rgba(0,0,0,0.25)]">
-                <span className="text-[10px] font-bold tracking-[0.08em] text-white uppercase">
+                <span className="text-pp-ink text-[10px] font-bold tracking-[0.08em] uppercase">
                   Open 24/7
                 </span>
               </div>

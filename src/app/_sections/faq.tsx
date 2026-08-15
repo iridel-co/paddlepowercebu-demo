@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { motion } from "motion/react"
 import { MinusIcon, PlusIcon } from "lucide-react"
 
@@ -73,6 +73,24 @@ const TAIL_RIGHT =
 
 export function DemoFaq() {
   const [openId, setOpenId] = useState<string | null>(FAQS[0].id)
+  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+  const panelRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  const setOpenItem = (nextId: string | null) => {
+    if (openId && openId !== nextId) {
+      const activeElement = document.activeElement
+      const closingPanel = panelRefs.current[openId]
+
+      if (
+        activeElement instanceof HTMLElement &&
+        closingPanel?.contains(activeElement)
+      ) {
+        triggerRefs.current[openId]?.focus()
+      }
+    }
+
+    setOpenId(nextId)
+  }
 
   return (
     <section
@@ -111,27 +129,30 @@ export function DemoFaq() {
               <div
                 key={item.id}
                 onPointerEnter={(event) => {
-                  if (event.pointerType === "mouse") setOpenId(item.id)
+                  if (event.pointerType === "mouse") setOpenItem(item.id)
                 }}
                 className="flex flex-col"
               >
                 <button
+                  ref={(element) => {
+                    triggerRefs.current[item.id] = element
+                  }}
                   type="button"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${item.id}`}
-                  onClick={() => setOpenId(isOpen ? null : item.id)}
+                  onClick={() => setOpenItem(isOpen ? null : item.id)}
                   /* `:focus-visible` keeps this to keyboard focus — a tap
                      focuses the button too, and would re-open the race. */
                   onFocus={(event) => {
                     if (event.currentTarget.matches(":focus-visible"))
-                      setOpenId(item.id)
+                      setOpenItem(item.id)
                   }}
                   className="focus-visible:outline-pp-ink flex w-full items-center justify-start gap-x-4 rounded-2xl text-left focus-visible:outline-2 focus-visible:outline-offset-4"
                 >
                   <span
                     className={`rounded-[1.15rem] px-5 py-3 text-base font-bold transition-colors duration-300 lg:text-lg ${TAIL_BASE} ${TAIL_LEFT} ${
                       isOpen
-                        ? "bg-pp-lime-light before:border-l-pp-lime-light text-white"
+                        ? "bg-pp-lime-light before:border-l-pp-lime-light text-pp-ink"
                         : "bg-pp-ink-wash before:border-l-pp-ink-wash text-pp-charcoal"
                     }`}
                   >
@@ -139,7 +160,7 @@ export function DemoFaq() {
                   </span>
                   <span
                     className={`shrink-0 transition-colors duration-300 ${
-                      isOpen ? "text-pp-lime-light" : "text-pp-charcoal/50"
+                      isOpen ? "text-pp-ink" : "text-pp-charcoal"
                     }`}
                     aria-hidden
                   >
@@ -152,7 +173,12 @@ export function DemoFaq() {
                 </button>
 
                 <motion.div
+                  ref={(element) => {
+                    panelRefs.current[item.id] = element
+                  }}
                   id={`faq-answer-${item.id}`}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen}
                   initial={false}
                   animate={isOpen ? "open" : "collapsed"}
                   variants={{

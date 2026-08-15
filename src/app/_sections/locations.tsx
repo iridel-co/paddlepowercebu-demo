@@ -633,7 +633,7 @@ export function DemoLocations() {
                         className={
                           branch.comingSoon
                             ? "focus-visible:outline-pp-olive mt-1 w-full rounded-full border-2 border-dashed border-white/60 px-5 py-3.5 text-center text-[15px] font-bold text-white/80 transition-colors duration-200 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 lg:py-4 lg:text-base"
-                            : `bg-pp-lime-light focus-visible:outline-pp-olive mt-1 w-full rounded-full px-5 py-3.5 text-center text-[15px] font-bold text-white transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:py-4 lg:text-base ${bookActiveClass}`
+                            : `bg-pp-lime-light text-pp-ink focus-visible:outline-pp-olive mt-1 w-full rounded-full px-5 py-3.5 text-center text-[15px] font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:py-4 lg:text-base ${bookActiveClass}`
                         }
                       >
                         Book {branch.comingSoon ? talisay.name : branch.name}

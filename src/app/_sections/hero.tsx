@@ -392,6 +392,16 @@ export function DemoHero() {
                   startDelay={SECOND_LINE_DELAY}
                 />
               </span>
+              {/* Says what the place actually is, for anything reading the
+                  page rather than looking at it — a screen reader, or a
+                  search engine deciding what this page is about. The visible
+                  headline says none of it. Inside the h1 rather than beside
+                  it so it reads as one heading, and outside the animated
+                  spans so it can't affect the weight sweep. */}
+              <span className="sr-only">
+                {" "}
+                — premium indoor pickleball courts in Talisay, Cebu
+              </span>
             </h1>
           </div>
 

@@ -53,6 +53,7 @@ const CHANNELS: {
 
 const BRANCH = {
   name: "Talisay",
+  region: "Cebu",
   address: ["Maghaway Rd", "Talisay City, 6045 Cebu", "Philippines"],
   /* Plus Code, not a business-name search — the embed's `q=` param treats
      bare text as a fuzzy place search, and "Paddle Power" isn't a verified
@@ -195,8 +196,10 @@ export function DemoVisit() {
         <div className="lg:col-span-12">
           <div className="grid gap-8 lg:grid-cols-[320px_1fr] lg:items-center lg:gap-16">
             <div className="flex flex-col gap-5">
+              {/* Branch and province, not just the branch — "Talisay" alone
+                  means nothing to someone who hasn't already found us. */}
               <h3 className="text-pp-cream m-0 text-2xl font-black tracking-[-0.015em] lg:text-3xl">
-                {BRANCH.name}
+                {BRANCH.name}, {BRANCH.region}
               </h3>
               <address className="text-pp-cream/80 text-base leading-relaxed font-medium not-italic lg:text-lg">
                 {BRANCH.address.map((line) => (

@@ -14,22 +14,24 @@ the missing fields before writing any code.
 
 ## Skill Commands
 
-| Command               | Use when                                                        |
-| --------------------- | --------------------------------------------------------------- |
-| `/ui-design`          | Layout, spacing, typography, visual decisions, or mobile design |
-| `/frontend`           | Writing or modifying Next.js / React / TypeScript code          |
-| `/token-efficiency`   | Starting a new demo or batching multiple changes at once        |
-| `/mobile-responsive`  | Auditing or fixing responsiveness on existing components        |
+| Command              | Use when                                                        |
+| -------------------- | --------------------------------------------------------------- |
+| `/ui-design`         | Layout, spacing, typography, visual decisions, or mobile design |
+| `/frontend`          | Writing or modifying Next.js / React / TypeScript code          |
+| `/token-efficiency`  | Starting a new demo or batching multiple changes at once        |
+| `/mobile-responsive` | Auditing or fixing responsiveness on existing components        |
 
 ---
 
 ## Workflows
 
 ### PRD → Claude Code
+
 1. Read `PRD.md` — if fields are missing, ask before writing any code
 2. Follow **Starting a New Demo** below
 
 ### PRD → Claude Design → Claude Code
+
 1. Read `PRD.md`
 2. Use the Claude Design output as a **visual spec** — do not import its CSS
 3. Rebuild the design using the template's component system and Tailwind:
@@ -57,13 +59,13 @@ the missing fields before writing any code.
 
 Never edit `src/components/`. Only these paths change per client:
 
-| Path | What changes |
-| --- | --- |
-| `src/app/globals.css` | Brand token, radius, background warmth |
-| `src/app/layout.tsx` | Metadata title/description, font |
-| `src/app/page.tsx` | Section imports and composition — no content here |
+| Path                      | What changes                                           |
+| ------------------------- | ------------------------------------------------------ |
+| `src/app/globals.css`     | Brand token, radius, background warmth                 |
+| `src/app/layout.tsx`      | Metadata title/description, font                       |
+| `src/app/page.tsx`        | Section imports and composition — no content here      |
 | `src/app/_sections/*.tsx` | One file per section — all content inline in that file |
-| `public/images/` | Client assets — flat, no subfolders |
+| `public/images/`          | Client assets — flat, no subfolders                    |
 
 ### `src/app/globals.css`
 
@@ -144,8 +146,12 @@ export function DemoHero() {
       image={localClientImg("meridian-health", "hero.jpg")}
       imageAlt="Meridian dashboard showing patient flow metrics"
     >
-      <Button variant="brand" size="lg">See a live demo</Button>
-      <Button variant="outline" size="lg">View pricing</Button>
+      <Button variant="brand" size="lg">
+        See a live demo
+      </Button>
+      <Button variant="outline" size="lg">
+        View pricing
+      </Button>
     </HeroSection>
   )
 }
@@ -195,7 +201,7 @@ All externally sourced images go flat in `public/images/` — no subfolders.
 import { localClientImg, placeholderImg } from "@/lib/images"
 
 localClientImg("client-slug", "hero.jpg") // → /images/hero.jpg
-placeholderImg("unsplash-id", 1600, 700)  // dev only — remove before delivery
+placeholderImg("unsplash-id", 1600, 700) // dev only — remove before delivery
 ```
 
 Check `public/images/` before using placeholders.

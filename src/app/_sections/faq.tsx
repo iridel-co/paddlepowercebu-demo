@@ -7,6 +7,8 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
 
+import { FAQS } from "./faq.data"
+
 /* Talisay is the only bookable branch right now — the next branch is under
    construction. Button links to booking there, same as the Hero and Visit
    sections' booking CTAs. */
@@ -28,52 +30,6 @@ import { VariableWeightText } from "@/components/ui/variable-weight-text"
  * gate, touch runs on `click` alone: one open item at a time, and tapping a
  * new question swaps the open one for it.
  */
-
-const FAQS = [
-  {
-    id: "booking",
-    question: "How do I book a court?",
-    answer: "Book online through Onda. Pick your date and time.",
-    showBookingButtons: true,
-  },
-  {
-    id: "hours",
-    question: "What are your opening hours?",
-    answer:
-      "The Talisay branch is open 24/7, including weekends and holidays. A new branch is coming soon near you.",
-  },
-  {
-    id: "gear",
-    question: "Do I need my own paddle and balls?",
-    answer:
-      "No. Paddle rental and match-grade balls are available at the counter, so you can turn up with nothing but court shoes.",
-  },
-  {
-    id: "beginner",
-    question: "I've never played pickleball. Can I still come?",
-    answer:
-      "Absolutely, most of our players started here. Beginner-friendly open play runs through the week, and coaching clinics launch soon.",
-  },
-  {
-    id: "group",
-    question: "Can I reserve multiple courts for a group?",
-    answer:
-      "Yes. Birthdays, corporate nights, and league play can take several courts at once. Send us a message with your headcount and we'll map out the schedule.",
-  },
-  {
-    id: "branches",
-    question: "Do you only have one branch?",
-    answer:
-      "For now, yes, Talisay is our only branch. A new branch is opening soon, so keep an eye out for updates! 👀",
-  },
-  {
-    id: "partnerships",
-    question: "Are you open to partnerships?",
-    answer:
-      "Yes, we're always open to partnering up, especially for events. Reach out to us on our socials below and let's talk.",
-    showSocialLinks: true,
-  },
-]
 
 const SOCIALS = [
   { href: "https://instagram.com/paddlepowercebu", label: "Instagram" },

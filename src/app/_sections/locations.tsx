@@ -299,6 +299,14 @@ export function DemoLocations() {
               animationConfig={HEADLINE_ANIM}
               startDelay={SECOND_LINE_DELAY}
             />
+            {/* Names what is being booked and where, for anything reading
+                the heading rather than seeing the court under it. Sits
+                outside the animated spans so the sweep's character-count
+                delays above stay correct. */}
+            <span className="sr-only">
+              {" "}
+              — book a pickleball court in Talisay, Cebu
+            </span>
           </h2>
         </div>
 

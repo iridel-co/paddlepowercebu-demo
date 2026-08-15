@@ -1,3 +1,6 @@
+import { PAGE_METADATA_CONFIG } from "@/config/page-metadata.config"
+import { generatePageMetadata } from "@/lib/seo/generate-page-metadata"
+
 import { SiteHeader } from "./_sections/site-header"
 import { DemoHero } from "./_sections/hero"
 import { DemoLocations } from "./_sections/locations"
@@ -5,6 +8,8 @@ import { DemoComingSoon } from "./_sections/coming-soon"
 import { DemoFaq } from "./_sections/faq"
 import { DemoVisit } from "./_sections/visit"
 import { DemoFooter } from "./_sections/footer"
+
+export const metadata = generatePageMetadata(PAGE_METADATA_CONFIG.home)
 
 export default function Home() {
   return (

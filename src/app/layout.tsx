@@ -1,6 +1,8 @@
-import type { Metadata } from "next"
 import { Geist_Mono, Montserrat } from "next/font/google"
 import "./globals.css"
+import { JsonLd } from "@/lib/seo/json-ld"
+import { generateRootLayoutMetadata } from "@/lib/seo/generate-root-layout-metadata"
+import { buildFaqJsonLd, buildVenueJsonLd } from "@/lib/seo/structured-data"
 import { SmoothAnchorScroll } from "./_ui/smooth-anchor-scroll"
 
 /**
@@ -22,11 +24,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: "Paddle Power Cebu: Book a Court, 24/7",
-  description:
-    "Premium indoor pickleball in Talisay, Cebu. Open around the clock. Book in one tap.",
-}
+export const metadata = generateRootLayoutMetadata()
 
 export default function RootLayout({
   children,
@@ -40,6 +38,8 @@ export default function RootLayout({
       >
         <SmoothAnchorScroll />
         {children}
+        <JsonLd id="ld-venue" data={buildVenueJsonLd()} />
+        <JsonLd id="ld-faq" data={buildFaqJsonLd()} />
       </body>
     </html>
   )

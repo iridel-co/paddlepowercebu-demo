@@ -1,0 +1,309 @@
+<!doctype html>
+<!--
+  Open Graph card source — 1200x630.
+
+  Rasterise with headless Chrome from the repo root:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --allow-file-access-from-files \
+      --virtual-time-budget=6000 --hide-scrollbars \
+      --window-size=1200,630 \
+      --screenshot=public/og/index.png \
+      "file://$PWD/assets/og/index.html"
+
+  HTML rather than a flat SVG on purpose: it pulls the real wordmark and icon
+  straight out of public/images/, so a logo change regenerates the card
+  correctly instead of drifting from a traced copy. Montserrat is fetched from
+  Google Fonts at render time, so rasterising needs a network connection.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        font-family: "Montserrat", system-ui, sans-serif;
+        background: #111111;
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: #111111;
+      }
+
+      /* ── Court art, full-bleed on the right ─────────────────────── */
+      .court {
+        position: absolute;
+        inset: 0;
+        left: 540px;
+      }
+      .court svg {
+        display: block;
+        width: 660px;
+        height: 630px;
+      }
+
+      /* Lime rule dividing panel from court */
+      .rule {
+        position: absolute;
+        top: 0;
+        left: 540px;
+        width: 6px;
+        height: 630px;
+        background: #c8dc3a;
+        z-index: 3;
+      }
+
+      /* Panel edge casts onto the court for depth */
+      .edge-shadow {
+        position: absolute;
+        top: 0;
+        left: 546px;
+        width: 90px;
+        height: 630px;
+        background: linear-gradient(
+          to right,
+          rgba(17, 17, 17, 0.34),
+          rgba(17, 17, 17, 0)
+        );
+        z-index: 2;
+      }
+
+      /* ── Left panel ─────────────────────────────────────────────── */
+      .panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 540px;
+        height: 630px;
+        z-index: 4;
+        padding: 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #111111;
+      }
+
+      .mark {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .mark img.icon {
+        height: 40px;
+        width: auto;
+      }
+      .mark img.wordmark {
+        height: 25px;
+        width: auto;
+        /* Source SVG paths are black; force to cream for the ink panel. */
+        filter: brightness(0) invert(1);
+        opacity: 0.96;
+      }
+      .mark img.icon {
+        filter: brightness(0) invert(1);
+        opacity: 0.96;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-self: flex-start;
+        align-items: center;
+        background: #c8dc3a;
+        color: #111111;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 7px 14px;
+        border-radius: 999px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-weight: 900;
+        font-size: 58px;
+        line-height: 0.9;
+        letter-spacing: -0.035em;
+        text-transform: uppercase;
+        color: #f7f4ee;
+      }
+      h1 .lime {
+        color: #c8dc3a;
+      }
+
+      .strap {
+        margin-top: 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #e8d8c2;
+        font-weight: 500;
+        font-size: 17px;
+        letter-spacing: 0.005em;
+      }
+      .strap .dash {
+        width: 26px;
+        height: 3px;
+        background: #c8dc3a;
+        flex: none;
+      }
+
+      .foot {
+        color: rgba(232, 216, 194, 0.62);
+        font-weight: 700;
+        font-size: 11.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <!-- ── Overhead court ──────────────────────────────────────────
+           Same read as the hero's scroll-scrub frames: tan surround,
+           green service zones, cream non-volley kitchen straddling the
+           net, white tape. 1ft = 16px, so the whole 44x20 court reads at
+           once and the baselines bleed off both sides. -->
+      <div class="court">
+        <svg viewBox="0 0 660 630" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="mesh"
+              width="6"
+              height="6"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0 0H6M0 0V6"
+                stroke="rgba(247,244,238,0.42)"
+                stroke-width="0.9"
+              />
+            </pattern>
+            <linearGradient id="turf" x1="0" y1="0" x2="0.35" y2="1">
+              <stop offset="0%" stop-color="#2b5c35" />
+              <stop offset="100%" stop-color="#1f4527" />
+            </linearGradient>
+            <radialGradient id="light" cx="42%" cy="30%" r="82%">
+              <stop offset="0%" stop-color="#fff" stop-opacity="0.15" />
+              <stop offset="58%" stop-color="#fff" stop-opacity="0" />
+              <stop offset="100%" stop-color="#111" stop-opacity="0.26" />
+            </radialGradient>
+            <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+            <filter id="ballsoft" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
+
+          <!-- Surround -->
+          <rect width="660" height="630" fill="#e8d8c2" />
+
+          <!-- In-bounds, 44ft x 20ft at 1ft = 17px. The net sits right of
+               centre so one whole half reads — baseline, both service boxes,
+               kitchen line — with the far half bleeding off the edge. -->
+          <rect x="46" y="145" width="748" height="340" fill="url(#turf)" />
+
+          <!-- Non-volley zone: 7ft either side of the net -->
+          <rect x="301" y="145" width="238" height="340" fill="#f7f4ee" />
+
+          <!-- Net shadow, thrown down-right like the hero frames -->
+          <g filter="url(#soft)" opacity="0.22">
+            <rect x="426" y="141" width="11" height="352" fill="#0e1e12" />
+          </g>
+
+          <!-- Tape: sidelines, baseline, kitchen lines, centrelines -->
+          <g stroke="#f7f4ee" stroke-width="3.6" fill="none">
+            <path d="M46 146.8H794M46 483.2H794" />
+            <path d="M47.8 145V485" />
+            <path d="M301 145V485M539 145V485" />
+            <path d="M46 315H301M539 315H794" />
+          </g>
+
+          <!-- Net: posts, mesh, top tape -->
+          <g>
+            <rect x="416.5" y="132" width="7" height="366" fill="#2a2824" />
+            <rect x="416.5" y="132" width="7" height="366" fill="url(#mesh)" />
+            <rect x="414.5" y="132" width="11" height="5" fill="#f7f4ee" />
+            <rect x="413" y="127" width="14" height="8" rx="2" fill="#1c1a17" />
+            <rect x="413" y="495" width="14" height="8" rx="2" fill="#1c1a17" />
+          </g>
+
+          <!-- Ball mid-rally, near-side service box -->
+          <g>
+            <ellipse
+              cx="238"
+              cy="258"
+              rx="19"
+              ry="9.5"
+              fill="#0e1e12"
+              opacity="0.34"
+              filter="url(#ballsoft)"
+            />
+            <circle cx="228" cy="231" r="17" fill="#c8dc3a" />
+            <circle cx="228" cy="231" r="17" fill="url(#light)" />
+            <g fill="#8fa321" opacity="0.85">
+              <circle cx="221" cy="224" r="2.5" />
+              <circle cx="233" cy="226" r="2.3" />
+              <circle cx="219" cy="236" r="2.3" />
+              <circle cx="231" cy="238" r="2.5" />
+              <circle cx="238" cy="233" r="1.9" />
+              <circle cx="226" cy="243" r="2.1" />
+            </g>
+          </g>
+
+          <!-- Lighting pass over everything -->
+          <rect width="660" height="630" fill="url(#light)" />
+        </svg>
+      </div>
+
+      <div class="edge-shadow"></div>
+      <div class="rule"></div>
+
+      <div class="panel">
+        <div class="mark">
+          <img class="icon" src="../../public/images/paddle-power-icon.svg" />
+          <img
+            class="wordmark"
+            src="../../public/images/paddle-power-horizontal.svg"
+          />
+        </div>
+
+        <div>
+          <span class="badge">Open 24/7</span>
+          <h1>
+            Pickleball.<br />
+            In Cebu.<br />
+            <span class="lime">Anytime.</span>
+          </h1>
+          <div class="strap">
+            <span class="dash"></span>
+            <span>Premium indoor courts &middot; Talisay, Cebu</span>
+          </div>
+        </div>
+
+        <div class="foot">paddlepowercebu.com</div>
+      </div>
+    </div>
+  </body>
+</html>

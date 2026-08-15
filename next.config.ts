@@ -38,6 +38,26 @@ const nextConfig: NextConfig = {
         source: "/images/:path*",
         headers: [{ key: "Cache-Control", value: STATIC_ASSET_CACHE }],
       },
+      /**
+       * Baseline security headers. HSTS is not repeated here — Vercel already
+       * sends it. A full Content-Security-Policy is deliberately absent: Next
+       * boots from inline scripts, so a real CSP needs per-request nonces via
+       * middleware, and a half-strict one would break hydration for zero
+       * practical gain on a static demo.
+       */
+      {
+        source: "/:path*",
+        headers: [
+          /* Nothing here should ever be sniffed into a different type. */
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          /* Full URL to our own pages, origin only to Google Maps etc. */
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          /* Nobody else has a reason to iframe the site. */
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          /* No popups need a handle on our window, so isolate outright. */
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+        ],
+      },
     ]
   },
   /**

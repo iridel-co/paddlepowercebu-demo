@@ -1,6 +1,8 @@
 "use client"
 
+import { useRef } from "react"
 import Image from "next/image"
+import { useInView } from "motion/react"
 import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react"
 
 import { localClientImg } from "@/lib/images"
@@ -83,6 +85,16 @@ const FIRST_LINE = "See you"
 const SECOND_LINE_DELAY = (FIRST_LINE.length + 1) * HEADLINE_STAGGER
 
 export function DemoVisit() {
+  /* The Google embed sets ~20 third-party cookies the moment its iframe
+     loads. `loading="lazy"` doesn't help: Chrome's lazy threshold is generous
+     enough that the frame still fetches during initial load, thousands of
+     pixels below the fold. So the iframe isn't in the document at all until
+     the visitor is within a screen or two of it — the wrapper below holds its
+     exact box, and by the time it scrolls into view the map is there. Nobody
+     who never reaches this section hands Google a cookie. */
+  const mapRef = useRef<HTMLDivElement>(null)
+  const mapNear = useInView(mapRef, { once: true, margin: "1000px 0px" })
+
   return (
     <section
       id="visit"
@@ -221,13 +233,22 @@ export function DemoVisit() {
                 />
               </a>
             </div>
-            <iframe
-              src={mapEmbed(BRANCH.mapQuery)}
-              title={`Map of Paddle Power Cebu: ${BRANCH.name}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="border-pp-tan/15 h-60 w-full border filter-[grayscale(20%)_invert(92%)_hue-rotate(180deg)_brightness(95%)_contrast(90%)] lg:h-80"
-            />
+            {/* Border and box live on the wrapper so the frame's footprint is
+                identical before and after the map mounts. */}
+            <div
+              ref={mapRef}
+              className="border-pp-tan/15 h-60 w-full border lg:h-80"
+            >
+              {mapNear && (
+                <iframe
+                  src={mapEmbed(BRANCH.mapQuery)}
+                  title={`Map of Paddle Power Cebu: ${BRANCH.name}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full filter-[grayscale(20%)_invert(92%)_hue-rotate(180deg)_brightness(95%)_contrast(90%)]"
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

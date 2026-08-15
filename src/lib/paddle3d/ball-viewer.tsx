@@ -85,6 +85,19 @@ export function BallViewer({
     })
     ball.model.rotation.x = THREE.MathUtils.degToRad(tiltDegrees)
 
+    /* The perforation mask now bakes in slices after the model is built, and
+       a ball without its mask draws as a solid shell with `alphaTest` holes
+       missing. Hold the canvas invisible until the mask is real — no fade,
+       so once ready it appears exactly as it always has. The bake finishes
+       hundreds of pixels of scroll before the ball can enter the viewport. */
+    renderer.domElement.style.opacity = "0"
+    void Promise.resolve(
+      ball.model.userData.texturesComplete as Promise<void> | undefined
+    ).then(() => {
+      renderer.domElement.style.opacity = "1"
+      invalidate()
+    })
+
     let azimuth = initialAzimuth
     ball.setAzimuth(azimuth)
 

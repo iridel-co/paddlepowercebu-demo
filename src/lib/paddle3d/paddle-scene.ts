@@ -239,7 +239,11 @@ function applyMeasuredResponse(model: THREE.Group): boolean {
 
     material.roughness = measured.roughness
     material.envMapIntensity = measured.envMapIntensity
-    const average = averageMapColor(material.map)
+    /* A procedural map whose sliced bake hasn't landed yet is a blank canvas —
+       averaging it would read [0,0,0] and lock in a wrong colour factor
+       forever. Treat it like a fetch still in flight and poll again. */
+    const stillBaking = material.map?.userData?.pendingFill === true
+    const average = stillBaking ? null : averageMapColor(material.map)
     if (!average && material.map) pending = true
     if (average) {
       // Divide out what the map already carries so the product lands on the measurement.
@@ -290,10 +294,18 @@ export function createPaddleScene(
   let measureTimer: ReturnType<typeof setTimeout> | null = null
   let attempts = 0
   let notifiedReady = false
+  /* The procedural bakes run in slices after the model is built (see
+     cooperative.ts), so "measured maps applied" no longer implies "textures
+     finished". Ready waits for both — the viewers hold their canvases at
+     opacity 0 until this fires, which is what keeps a half-baked paddle or an
+     unperforated ball from ever being painted. */
+  const textureCompletions: Promise<unknown>[] = []
+  if (model.userData.texturesComplete)
+    textureCompletions.push(model.userData.texturesComplete)
   const notifyReady = () => {
     if (notifiedReady) return
     notifiedReady = true
-    options.onReady?.()
+    void Promise.all(textureCompletions).then(() => options.onReady?.())
   }
   const measure = () => {
     measureTimer = null
@@ -304,7 +316,6 @@ export function createPaddleScene(
     if ((attempts += 1) > 150) return notifyReady()
     measureTimer = setTimeout(measure, 100)
   }
-  measure()
   scene.add(model)
   scene.add(
     createReferenceLights(lighting === "neutral" ? "neutral" : "reference")
@@ -327,7 +338,14 @@ export function createPaddleScene(
     const ballKey = new THREE.PointLight(0xfffdf3, 0.035, 0.4, 2)
     ballKey.position.set(0.24, PADDLE_LENGTH * 0.9, 0.24)
     scene.add(ballKey)
+
+    if (ball.userData.texturesComplete)
+      textureCompletions.push(ball.userData.texturesComplete)
   }
+
+  /* Kicked off only after every completion the scene must wait on is
+     registered — `measure` can reach `notifyReady` on its first pass. */
+  measure()
 
   const camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.001, 10)
   camera.position.set(0, PADDLE_CENTER_Y, 2)

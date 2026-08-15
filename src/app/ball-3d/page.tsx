@@ -63,7 +63,16 @@ export default function BallReviewPage() {
       ball.setAzimuth(degrees)
       draw()
     }
-    window.__ballReady = true
+    /* The perforation mask bakes in slices now (see cooperative.ts), so the
+       ready flag the capture harness gates on can only flip once the mask is
+       actually in the texture — an early screenshot would get a ball with no
+       holes. */
+    void Promise.resolve(
+      ball.model.userData.texturesComplete as Promise<void> | undefined
+    ).then(() => {
+      draw()
+      window.__ballReady = true
+    })
 
     return () => {
       delete window.__ballReady

@@ -6,6 +6,8 @@ import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass.js"
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 
+import { runSliced } from "./cooperative"
+
 export type ProceduralModelOptions = {
   wireframe?: boolean
   castShadow?: boolean
@@ -13,6 +15,14 @@ export type ProceduralModelOptions = {
   textureSize?: number
   textureAnisotropy?: number
   qualityPriority?: "reference-fidelity" | "balanced"
+  /**
+   * Receives one promise per procedural texture set, resolving when its
+   * pixels are baked. The bakes run in main-thread slices (see
+   * `cooperative.ts`) so the model builder can return while they finish; the
+   * model aggregates these into `root.userData.texturesComplete` so scenes
+   * can hold their fade-in until every map is real.
+   */
+  onTextureWork?: (work: Promise<void>) => void
 }
 
 export type ProceduralModelRuntime = {
@@ -588,6 +598,15 @@ function makeProceduralTextureSet(
     !contexts.ao
   )
     return null
+  /* Narrowed copies: the completion below runs in an async closure, where the
+     null checks above no longer apply as far as the compiler can see. */
+  const paint = {
+    albedo: contexts.albedo,
+    roughness: contexts.roughness,
+    height: contexts.height,
+    normal: contexts.normal,
+    ao: contexts.ao,
+  }
   const images = {
     albedo: contexts.albedo.createImageData(size, size),
     roughness: contexts.roughness.createImageData(size, size),
@@ -616,7 +635,12 @@ function makeProceduralTextureSet(
     readLayerNumber(spec.colorVariation, ["heightCorrelation"], 0.3)
   )
   const colorGradient: ColorGradientSpec | undefined = spec.colorGradient
-  for (let y = 0; y < size; y += 1) {
+  /* The two passes below used to run inline, which is where the page's worst
+     long task came from: five of these sets bake at model build, ~200ms each.
+     The loop bodies are unchanged — `runSliced` just spreads the rows across
+     the task queue. Pass order still matters: the derivation pass reads the
+     completed height field. */
+  const fillRow = (y: number) => {
     const v = y / size
     for (let x = 0; x < size; x += 1) {
       const u = x / size
@@ -651,7 +675,7 @@ function makeProceduralTextureSet(
   const aoStrength = clamp01(
     readLayerNumber(spec.ambientOcclusion, ["cavityStrength", "strength"], 0.35)
   )
-  for (let y = 0; y < size; y += 1) {
+  const deriveRow = (y: number) => {
     const up = ((y - 1 + size) % size) * size
     const down = ((y + 1) % size) * size
     for (let x = 0; x < size; x += 1) {
@@ -698,12 +722,12 @@ function makeProceduralTextureSet(
       writePixel(images.ao.data, offset, ao * 255, ao * 255, ao * 255)
     }
   }
-  contexts.albedo.putImageData(images.albedo, 0, 0)
-  contexts.roughness.putImageData(images.roughness, 0, 0)
-  contexts.height.putImageData(images.height, 0, 0)
-  contexts.normal.putImageData(images.normal, 0, 0)
-  contexts.ao.putImageData(images.ao, 0, 0)
-  return {
+  /* Textures are created up front over still-blank canvases so the material
+     can be assembled synchronously. `pendingFill` on the albedo map tells
+     `applyMeasuredResponse` (paddle-scene.ts) not to average a canvas that
+     hasn't been painted yet — it keeps polling, which also keeps the viewers'
+     fade-in gate closed until the bake lands. */
+  const textureSet: ProceduralTextureSet = {
     albedo: createMapTexture(
       canvases.albedo,
       THREE.SRGBColorSpace,
@@ -731,6 +755,24 @@ function makeProceduralTextureSet(
     ao: createMapTexture(canvases.ao, THREE.NoColorSpace, spec, options),
     source: "procedural",
   }
+  textureSet.albedo.userData.pendingFill = true
+  const work = runSliced(size, fillRow)
+    .then(() => runSliced(size, deriveRow))
+    .then(() => {
+      paint.albedo.putImageData(images.albedo, 0, 0)
+      paint.roughness.putImageData(images.roughness, 0, 0)
+      paint.height.putImageData(images.height, 0, 0)
+      paint.normal.putImageData(images.normal, 0, 0)
+      paint.ao.putImageData(images.ao, 0, 0)
+      textureSet.albedo.userData.pendingFill = false
+      textureSet.albedo.needsUpdate = true
+      textureSet.roughness.needsUpdate = true
+      textureSet.height.needsUpdate = true
+      textureSet.normal.needsUpdate = true
+      textureSet.ao.needsUpdate = true
+    })
+  options.onTextureWork?.(work)
+  return textureSet
 }
 
 function createSculptMaterial(
@@ -979,8 +1021,20 @@ function remapExtrudeUvsToBounds(
 // Sculpt build pass: surface-pass
 // This factory is intentionally pass-gated. Finish browser screenshot review before unlocking deeper passes.
 export function createPaddlePowerPickleballPaddleModel(
-  options: ProceduralModelOptions = {}
+  callerOptions: ProceduralModelOptions = {}
 ): THREE.Group {
+  /* Every procedural texture set registers its sliced bake here, and the
+     aggregate rides on `userData` — which instance copies share by reference
+     (see instancing.ts) — so any scene holding a copy can await the same
+     completion. */
+  const textureWork: Promise<void>[] = []
+  const options: ProceduralModelOptions = {
+    ...callerOptions,
+    onTextureWork: (work) => {
+      textureWork.push(work)
+      callerOptions.onTextureWork?.(work)
+    },
+  }
   const root = new THREE.Group()
   root.name = "Paddle Power Pickleball Paddle"
   root.userData.reconstructionEvidence = {
@@ -7100,6 +7154,7 @@ export function createPaddlePowerPickleballPaddleModel(
   root.userData.actionReadiness = {
     note: "Use root.userData.sculptRuntime.nodes for transforms, sockets for attachments, colliders for physics proxies, and destructionGroups for breakable sets.",
   }
+  root.userData.texturesComplete = Promise.all(textureWork).then(() => {})
   return root
 }
 

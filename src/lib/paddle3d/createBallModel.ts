@@ -1,5 +1,7 @@
 import * as THREE from "three"
 
+import { runSliced } from "./cooperative"
+
 import type {
   ProceduralModelOptions,
   ProceduralModelRuntime,
@@ -68,7 +70,10 @@ function holeDirections(): THREE.Vector3[] {
  * DOM. The direction reconstruction below mirrors `THREE.SphereGeometry`'s own vertex/UV
  * mapping exactly — get it wrong and the cuts land off-axis from the bore walls.
  */
-function createPerforationAlphaMap(directions: THREE.Vector3[]): THREE.Texture {
+function createPerforationAlphaMap(
+  directions: THREE.Vector3[],
+  registerWork: (work: Promise<void>) => void
+): THREE.Texture {
   const width = 1024
   const height = 512
   const data = new Uint8Array(width * height * 4)
@@ -77,7 +82,13 @@ function createPerforationAlphaMap(directions: THREE.Vector3[]): THREE.Texture {
   const feather = (Math.PI / height) * 1.5
   const axes = directions.map((d) => [d.x, d.y, d.z] as const)
 
-  for (let y = 0; y < height; y += 1) {
+  /* 26 axis tests plus an acos per texel over half a million texels — the
+     single most expensive line item in the ball build, and it used to run
+     inline. The loop body is unchanged; `runSliced` spreads the rows across
+     the task queue and the texture re-uploads once the mask is complete.
+     Until then the data is all zeros — fully cut away by `alphaTest` — which
+     is why callers gate visibility on the registered promise. */
+  const fillRow = (y: number) => {
     // SphereGeometry uvs are (u, 1 - v), and theta runs from the +Y pole.
     const theta = ((y + 0.5) / height) * Math.PI
     const sinTheta = Math.sin(theta)
@@ -115,6 +126,11 @@ function createPerforationAlphaMap(directions: THREE.Vector3[]): THREE.Texture {
   texture.generateMipmaps = true
   texture.anisotropy = 8
   texture.needsUpdate = true
+  registerWork(
+    runSliced(height, fillRow).then(() => {
+      texture.needsUpdate = true
+    })
+  )
   return texture
 }
 
@@ -175,7 +191,14 @@ export function createPickleballModel(
   root.name = "Pickleball"
 
   const directions = holeDirections()
-  const alphaMap = createPerforationAlphaMap(directions)
+  /* Same contract as the paddle: sliced texture work registers here and the
+     aggregate rides on shared `userData`, so scenes and viewers can hold the
+     ball invisible until the perforation mask is real (a maskless ball with
+     `alphaTest` renders as no ball at all). */
+  const textureWork: Promise<void>[] = []
+  const alphaMap = createPerforationAlphaMap(directions, (work) =>
+    textureWork.push(work)
+  )
   const bumpMap = createGrainBumpMap()
 
   const shellMaterial = new THREE.MeshPhysicalMaterial({
@@ -341,6 +364,7 @@ export function createPickleballModel(
     ],
   }
 
+  root.userData.texturesComplete = Promise.all(textureWork).then(() => {})
   return root
 }
 

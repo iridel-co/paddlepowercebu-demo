@@ -26,22 +26,58 @@
  * that changes, this needs an explicit `NEXT_PUBLIC_BASE_URL` to keep working
  * in the browser.
  */
+
+const PRODUCTION_ORIGIN = "https://paddlepowercebu.com"
+
+/**
+ * Turns whatever was configured into a clean origin, or `null` if it can't be
+ * one.
+ *
+ * This exists because the build used to die here. `metadataBase` calls
+ * `new URL()` at module scope, so one malformed value took the whole build
+ * down with `TypeError: Invalid URL` — and the easiest way to write a
+ * malformed one is to paste a bare hostname, which is exactly the shape
+ * Vercel's own variables come in. A missing scheme is a typo, not a reason to
+ * fail a deploy, so we add it and move on.
+ *
+ * Returning the origin rather than the input also drops any trailing slash or
+ * stray path, so canonical and `og:url` are always built the same way.
+ */
+function normalizeOrigin(value: string | undefined): string | null {
+  const trimmed = value?.trim()
+  if (!trimmed) return null
+
+  const withScheme = /^https?:\/\//i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`
+
+  try {
+    const { origin, hostname } = new URL(withScheme)
+    /* `https://true` parses perfectly well. Insisting on a dotted host (or
+       localhost) catches a value that was never a URL, so we fall back to
+       somewhere real instead of publishing links nobody can follow. */
+    if (!hostname.includes(".") && hostname !== "localhost") return null
+    return origin
+  } catch {
+    return null
+  }
+}
+
 function resolveBaseUrl(): string {
-  const explicit = process.env.NEXT_PUBLIC_BASE_URL
-  if (explicit) return explicit
+  const candidates = [
+    process.env.NEXT_PUBLIC_BASE_URL,
+    process.env.VERCEL_ENV === "production"
+      ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+      : undefined,
+    process.env.VERCEL_URL,
+  ]
 
-  if (
-    process.env.VERCEL_ENV === "production" &&
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  for (const candidate of candidates) {
+    const origin = normalizeOrigin(candidate)
+    if (origin) return origin
   }
 
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`
-  }
-
-  return "https://paddlepowercebu.com"
+  return PRODUCTION_ORIGIN
 }
 
 export const ENV_CLIENT = {

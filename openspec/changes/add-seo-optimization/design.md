@@ -30,8 +30,9 @@ Constraints from the client:
   impression is a pasted link in a chat.
 - Machine-readable local-business facts so the venue can surface for "pickleball Cebu",
   "pickleball Talisay", and "pickleball court near me".
-- Indexing that is safe by construction: preview deploys must not be crawlable, and the
-  correctness of that must not depend on anyone remembering to flip a flag.
+- Indexing that is safe by construction: preview deploys must not be _indexable_, and the
+  correctness of that must not depend on anyone remembering to flip a flag. They stay
+  crawlable — see decision 2b.
 - A metadata layer that survives the site growing to multiple pages without rework.
 
 **Non-Goals:**
@@ -71,23 +72,54 @@ duplicating NAP data across four call sites is exactly how local SEO breaks.
 
 ### 2. Indexability derives from the resolved base URL, not a separate flag
 
+The base URL resolves from whatever the deployment can tell us, so a build is correct
+without anyone setting anything:
+
 ```
-  NEXT_PUBLIC_BASE_URL
-          │
-          ▼
-  isProductionHost = new URL(BASE_URL).host === "paddlepowercebu.com"
-          │
-          ├──► robots.ts        allow: "/"        vs.  disallow: "/"
-          ├──► layout metadata  index/follow      vs.  noindex/nofollow
-          └──► sitemap.ts       real routes       vs.  []
+  NEXT_PUBLIC_BASE_URL                          explicit override, always wins
+       └─ unset ─► VERCEL_ENV === "production"
+                     └─ yes ─► VERCEL_PROJECT_PRODUCTION_URL   project's own domain
+                     └─ no  ─► VERCEL_URL                      this deployment
+       └─ neither ─► https://paddlepowercebu.com               local dev
 ```
 
-One derived boolean, three consumers. A Vercel preview URL is not the production host, so it
-is `noindex` without anyone configuring anything; production sets the env var once and is
-indexable. There is no `SEO_ENABLED` toggle to forget.
+`VERCEL_ENV` is checked deliberately: `VERCEL_PROJECT_PRODUCTION_URL` is set on preview
+builds too, so using it unguarded would let every branch deploy claim to be production and
+invite Google in.
+
+Indexability then falls out of the host:
+
+```
+  IS_INDEXABLE = new URL(baseUrl).host === "paddlepowercebu.com"
+          │
+          ├──► layout metadata  index/follow   vs.  noindex/nofollow
+          ├──► sitemap.ts       real routes    vs.  []
+          └──► robots.ts        sitemap: …     vs.  no sitemap advertised
+                                (crawling itself is allowed either way — see 2b)
+```
+
+One derived boolean. While the site lives on `paddlepowercebu-demo.vercel.app` it is
+crawlable but `noindex`; attaching the real domain to the project flips it to indexable with
+no code change and no env var.
 
 **Alternative considered:** an explicit `NEXT_PUBLIC_ALLOW_INDEXING` flag. Rejected — it is
 one more thing that can be wrong, and its correct value is always derivable from the URL.
+
+### 2b. Non-indexable does not mean non-crawlable
+
+A first pass had `robots.ts` return `Disallow: /` whenever `IS_INDEXABLE` was false. That is
+wrong twice over, and deploying the demo made both concrete:
+
+- A crawler blocked from fetching the page never reads the `noindex` in its head. A URL
+  linked from anywhere can still surface as a bare result, and there is no directive
+  available to suppress it. Blocking the fetch is what _prevents_ de-indexing.
+- Link-preview scrapers honour `robots.txt` too. A blanket disallow means the Open Graph
+  card silently stops working in exactly the situation it exists for — sharing a demo link
+  for review.
+
+So `robots.txt` allows crawling in every environment, `/api/` aside, and search exclusion is
+carried by the `noindex` header on the page. Off-production builds additionally advertise no
+sitemap, so there is nothing inviting discovery.
 
 ### 3. Structured data emits only verified facts
 

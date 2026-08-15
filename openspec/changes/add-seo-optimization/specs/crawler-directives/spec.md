@@ -17,7 +17,8 @@ sitemap contents SHALL all derive from that single condition, with no independen
 
 - **WHEN** the resolved base URL host is a preview or any non-production host
 - **THEN** the page emits `noindex, nofollow`
-- **AND** `robots.txt` disallows `/`
+- **AND** `robots.txt` still allows crawling, so the `noindex` can be read
+- **AND** `robots.txt` advertises no sitemap
 - **AND** the sitemap is empty
 
 #### Scenario: Nobody configured anything
@@ -25,10 +26,22 @@ sitemap contents SHALL all derive from that single condition, with no independen
 - **WHEN** a preview deploy is created with no SEO-specific configuration
 - **THEN** it is non-indexable by default without any manual step
 
-### Requirement: Renderable assets are never blocked
+### Requirement: Crawlers are never blocked from fetching
 
-`robots.txt` SHALL NOT disallow Next.js build output. Only server API paths may be
-disallowed.
+`robots.txt` SHALL NOT disallow the site itself or Next.js build output, in any environment.
+Only server API paths may be disallowed. Excluding a page from search SHALL be done with a
+`noindex` directive in its head, never by blocking the fetch.
+
+#### Scenario: A non-indexable build is crawled
+
+- **WHEN** a crawler requests a page on a non-production host
+- **THEN** `robots.txt` permits the request
+- **AND** the crawler receives the page and its `noindex` directive
+
+#### Scenario: A link preview is generated while under review
+
+- **WHEN** a social or chat client fetches a non-production deploy to build a card
+- **THEN** it is not blocked, and reads the Open Graph tags
 
 #### Scenario: Googlebot renders the page
 

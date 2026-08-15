@@ -20,8 +20,8 @@
 
 ## 3. Crawler directives
 
-- [x] 3.1 Create `src/app/robots.ts` allowing `/` and disallowing `/api/*` when indexable, disallowing `/` when not
-- [x] 3.2 Confirm `/_next/*` is not disallowed in any branch
+- [x] 3.1 Create `src/app/robots.ts` allowing `/` and disallowing `/api/*` in every environment; off-production builds advertise no sitemap
+- [x] 3.2 Confirm neither `/_next/*` nor `/` is disallowed in any branch
 - [x] 3.3 Point `robots.txt` at the absolute sitemap URL on the resolved base URL
 - [x] 3.4 Create `src/app/sitemap.ts` returning the homepage when indexable and an empty array otherwise
 - [x] 3.5 Confirm neither `/ball-3d` nor `/paddle-3d` appears in the sitemap
@@ -63,7 +63,7 @@
 - [ ] 7.3 Validate both JSON-LD blocks in the Google Rich Results Test against the preview URL
 - [ ] 7.4 Validate the OG card in the Facebook Sharing Debugger and the X Card Validator
 - [ ] 7.5 Paste the preview URL into iMessage and Slack and confirm the card renders
-- [x] 7.6 Confirm a preview deploy serves `noindex` and a `Disallow: /` robots.txt
+- [x] 7.6 Confirm a preview deploy serves `noindex` while robots.txt still allows crawling
 - [x] 7.7 Confirm setting `NEXT_PUBLIC_BASE_URL` to the production domain flips robots, sitemap, and meta robots together
 
 ## 8. Launch and follow-up

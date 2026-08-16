@@ -598,7 +598,7 @@ export function DemoLocations() {
                             : "bg-pp-lime-light text-pp-ink hover:bg-pp-cream focus-visible:outline-pp-olive mt-1 flex h-14 w-full items-center justify-center rounded-full px-5 text-center text-[15px] font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-base"
                         }
                       >
-                        Book {branch.comingSoon ? talisay.name : branch.name}
+                        Book {branch.comingSoon ? "Mandaue" : branch.name}
                       </a>
                       <a
                         href={

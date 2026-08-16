@@ -40,7 +40,7 @@ export function DemoFooter() {
                 alt="Paddle Power Cebu"
                 width={913}
                 height={95}
-                className="h-6 w-auto"
+                className="aspect-[913/95] h-6 w-auto"
               />
             </a>
             <p className="text-pp-tan/70 m-0 max-w-[38ch] text-sm leading-relaxed font-medium">
@@ -84,20 +84,12 @@ export function DemoFooter() {
           </div>
         </div>
 
-        <div className="border-pp-tan/15 flex flex-col gap-3 border-t pt-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-pp-tan/15 border-t pt-7">
           {/* /60 is the floor that clears WCAG AA (4.5:1) on the ink surface —
               /50 measured 4.15 and /40 measured 3.08 in an axe audit. */}
           <p className="text-pp-tan/60 m-0 text-xs font-medium">
             © {new Date().getFullYear()} Paddle Power Cebu. All rights reserved.
           </p>
-          <a
-            href="https://iridel.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-pp-tan/60 hover:text-pp-tan/85 text-xs transition-colors"
-          >
-            Demo by iridel.com
-          </a>
         </div>
       </div>
     </footer>

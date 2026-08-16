@@ -1,6 +1,6 @@
 {
-  "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
-  "zonesDir": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones",
+  "sourceImage": "/Users/chanchan/Programming/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
+  "zonesDir": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones",
   "detailInventory": {
     "scanMethod": "grid-3x3",
     "targetMinDetails": 6,
@@ -22,7 +22,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c0.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c0.png",
         "confidence": 0.0
       },
       {
@@ -42,7 +42,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c1.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c1.png",
         "confidence": 0.0
       },
       {
@@ -62,7 +62,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c2.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r0c2.png",
         "confidence": 0.0
       },
       {
@@ -82,7 +82,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c0.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c0.png",
         "confidence": 0.0
       },
       {
@@ -102,7 +102,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c1.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c1.png",
         "confidence": 0.0
       },
       {
@@ -122,7 +122,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c2.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r1c2.png",
         "confidence": 0.0
       },
       {
@@ -142,7 +142,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c0.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c0.png",
         "confidence": 0.0
       },
       {
@@ -162,7 +162,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c1.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c1.png",
         "confidence": 0.0
       },
       {
@@ -182,7 +182,7 @@
           "type": "",
           "ref": ""
         },
-        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c2.png",
+        "evidenceRef": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/zones/zone-r2c2.png",
         "confidence": 0.0
       }
     ]

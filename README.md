@@ -5,7 +5,7 @@ open 24/7 at Maghaway Rd, Talisay, with an AS Fortuna branch marked "under const
 until it launches. Booking is handled externally by Onda Fit — this site's job is to get
 a visitor to the Talisay booking link in one tap.
 
-Built by Iridel from `PRD.md` and the Claude Design files. **This is a demo build being
+Built from `PRD.md` and the Claude Design files. **This build is being
 handed off — it is not production-ready. See [Handoff status](#handoff-status).**
 
 **Stack:** Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS 4 · TypeScript ·
@@ -69,7 +69,7 @@ Named out loud so nothing is assumed complete:
   (~1.3 MB) and the page mounts two WebGL viewers — see [Performance notes](#performance-notes).
 - **Accessibility audit.** `eslint-plugin-jsx-a11y` passes; no screen-reader or contrast
   pass has been run. The lime-on-white pill CTA in particular should be checked.
-- **Content pass.** All body copy is Iridel-written from the PRD and unreviewed by the client.
+- **Content pass.** All body copy is written by us from the PRD and unreviewed by the client.
 - **Deploy.** No hosting configured. Currently a Vercel preview only.
 
 ---
@@ -87,7 +87,7 @@ src/app/
   _ui/              Per-client UI, deliberately outside the shared library
   ball-3d/          Internal 3D review route (see below)
   paddle-3d/        Internal 3D review route (see below)
-src/components/     Shared Iridel template library — do not edit per-client
+src/components/     Shared template library — do not edit per-client
 src/lib/paddle3d/   Procedural Three.js paddle + ball, built in code
 tools/              Asset + render scripts (not part of the build)
 docs/               3D pipeline notes and reference renders
@@ -116,7 +116,7 @@ offset has to move with them.**
 
 - **Copy lives in the section that renders it.** No shared `content.ts` / constants file.
   `page.tsx` holds imports and composition, nothing else.
-- **Never edit `src/components/`** — that's the shared Iridel template library, used by
+- **Never edit `src/components/`** — that's the shared template library, used by
   other demos. Client-specific UI goes in `src/app/_ui/`.
 - Tailwind only. No CSS modules, no inline styles unless a value is computed at runtime.
 - TypeScript everywhere; no plain JS.
@@ -225,12 +225,11 @@ Mobile was verified by hand at 390px and 768px — no horizontal overflow.
 
 ## Cleaning up the template
 
-This repo started from the Iridel demo template and still carries some of its scaffolding.
+This repo started from a shared demo template and still carries some of its scaffolding.
 Worth clearing during the production pass:
 
-- `package.json` still says `"name": "iridel-demo-template"` with the template description.
 - [next.config.ts](next.config.ts) whitelists `assets.nanobanana.io` and
   `images.unsplash.com` as remote image hosts. **Neither is used** — both entries should go.
 - `src/lib/images.ts` exports `placeholderImg`; verify `grep -r "placeholderImg" src/`
   comes back empty (it currently does).
-- `CLAUDE.md` and `PRD.md` are Iridel working documents, not deliverables.
+- `CLAUDE.md` and `PRD.md` are internal working documents, not deliverables.

@@ -5,7 +5,7 @@ The site is one route (`/`) with anchor-based navigation (`#top`, `#locations`, 
 `#faq`, `#visit`, `#contact`) plus two three.js review harnesses at `/ball-3d` and
 `/paddle-3d` that exist to feed `tools/export-renders.mjs` and are not marketing pages.
 
-The reference implementation is `iridel-co/LRA#53` (merged, branch `feat/seo`), which
+The reference implementation is a previously merged SEO change (branch `feat/seo`), which
 established a config → generator → route pattern across five files. It is a good skeleton and
 we adopt its shape, but it has three defects we do not carry over (see Decisions).
 

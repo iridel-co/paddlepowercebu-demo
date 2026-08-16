@@ -392,7 +392,7 @@
       "confidence": 0.0,
       "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
     },
-    "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
+    "sourceImage": "/Users/chanchan/Programming/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
     "resolvedUnknowns": [
       "thickness-axis [undetermined-from-reference, needs a side/edge-on view]: total core thickness and edge-guard bead depth. Resolved from category convention (16 mm head, guard 2 mm proud per side) and flagged as inference, not measurement.",
       "rear-face-graphic [hidden, needs a rear view]: whether the rear face carries the same decal. Assumed mirrored; many paddles print a different rear. Lowest-confidence visual claim (0.35).",
@@ -3801,8 +3801,8 @@
         }
       ],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-blockout.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-blockout.png",
       "cameraView": "front",
       "notes": "Turntable at 0/90/180/270 non-degenerate at a 0.10 collapse ratio, which sits under the paddle's own measured edge-on/front area ratio of 0.138 and above a zero-thickness billboard's 0.07.",
       "aiVisionNotes": "Side-by-side at matched framing. Every macro identity feature the blockout is responsible for is present and correctly proportioned. The two things that read wrong are out of this pass's scope or are material-pass work: the collar ring stack is a meso component the pass gate has not unlocked, and the decal's embossed bevel comes from the reference-extracted height/normal maps applied at full strength."
@@ -3859,8 +3859,8 @@
         }
       ],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-structural.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-structural.png",
       "cameraView": "front",
       "notes": "",
       "aiVisionNotes": "The collar stack is the identity feature this pass was responsible for and it lands: three rings, correct order, correct heights, increasing radii into the throat. The regression this pass caught is worth naming — repetitionSystems in this schema means 'emit N InstancedMesh copies', and it was read literally, putting 271 tenth-of-a-metre boxes wearing the face material under the grip. Neither observed repetition is an instanced cluster, so both moved to observedRepetitions."
@@ -3921,8 +3921,8 @@
         }
       ],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-form.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-form.png",
       "cameraView": "front",
       "notes": "",
       "aiVisionNotes": "All five identity systems now read. The remaining gap is not resolvable from this reference: thickness and the rear graphic are inferences, and both are recorded as such rather than presented as measured."
@@ -3975,8 +3975,8 @@
         }
       ],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
       "cameraView": "front",
       "notes": "",
       "aiVisionNotes": "Neutral-light capture at 0 and 45 degrees confirms the material read does not depend on the reference key. The honest limit: five of seven materials are measured-albedo-plus-authored-response, marked utility-tier, because a 12-28 px band cannot yield a PBR map that is evidence rather than noise."
@@ -3996,8 +3996,8 @@
       },
       "featureReviews": [],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
       "cameraView": "front",
       "notes": "",
       "aiVisionNotes": "The whole-frame comparison sheet hid this: the gold ring is under 0.1% of the frame, so both the global score and the k-means colour check averaged it away. Measuring on the component's own visible footprint is what exposed it."
@@ -4050,8 +4050,8 @@
         }
       ],
       "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
-      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+      "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
+      "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
       "cameraView": "front",
       "notes": "",
       "aiVisionNotes": "Tier 1's per-part colour check compares each recipe against five k-means clusters over the WHOLE frame, which its own docstring calls a coarse proxy. It kept the grip at 21-22 while the grip's own visible footprint improved to 8/255, and the two metrics moved in opposite directions across the last three iterations. Following the microscope rule — measure a component on its visible footprint — the material state is good; the whole-frame proxy is not passing and that is stated rather than tuned around."
@@ -4122,19 +4122,19 @@
         "reduce faceSkin normal strength and bump amplitude so the decal reads as print, not relief"
       ],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-45.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-90.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-180.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-270.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-45.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-90.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-180.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-270.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
       ],
-      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png",
+      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png",
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-blockout.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-blockout.png",
         "cameraView": "front",
         "notes": "Turntable at 0/90/180/270 non-degenerate at a 0.10 collapse ratio, which sits under the paddle's own measured edge-on/front area ratio of 0.138 and above a zero-thickness billboard's 0.07.",
         "aiVisionNotes": "Side-by-side at matched framing. Every macro identity feature the blockout is responsible for is present and correctly proportioned. The two things that read wrong are out of this pass's scope or are material-pass work: the collar ring stack is a meso component the pass gate has not unlocked, and the decal's embossed bevel comes from the reference-extracted height/normal maps applied at full strength."
@@ -4210,18 +4210,18 @@
         "flatten the face sheen gradient by softening the key or raising fill"
       ],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-45.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-90.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-180.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-270.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/parts.json",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-45.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-90.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-180.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-270.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/parts.json",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
       ],
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-structural.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/structural-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-structural.png",
         "cameraView": "front",
         "notes": "",
         "aiVisionNotes": "The collar stack is the identity feature this pass was responsible for and it lands: three rings, correct order, correct heights, increasing radii into the throat. The regression this pass caught is worth naming — repetitionSystems in this schema means 'emit N InstancedMesh copies', and it was read literally, putting 271 tenth-of-a-metre boxes wearing the face material under the grip. Neither observed repetition is an instanced cluster, so both moved to observedRepetitions."
@@ -4297,17 +4297,17 @@
       "specFixes": [],
       "codeFixes": [],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-45.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-90.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-180.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-270.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-45.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-90.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-180.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-270.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/meshes.json"
       ],
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-form.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/form-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-form.png",
         "cameraView": "front",
         "notes": "",
         "aiVisionNotes": "All five identity systems now read. The remaining gap is not resolvable from this reference: thickness and the rear graphic are inferences, and both are recorded as such rather than presented as measured."
@@ -4375,14 +4375,14 @@
       "specFixes": [],
       "codeFixes": [],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-45.png"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-45.png"
       ],
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
         "cameraView": "front",
         "notes": "",
         "aiVisionNotes": "Neutral-light capture at 0 and 45 degrees confirms the material read does not depend on the reference key. The honest limit: five of seven materials are measured-albedo-plus-authored-response, marked utility-tier, because a 12-28 px band cannot yield a PBR map that is evidence rather than noise."
@@ -4417,15 +4417,15 @@
         "renormalise the grip albedo map so its median returns to the measured rgb(228,211,182)"
       ],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
         "gold crop median rgb(58,51,35) vs reference rgb(182,153,92)",
         "grip crop median rgb(197,188,171) vs reference rgb(228,211,182)"
       ],
       "outOfSequence": true,
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
         "cameraView": "front",
         "notes": "",
         "aiVisionNotes": "The whole-frame comparison sheet hid this: the gold ring is under 0.1% of the frame, so both the global score and the k-means colour check averaged it away. Measuring on the component's own visible footprint is what exposed it."
@@ -4493,17 +4493,17 @@
       "specFixes": [],
       "codeFixes": [],
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-45.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/material-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/neutral-45.png",
         "per-footprint measurement docs/paddle3d/measure.py",
         "per-cluster measurement docs/paddle3d/cluster.py"
       ],
       "outOfSequence": true,
       "visualEvidence": {
         "referenceScreenshot": "public/images/paddlepower-paddle.jpeg",
-        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
-        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
+        "renderScreenshot": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/surface-0.png",
+        "comparisonImage": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/cmp-material.png",
         "cameraView": "front",
         "notes": "",
         "aiVisionNotes": "Tier 1's per-part colour check compares each recipe against five k-means clusters over the WHOLE frame, which its own docstring calls a coarse proxy. It kept the grip at 21-22 while the grip's own visible footprint improved to 8/255, and the two metrics moved in opposite directions across the last three iterations. Following the microscope rule — measure a component on its visible footprint — the material state is good; the whole-frame proxy is not passing and that is stated rather than tuned around."
@@ -4709,7 +4709,7 @@
       "maskWarnings": [],
       "renderHash": "0ecabac3cdd1c103",
       "passId": "blockout",
-      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png"
+      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png"
     },
     {
       "passed": true,
@@ -4770,7 +4770,7 @@
       "maskWarnings": [],
       "renderHash": "87cd2b40b9290f9c",
       "passId": "blockout",
-      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png"
+      "mapStrippedRender": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/renders/blockout-clay-0.png"
     },
     {
       "passed": true,

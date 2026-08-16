@@ -16,7 +16,7 @@ indexed alongside the real page.
 
 - **Config layer** — a single `APP_CONFIG` holding the verified business facts (name,
   description, address, Plus Code geo, hours, socials) and an `ENV_CLIENT` module resolving
-  `NEXT_PUBLIC_BASE_URL`. Adapted from the pattern merged in `iridel-co/LRA#53`.
+  `NEXT_PUBLIC_BASE_URL`. Adapted from a previously merged SEO implementation.
 - **Metadata generators** — `generateRootLayoutMetadata()` producing `metadataBase`, title
   template, description, canonical, Open Graph, Twitter `summary_large_image`, icons, and
   `robots` directives; plus `generatePageMetadata()` for future routes.

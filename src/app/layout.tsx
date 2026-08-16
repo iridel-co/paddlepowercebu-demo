@@ -17,6 +17,12 @@ import { SmoothAnchorScroll } from "./_ui/smooth-anchor-scroll"
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
+  /* `optional` keeps the webfont off the LCP critical path: if it isn't
+     ready within the browser's short block window it stays on the fallback
+     for that pageview instead of swapping in late. The font is preloaded,
+     so on any normal connection it always makes the window — only very slow
+     first visits render the metric-matched fallback. */
+  display: "optional",
 })
 
 const geistMono = Geist_Mono({

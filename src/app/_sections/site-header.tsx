@@ -92,38 +92,26 @@ export function SiteHeader() {
       height={175}
       priority
       className={cn(
-        "h-8 w-auto transition-opacity duration-260 ease-out",
+        /* Explicit aspect ratio so the box is reserved before the SVG
+           arrives — with only `w-auto` the width computes to 0 until load
+           and the first paint reflows everything (CLS). */
+        "aspect-[462/175] h-8 w-auto transition-opacity duration-260 ease-out",
         (variant === "black") === stuck ? "opacity-100" : "opacity-0"
       )}
     />
   )
 
   const logo = (
-    <div className="flex items-center gap-3">
-      <a
-        href="#top"
-        className="relative flex items-center"
-        aria-label="Paddle Power Cebu"
-      >
-        {logoMark("black")}
-        <span aria-hidden className="absolute inset-0 flex items-center">
-          {logoMark("white")}
-        </span>
-      </a>
-      <a
-        href="https://iridel.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          "hidden text-xs font-medium tracking-[0.01em] whitespace-nowrap transition-colors duration-260 ease-out sm:inline-block",
-          stuck
-            ? "text-pp-ink/50 hover:text-pp-ink"
-            : "text-white/70 hover:text-white"
-        )}
-      >
-        Demo by iridel.com
-      </a>
-    </div>
+    <a
+      href="#top"
+      className="relative flex items-center"
+      aria-label="Paddle Power Cebu"
+    >
+      {logoMark("black")}
+      <span aria-hidden className="absolute inset-0 flex items-center">
+        {logoMark("white")}
+      </span>
+    </a>
   )
 
   /** Same logo, forced dark — the mobile drawer is always cream. */
@@ -137,7 +125,7 @@ export function SiteHeader() {
         alt="Paddle Power Cebu"
         width={462}
         height={175}
-        className="h-8 w-auto"
+        className="aspect-[462/175] h-8 w-auto"
       />
     </a>
   )
@@ -225,15 +213,6 @@ export function SiteHeader() {
                   Book a Court
                 </PillLink>
               </SheetClose>
-
-              <a
-                href="https://iridel.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-pp-ink/50 hover:text-pp-ink text-xs font-medium transition-colors"
-              >
-                Demo by iridel.com
-              </a>
             </SheetContent>
           </Sheet>
         </>

@@ -10,7 +10,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
       ],
       "reason": "",
       "command": "Read grimoire/intake/image_analysis.md and analyze {reference}"
@@ -20,7 +20,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
       ],
       "reason": "",
       "command": "Read grimoire/intake/validation_rubric.md and record a pass, conditional, or reject verdict for {reference}"
@@ -30,7 +30,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/analysis.md"
       ],
       "reason": "",
       "command": "python3 forge/stage1_intake/check_reference_admission.py {reference}"
@@ -40,7 +40,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/assessment.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/assessment.json"
       ],
       "reason": "",
       "command": "Run the local evidence search before authoring the assessment"
@@ -50,7 +50,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/assessment.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/assessment.json"
       ],
       "reason": "",
       "command": "python3 forge/stage2_spec/new_pre_spec_assessment.py \"<name>\" --image {reference} --out assessment.json"
@@ -60,7 +60,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/detail-inventory.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/detail-inventory.json"
       ],
       "reason": "",
       "command": "python3 forge/stage1_intake/build_detail_inventory.py {reference} --mode grid-3x3 --out-dir detail-inventory --out di.json"
@@ -70,7 +70,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/projection.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/projection.json"
       ],
       "reason": "",
       "command": "Record whether projection is required; if required run solve_camera_pose.py, delight_albedo.py, and bake_projected_texture.py, otherwise skip with a reason"
@@ -80,7 +80,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
       ],
       "reason": "",
       "command": "python3 forge/stage2_spec/new_sculpt_spec.py \"<name>\" --image {reference} --assessment assessment.json --out object-sculpt-spec.json"
@@ -90,7 +90,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
       ],
       "reason": "",
       "command": "python3 forge/stage1_intake/material_region_analysis.py --manifest material-regions.json --out-dir material-evidence --out material-analysis.json (single-crop route: analyze_texture.py + extract_pbr_evidence.py per verified crop; otherwise skip with a reason)"
@@ -100,7 +100,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
       ],
       "reason": "",
       "command": "python3 forge/stage2_spec/apply_material_analysis.py {spec} material-analysis.json --in-place"
@@ -110,7 +110,7 @@
       "scope": "setup",
       "status": "done",
       "evidence": [
-        "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
+        "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
       ],
       "reason": "",
       "command": "python3 forge/stage2_spec/validate_sculpt_spec.py {spec} --strict-quality"
@@ -205,8 +205,8 @@
     "maxTotal": 6
   },
   "artifacts": {
-    "reference": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
-    "spec": "/private/tmp/claude-501/-Users-chanchan-Programming-Iridel-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
+    "reference": "/Users/chanchan/Programming/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
+    "spec": "/private/tmp/claude-501/-Users-chanchan-Programming-demos-paddlepowercebu-demo/a5de2cde-7389-4101-bae3-a8fe1933c15f/scratchpad/i2t/object-sculpt-spec.json"
   },
   "passHistory": [],
   "reviewCursor": 6,

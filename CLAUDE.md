@@ -1,11 +1,11 @@
-# Iridel Demo Template — Claude Instructions
+# Demo Template — Claude Instructions
 
-> **Precedence:** `/Programming/Iridel/CLAUDE.md` governs process, stack, and core
+> **Precedence:** the parent workspace `CLAUDE.md` governs process, stack, and core
 > directives. This file supplements it — on any conflict, the parent wins.
 
 ## Purpose
 
-Iridel's base for all client demos. Ship polished, client-ready demos fast.
+Base template for all client demos. Ship polished, client-ready demos fast.
 
 At the start of every demo session, read `PRD.md` first. If it isn't filled in, ask for
 the missing fields before writing any code.

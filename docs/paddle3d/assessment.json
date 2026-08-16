@@ -1,6 +1,6 @@
 {
   "targetName": "Paddle Power Pickleball Paddle",
-  "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
+  "sourceImage": "/Users/chanchan/Programming/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg",
   "preSpecAssessment": {
     "objectClass": {
       "primaryType": "pickleball paddle (elongated face)",
@@ -357,7 +357,7 @@
       "confidence": 0.0,
       "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
     },
-    "sourceImage": "/Users/chanchan/Programming/Iridel/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg"
+    "sourceImage": "/Users/chanchan/Programming/demos/paddlepowercebu-demo/public/images/paddlepower-paddle.jpeg"
   },
   "qualityContract": {
     "qualityBar": "moderate",

@@ -1,8 +1,8 @@
 {
-  "name": "iridel-demo-template",
+  "name": "paddlepowercebu",
   "version": "1.2.0",
   "private": true,
-  "description": "Iridel Demo Template - A warm, minimal, accessibility-first Next.js starter with unified design system",
+  "description": "Paddle Power Cebu - premium indoor pickleball courts in Cebu",
   "scripts": {
     "predev": "PID=$(lsof -t .next/dev/lock 2>/dev/null); [ -n \"$PID\" ] && kill $PID 2>/dev/null && sleep 1; exit 0",
     "dev": "next dev --turbopack",

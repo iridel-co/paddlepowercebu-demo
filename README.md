@@ -1,4 +1,4 @@
-# Paddle Power Cebu — Demo Site
+# Paddle Power Cebu
 
 Single-page teaser site for Paddle Power Cebu: premium indoor pickleball courts,
 open 24/7 at Maghaway Rd, Talisay, with an AS Fortuna branch marked "under construction"

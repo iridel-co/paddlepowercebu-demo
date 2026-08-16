@@ -141,8 +141,9 @@ hero rally in `public/frames/`.
 > the official logo package from the client. Replace all of them, keeping the same filenames,
 > and re-check the header, footer and Visit lockups at every breakpoint afterwards.
 >
-> The same applies to the favicon — `src/app/favicon.ico` is still the Next.js default and
-> needs the real mark plus a full icon set.
+> The same applies to the icon set — `src/app/favicon.ico` (16/32/48), `public/favicon.svg`
+> and `public/apple-touch-icon.png` are all rendered from the placeholder mark, so they need
+> regenerating once the official artwork lands.
 
 `court-render.webp` and `court-seelction-2k.png` (aerial shot, used in Locations — note
 the filename typo, kept as-is to match what's already referenced in code) are real.

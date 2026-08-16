@@ -4,6 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import { MenuIcon } from "lucide-react"
 import { Navbar } from "@/components/common/navbar"
+import { BOOKING_URL } from "@/config/links.config"
 import {
   Sheet,
   SheetContent,
@@ -166,7 +167,9 @@ export function SiteHeader() {
       end={
         <>
           <PillLink
-            href="#locations"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             variant={stuck ? "outline" : "white"}
             className="hidden duration-260 sm:inline-flex"
           >
@@ -209,7 +212,13 @@ export function SiteHeader() {
               </nav>
 
               <SheetClose asChild>
-                <PillLink href="#locations" variant="lime" className="w-full">
+                <PillLink
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="lime"
+                  className="w-full"
+                >
                   Book a Court
                 </PillLink>
               </SheetClose>

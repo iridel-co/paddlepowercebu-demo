@@ -79,10 +79,13 @@ export function buildVenueJsonLd(): JsonLdObject {
       },
     ],
     sameAs: [APP_CONFIG.socials.instagram],
+    potentialAction: {
+      "@type": "ReserveAction",
+      target: APP_CONFIG.bookingUrl,
+    },
     /*
      * Absent on purpose until the client confirms them — see the TODOs in
-     * `app.config.ts`. `telephone`, `email`, and a `potentialAction` booking
-     * link all belong here once they exist.
+     * `app.config.ts`. `telephone` and `email` belong here once they exist.
      */
   })
 }

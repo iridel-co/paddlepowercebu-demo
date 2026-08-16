@@ -6,6 +6,7 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
+import { BOOKING_URL } from "@/config/links.config"
 
 import { FAQS } from "./faq.data"
 
@@ -204,7 +205,13 @@ export function DemoFaq() {
                             asChild
                             className="bg-pp-lime-light hover:bg-pp-lime-light/90 min-h-11"
                           >
-                            <a href="#locations">Book Talisay on Onda</a>
+                            <a
+                              href={BOOKING_URL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Book Talisay on Onda
+                            </a>
                           </Button>
                         </div>
                       )}

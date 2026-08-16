@@ -1,4 +1,5 @@
 import { ENV_CLIENT } from "@/config/env.client"
+import { BOOKING_URL } from "@/config/links.config"
 
 /**
  * Every fact this site publishes about the business, in one place.
@@ -44,6 +45,7 @@ export const APP_CONFIG = {
   longName: "Paddle Power Cebu: Book a Court, 24/7",
   description:
     "Premium indoor pickleball in Talisay, Cebu. Open around the clock. Book in one tap.",
+  bookingUrl: BOOKING_URL,
 
   branch: TALISAY,
 
@@ -67,7 +69,6 @@ export const APP_CONFIG = {
    * Still waiting on the client, and left absent rather than stubbed:
    * TODO: telephone
    * TODO: email
-   * TODO: Ondafit booking URL (unlocks a booking action in search results)
    * TODO: court count
    */
 } as const

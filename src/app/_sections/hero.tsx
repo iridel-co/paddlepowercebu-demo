@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import ReactDOM from "react-dom"
+import { BOOKING_URL } from "@/config/links.config"
 import { PillLink } from "../_ui/pill-link"
 import { LiquidGlass } from "../_ui/liquid-glass"
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
@@ -439,9 +440,10 @@ export function DemoHero() {
               {/* Centered while the panel spans the full width of a phone;
                   left-aligned once it shrinks to the corner card. */}
               <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-                {/* TODO: replace with client's Ondafit booking link — Talisay */}
                 <PillLink
-                  href="#locations"
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="lime-light"
                   className="min-h-11 px-[18px] py-2.5 text-[13px]"
                 >

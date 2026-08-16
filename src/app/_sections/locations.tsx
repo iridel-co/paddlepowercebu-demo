@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useInView, useReducedMotion } from "motion/react"
 
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
+import { BOOKING_URL } from "@/config/links.config"
 import { localClientImg } from "@/lib/images"
 import { useMediaQuery } from "@/lib/use-media-query"
 
@@ -52,7 +53,7 @@ const BRANCHES = [
     side: "",
     meta: "A new court is coming soon, opening near you. Book Talisay for now.",
     comingSoon: true,
-    bookingUrl: "#",
+    bookingUrl: BOOKING_URL,
     mapsUrl: "#",
   },
   {
@@ -60,8 +61,7 @@ const BRANCHES = [
     side: "Now Open",
     meta: "24/7 · Indoor · Maghaway Rd, Talisay",
     comingSoon: false,
-    /* TODO: replace with client's Ondafit booking link — Talisay */
-    bookingUrl: "#",
+    bookingUrl: BOOKING_URL,
     mapsUrl: mapDirections("7R59+W5 Talisay, Cebu"),
   },
 ] as const
@@ -276,7 +276,7 @@ export function DemoLocations() {
               sweep reads as a single pass across the whole line. */}
           <h2
             ref={headingRef}
-            className="text-pp-ink m-0 max-w-[18ch] leading-[0.95] tracking-[-0.025em] text-balance uppercase lg:max-w-none lg:whitespace-nowrap"
+            className="text-pp-ink m-0 max-w-[18ch] leading-[0.95] tracking-[-0.025em] text-balance uppercase sm:max-w-none sm:whitespace-nowrap"
             style={{ fontSize: "clamp(44px, 6.2vw, 84px)" }}
             onPointerEnter={() => setReplaySignal((n) => n + 1)}
           >
@@ -325,10 +325,14 @@ export function DemoLocations() {
           onMouseLeave={leaveCourt}
           className="perspective-[1600px] perspective-origin-center"
         >
-          <div
-            className={`@container-[size] relative aspect-10/18 w-full transition-transform duration-500 ease-out transform-3d motion-reduce:transition-none sm:aspect-square lg:aspect-44/20 ${tilt}`}
-          >
-            {/* Playing surface: the client's own court photo *is* the court now —
+          <div className="@container-[size] relative aspect-10/18 w-full sm:aspect-square lg:aspect-44/20">
+            {/* Only the decorative court layer tilts. The booking cards are
+                siblings below, so their link hitboxes never move away from a
+                stationary pointer while this transition is running. */}
+            <div
+              className={`pointer-events-none absolute inset-0 transition-transform duration-500 ease-out transform-3d motion-reduce:transition-none ${tilt}`}
+            >
+              {/* Playing surface: the client's own court photo *is* the court now —
                 it already carries the lines, the kitchen, the net. The 2k
                 export (2560×1440) is the untouched Canva canvas, so
                 `object-contain` centres it purely by its own dimensions
@@ -354,26 +358,26 @@ export function DemoLocations() {
                 the swap the image would still fit to the narrow portrait
                 width first and rotate that undersized result, instead of
                 filling the space. */}
-            <div className="absolute top-1/2 left-1/2 h-[100cqw] w-[100cqh] -translate-x-1/2 -translate-y-1/2 scale-150 -rotate-90 sm:h-full sm:w-full sm:rotate-0">
-              <Image
-                src={localClientImg(
-                  "paddle-power-cebu",
-                  "court-seelction-2k.png"
-                )}
-                alt="Aerial view of the Paddle Power Cebu pickleball court"
-                fill
-                className="object-contain object-center"
-                /* `scale-150` on the wrapper renders these pixels 1.5x larger
+              <div className="absolute top-1/2 left-1/2 h-[100cqw] w-[100cqh] -translate-x-1/2 -translate-y-1/2 scale-150 -rotate-90 sm:h-full sm:w-full sm:rotate-0">
+                <Image
+                  src={localClientImg(
+                    "paddle-power-cebu",
+                    "court-seelction-2k.png"
+                  )}
+                  alt="Aerial view of the Paddle Power Cebu pickleball court"
+                  fill
+                  className="object-contain object-center"
+                  /* `scale-150` on the wrapper renders these pixels 1.5x larger
                    on screen than the box they're requested for, so the
                    request has to ask for 1.5x the resolution too — otherwise
                    the browser is just stretching an already-rasterised image
                    and it reads as blurry. */
-                sizes="(min-width: 1024px) 1800px, 150vw"
-                priority={false}
-              />
-            </div>
+                  sizes="(min-width: 1024px) 1800px, 150vw"
+                  priority={false}
+                />
+              </div>
 
-            {/* Two independent paddles, one per branch, parked at its own
+              {/* Two independent paddles, one per branch, parked at its own
                 corner — not one viewer sliding between corners. Both mount
                 once and scale/lift in when their own side is hovered.
                 Hidden state is `scale-0`, never `opacity-0`: an alpha canvas
@@ -388,25 +392,25 @@ export function DemoLocations() {
                 than a single one sliding across. No corner whitespace to
                 spare on the vertical mobile layout, and no hover there
                 either. */}
-            {showCourtProps &&
-              BRANCHES.map((branch) => {
-                const isActive = hovered === branch.name
-                const sign = branch.name === "Talisay" ? -1 : 1
-                const anchor =
-                  branch.name === "Talisay"
-                    ? "bottom-0 right-0 translate-x-[26%]"
-                    : "bottom-0 left-0 -translate-x-[26%]"
-                return (
-                  <div
-                    key={branch.name}
-                    aria-hidden
-                    className={`pointer-events-none absolute z-35 hidden h-[104%] w-[58%] translate-y-[34%] lg:block ${anchor}`}
-                  >
+              {showCourtProps &&
+                BRANCHES.map((branch) => {
+                  const isActive = hovered === branch.name
+                  const sign = branch.name === "Talisay" ? -1 : 1
+                  const anchor =
+                    branch.name === "Talisay"
+                      ? "bottom-0 right-0 translate-x-[26%]"
+                      : "bottom-0 left-0 -translate-x-[26%]"
+                  return (
                     <div
-                      className="h-full w-full origin-bottom transition-[opacity,transform] duration-500 ease-out"
-                      style={{
-                        opacity: isActive ? 1 : 0,
-                        /* Entrance reads as coming in from this branch's own
+                      key={branch.name}
+                      aria-hidden
+                      className={`pointer-events-none absolute z-35 hidden h-[104%] w-[58%] translate-y-[34%] lg:block ${anchor}`}
+                    >
+                      <div
+                        className="h-full w-full origin-bottom transition-[opacity,transform] duration-500 ease-out"
+                        style={{
+                          opacity: isActive ? 1 : 0,
+                          /* Entrance reads as coming in from this branch's own
                            edge of the screen — left for the new branch, right
                            for Talisay — rather than rising from the bottom
                            centre. `sign` is +1 for the left side and -1 for
@@ -416,12 +420,12 @@ export function DemoLocations() {
                            directions — Talisay counter-clockwise, the new
                            branch clockwise — like two hands mirrored across
                            the net rather than both spinning the same way. */
-                        transform: isActive
-                          ? "translateX(0) translateY(0) rotate(0deg)"
-                          : `translateX(${-sign * 90}%) translateY(1rem) rotate(${-78 * sign}deg)`,
-                      }}
-                    >
-                      {/* The swing angle, straight from the design's
+                          transform: isActive
+                            ? "translateX(0) translateY(0) rotate(0deg)"
+                            : `translateX(${-sign * 90}%) translateY(1rem) rotate(${-78 * sign}deg)`,
+                        }}
+                      >
+                        {/* The swing angle, straight from the design's
                           `lAngle`/`rAngle`: 4° while `swinging` (the
                           snap-open on entry), easing to 24° once it settles
                           into the ready stance — leaning toward the net.
@@ -435,36 +439,36 @@ export function DemoLocations() {
                           `transform`. No baked-in ball here — the ball is
                           its own independently-animated element below,
                           driven by the same state machine. */}
-                      <div
-                        className="h-full w-full transition-transform duration-500 ease-out motion-reduce:transition-none"
-                        style={{
-                          transform: isActive
-                            ? `rotate(${(swinging === branch.name ? 4 : 24) * sign}deg)`
-                            : "rotate(0deg)",
-                        }}
-                      >
-                        <div className="h-full w-full animate-[pp-paddle-float_6.5s_ease-in-out_infinite] motion-reduce:animate-none">
-                          <PaddleViewer
-                            className="h-full w-full"
-                            spinSpeed={0}
-                            swayDegrees={9}
-                            swayPeriod={8}
-                            interactive={false}
-                            initialAzimuth={-22}
-                            /* Both paddles stay mounted so the second hover is
+                        <div
+                          className="h-full w-full transition-transform duration-500 ease-out motion-reduce:transition-none"
+                          style={{
+                            transform: isActive
+                              ? `rotate(${(swinging === branch.name ? 4 : 24) * sign}deg)`
+                              : "rotate(0deg)",
+                          }}
+                        >
+                          <div className="h-full w-full animate-[pp-paddle-float_6.5s_ease-in-out_infinite] motion-reduce:animate-none">
+                            <PaddleViewer
+                              className="h-full w-full"
+                              spinSpeed={0}
+                              swayDegrees={9}
+                              swayPeriod={8}
+                              interactive={false}
+                              initialAzimuth={-22}
+                              /* Both paddles stay mounted so the second hover is
                                instant, but the one at rest sits at opacity 0 —
                                it has no business swaying and redrawing at
                                60fps while it's invisible. */
-                            paused={!isActive}
-                          />
+                              paused={!isActive}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
 
-            {/* The ball: rests against the paddle face — same corner, same
+              {/* The ball: rests against the paddle face — same corner, same
                 slide — rather than floating free in the kitchen, so the two
                 read as one object at rest. A side switch sends it straight
                 across the net in a single ping-pong slide (no separate lift
@@ -472,20 +476,20 @@ export function DemoLocations() {
                 (z-30) and the paddle (z-35) mid-slide, though it still sits
                 under the cards (z-50), which stay topmost throughout.
                 Desktop only, same gate as the paddle. */}
-            {showCourtProps && (
-              <div
-                aria-hidden
-                className="pointer-events-none absolute z-40 hidden aspect-square w-[9%] -translate-x-1/2 -translate-y-1/2 transition-[left,top] duration-520 ease-out lg:block"
-                style={{
-                  left: hovered === "Talisay" ? "72%" : "28%",
-                  top: hovered ? "55%" : "72%",
-                }}
-              >
+              {showCourtProps && (
                 <div
-                  className="h-full w-full transition-opacity duration-300 ease-out"
-                  style={{ opacity: hovered ? 1 : 0 }}
+                  aria-hidden
+                  className="pointer-events-none absolute z-40 hidden aspect-square w-[9%] -translate-x-1/2 -translate-y-1/2 transition-[left,top] duration-520 ease-out lg:block"
+                  style={{
+                    left: hovered === "Talisay" ? "72%" : "28%",
+                    top: hovered ? "55%" : "72%",
+                  }}
                 >
-                  {/* While crossing, a single up/down arc timed to the 520ms
+                  <div
+                    className="h-full w-full transition-opacity duration-300 ease-out"
+                    style={{ opacity: hovered ? 1 : 0 }}
+                  >
+                    {/* While crossing, a single up/down arc timed to the 520ms
                       slide above. At rest against the paddle face, the same
                       idle bob the paddle uses, on its own shorter period
                       since the ball is the smaller object. Never both at
@@ -495,30 +499,31 @@ export function DemoLocations() {
                       "up" direction would rotate along with the hundreds of
                       degrees of spin, twisting a clean vertical arc into a
                       wobble. */}
-                  <div
-                    className={
-                      arcing
-                        ? "h-full w-full animate-[pp-ball-arc_520ms_ease-in-out_1] motion-reduce:animate-none"
-                        : "h-full w-full animate-[pp-paddle-float_4s_ease-in-out_infinite] motion-reduce:animate-none"
-                    }
-                  >
                     <div
-                      className="h-full w-full transition-transform duration-520 ease-linear"
-                      style={{ transform: `rotate(${spin}deg)` }}
+                      className={
+                        arcing
+                          ? "h-full w-full animate-[pp-ball-arc_520ms_ease-in-out_1] motion-reduce:animate-none"
+                          : "h-full w-full animate-[pp-paddle-float_4s_ease-in-out_infinite] motion-reduce:animate-none"
+                      }
                     >
-                      <BallViewer
-                        className="h-full w-full"
-                        spinSpeed={30}
-                        interactive={false}
-                        /* Only in play while a side is hovered; the rest of the
+                      <div
+                        className="h-full w-full transition-transform duration-520 ease-linear"
+                        style={{ transform: `rotate(${spin}deg)` }}
+                      >
+                        <BallViewer
+                          className="h-full w-full"
+                          spinSpeed={30}
+                          interactive={false}
+                          /* Only in play while a side is hovered; the rest of the
                            time it is a transparent canvas spinning for nobody. */
-                        paused={!hovered}
-                      />
+                          paused={!hovered}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Two halves, two links. Each card sits in the centre of its own
               service box (34.1% in from the baseline), so the pair reads as
@@ -530,55 +535,16 @@ export function DemoLocations() {
               /* The new court has nothing bookable yet, so its card redirects
                  to the one branch that is: Talisay. */
               const talisay = BRANCHES.find((b) => b.name === "Talisay")!
-              /* Lifted clear of the paddle's now-larger corner whenever its
-                 own side is hovered — `lg`-only, since the paddle only ever
-                 shows there. The unprefixed `-translate-y-1/2` still centres
-                 the card at every width below `lg`, and below `lg` no
-                 `lg:-translate-y-*` class is present to win the cascade. */
               const isActive = hovered === branch.name
-              const cardLift = isActive
-                ? "lg:-translate-y-[95%]"
-                : "lg:-translate-y-1/2"
-              /* Driven off `isActive`, not `group-hover`: this card is a
-                 child of the 3D-tilted court, so its real screen-space hit
-                 box shifts under a stationary cursor the instant the tilt
-                 engages — the same feedback loop `handleCourtPointerMove`'s
-                 comment above already diagnosed for `hovered`, just landing
-                 on genuine CSS `:hover` here instead of the JS state. Real
-                 `:hover` flickering on/off reads as the card jittering
-                 in and out of its zoomed size right as the pointer reaches
-                 it. `hovered` comes from the untransformed wrapper's rect,
-                 so it doesn't have that problem. */
-              const cardScale = isActive ? "scale-100" : "scale-[0.95]"
-              const bookActiveClass = isActive ? "bg-pp-cream text-pp-ink" : ""
               return (
-                /* A <div>, not an <a> — the card now holds two real links
-                   (Book, Get directions) and a link can't nest inside a
-                   link. Whole-half click-to-book is kept as a progressive
-                   enhancement on top of the Book link itself, which stays
-                   the real, keyboard-reachable target. */
+                /* The half is a passive visual region. Book and directions
+                   remain the only interactive targets inside the card. */
                 <div
                   key={branch.name}
-                  onClick={() => {
-                    window.location.href = branch.comingSoon
-                      ? talisay.bookingUrl
-                      : branch.bookingUrl
-                  }}
-                  /* Focus tilts the court too, so keyboard users get the same
-                   read of which side they're about to book. Mouse hover is
-                   driven by `handleCourtPointerMove` on the untransformed
-                   wrapper instead of `onPointerEnter` here — these halves are
-                   children of the tilted court, so their own rendered bounds
-                   shift as soon as a hover applies the tilt, which used to
-                   flip `hovered` back and forth near the net and read as
-                   jitter. Focus doesn't have that feedback problem (it only
-                   moves on an actual keyboard action, not a geometry change),
-                   so it still targets the half directly. React's
-                   onFocus/onBlur bubble like focusin/focusout, so focusing
-                   either link inside still fires these. */
+                  data-location-card
                   onFocus={() => enterSide(branch.name)}
                   onBlur={() => leaveCourt()}
-                  className={`group absolute right-0 left-0 z-50 h-1/2 cursor-pointer lg:h-full lg:w-1/2 ${half.frame}`}
+                  className={`absolute right-0 left-0 z-50 h-1/2 lg:h-full lg:w-1/2 ${half.frame}`}
                 >
                   {/* Same liquid-glass panel the hero's copy block rides —
                     tinted darker than the hero's `bg-black/25`, since this one
@@ -586,28 +552,23 @@ export function DemoLocations() {
                     copy inside has to stay legible against it. 20px radius is
                     the hero's.
 
-                    The card is laid out at its *hovered* size and scaled
-                    down at rest, never up — text is rasterised once at layout
-                    size, so scaling past 1 blurs it while scaling back to 1
-                    lands pixel-exact. Scale composes with the centring and
-                    lift translate: Tailwind keeps `scale` and `translate` on
-                    separate properties, so the card grows about its own centre
-                    and stays pinned to its service box, only rising straight
-                    up out of the paddle's way. */}
+                    The panel remains position-stable while the decorative
+                    court and paddle choreography plays behind it. */}
                   <LiquidGlass
                     borderRadius="20px"
                     blurIntensity="xl"
                     shadowIntensity="xs"
                     glowIntensity="sm"
-                    className={`absolute left-1/2 z-20 w-[290px] max-w-[90%] origin-center -translate-x-1/2 -translate-y-1/2 bg-black/65 ${cardLift} ${cardScale} transition-[scale,translate] duration-300 ease-out motion-reduce:transition-none lg:w-[306px] xl:w-[348px] ${half.card}`}
+                    className={`absolute left-1/2 z-20 w-[290px] max-w-[90%] origin-center -translate-x-1/2 -translate-y-1/2 bg-black/65 transition-[scale] duration-300 ease-out motion-reduce:transition-none lg:w-[306px] xl:w-[348px] ${isActive ? "scale-100" : "scale-[0.95]"} ${half.card}`}
                   >
                     <div className="flex flex-col items-center gap-3 px-6 py-[18px] sm:gap-3.5 sm:py-5 lg:gap-4 lg:px-7 lg:py-6">
-                      {branch.side && (
-                        <span className="text-pp-lime-light text-[11px] font-bold tracking-[0.18em] uppercase lg:text-xs">
-                          {branch.side}
-                        </span>
-                      )}
-                      <span className="text-center text-[25px] leading-tight font-black tracking-[-0.015em] text-white lg:text-[29px]">
+                      <span
+                        aria-hidden={!branch.side}
+                        className={`text-pp-lime-light text-[11px] font-bold tracking-[0.18em] uppercase lg:text-xs ${branch.side ? "" : "invisible"}`}
+                      >
+                        {branch.side || "Status"}
+                      </span>
+                      <span className="flex min-h-[2.5em] items-center text-center text-[25px] leading-tight font-black tracking-[-0.015em] text-white lg:text-[29px]">
                         {branch.comingSoon ? (
                           <>
                             New Court
@@ -618,7 +579,7 @@ export function DemoLocations() {
                           branch.name
                         )}
                       </span>
-                      <span className="text-center text-xs font-medium text-white/85 lg:text-[13px]">
+                      <span className="flex min-h-[2.75em] items-center justify-center text-center text-xs font-medium text-white/85 lg:text-[13px]">
                         {branch.meta}
                       </span>
                       {/* The new court has nothing bookable yet, so its card
@@ -629,11 +590,12 @@ export function DemoLocations() {
                             ? talisay.bookingUrl
                             : branch.bookingUrl
                         }
-                        onClick={(e) => e.stopPropagation()}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={
                           branch.comingSoon
-                            ? "focus-visible:outline-pp-olive mt-1 w-full rounded-full border-2 border-dashed border-white/60 px-5 py-3.5 text-center text-[15px] font-bold text-white/80 transition-colors duration-200 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 lg:py-4 lg:text-base"
-                            : `bg-pp-lime-light text-pp-ink focus-visible:outline-pp-olive mt-1 w-full rounded-full px-5 py-3.5 text-center text-[15px] font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:py-4 lg:text-base ${bookActiveClass}`
+                            ? "focus-visible:outline-pp-olive mt-1 flex h-14 w-full items-center justify-center rounded-full border-2 border-dashed border-white/60 px-5 text-center text-[15px] font-bold text-white/80 transition-colors duration-200 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-base"
+                            : "bg-pp-lime-light text-pp-ink hover:bg-pp-cream focus-visible:outline-pp-olive mt-1 flex h-14 w-full items-center justify-center rounded-full px-5 text-center text-[15px] font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-base"
                         }
                       >
                         Book {branch.comingSoon ? talisay.name : branch.name}
@@ -644,7 +606,6 @@ export function DemoLocations() {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
                         className="focus-visible:outline-pp-olive inline-flex items-center gap-1.5 text-xs font-medium text-white/85 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-[13px]"
                       >
                         <svg

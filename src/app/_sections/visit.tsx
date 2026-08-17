@@ -166,11 +166,14 @@ export function DemoVisit() {
           <figure className="border-pp-tan/20 m-0 flex flex-col gap-3 border p-3">
             <div className="relative aspect-3/2 overflow-hidden">
               <Image
-                src={localClientImg("paddle-power-cebu", "court-render.webp")}
-                alt="Interior render of the Paddle Power Cebu court: blue playing surface under a lit steel-truss roof"
+                src={localClientImg(
+                  "paddle-power-cebu",
+                  "paddle-power-talisay-courts.webp"
+                )}
+                alt="Indoor pickleball courts at Paddle Power Talisay"
                 fill
                 sizes="(min-width: 1024px) 460px, 100vw"
-                className="object-cover object-[center_30%]"
+                className="object-cover object-[center_72%]"
               />
             </div>
             <figcaption className="text-pp-tan/55 text-center text-xs font-medium">

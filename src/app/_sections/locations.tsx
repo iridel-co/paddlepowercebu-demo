@@ -573,6 +573,7 @@ export function DemoLocations() {
                     blurIntensity="xl"
                     shadowIntensity="xs"
                     glowIntensity="sm"
+                    displaceBackdrop={false}
                     className={`absolute left-1/2 z-20 w-[270px] max-w-[88%] origin-center -translate-x-1/2 -translate-y-1/2 bg-black/65 transition-[scale] duration-300 ease-out motion-reduce:transition-none sm:w-[290px] sm:max-w-[90%] lg:w-[306px] xl:w-[348px] ${isActive ? "scale-100" : "scale-[0.95]"} ${half.card}`}
                   >
                     <div className="flex flex-col items-center gap-2 px-5 py-4 sm:gap-3.5 sm:px-6 sm:py-5 lg:gap-4 lg:px-7 lg:py-6">

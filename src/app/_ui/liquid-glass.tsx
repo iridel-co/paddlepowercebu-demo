@@ -49,6 +49,8 @@ export interface LiquidGlassProps extends React.HTMLAttributes<HTMLDivElement> {
   blurIntensity?: keyof typeof BLUR
   shadowIntensity?: keyof typeof EDGE
   glowIntensity?: keyof typeof GLOW
+  /** Keep the blur but skip the animated SVG refraction when compositing over WebGL. */
+  displaceBackdrop?: boolean
   /** Any CSS length — must match the visual radius you want on all layers. */
   borderRadius?: string
 }
@@ -59,6 +61,7 @@ export function LiquidGlass({
   blurIntensity = "xl",
   shadowIntensity = "xs",
   glowIntensity = "sm",
+  displaceBackdrop = true,
   borderRadius = "28px",
   style,
   ...props
@@ -73,32 +76,34 @@ export function LiquidGlass({
       {/* Displacement source for the bend layer. Rendered inline so the panel
           stays self-contained; duplicate ids across panels resolve to the
           same def, which is exactly what we want. */}
-      <svg aria-hidden className="absolute h-0 w-0">
-        <defs>
-          <filter
-            id={FILTER_ID}
-            x="0"
-            y="0"
-            width="100%"
-            height="100%"
-            filterUnits="objectBoundingBox"
-          >
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.003 0.007"
-              numOctaves="1"
-              result="turbulence"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="turbulence"
-              scale="200"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
+      {displaceBackdrop && (
+        <svg aria-hidden className="absolute h-0 w-0">
+          <defs>
+            <filter
+              id={FILTER_ID}
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              filterUnits="objectBoundingBox"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.003 0.007"
+                numOctaves="1"
+                result="turbulence"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="turbulence"
+                scale="200"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          </defs>
+        </svg>
+      )}
 
       {/* Bend. The `filter: url()` lives in a class rather than inline so a
           media query can drop it — see `.pp-glass-bend` in globals.css. It is
@@ -112,7 +117,7 @@ export function LiquidGlass({
           "pp-glass-bend absolute inset-0 z-0",
           BLUR[blurIntensity]
         )}
-        style={{ borderRadius }}
+        style={{ borderRadius, filter: displaceBackdrop ? undefined : "none" }}
       />
       {/* Face */}
       <div

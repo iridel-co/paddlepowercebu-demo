@@ -42,16 +42,12 @@ export const APP_CONFIG = {
   productionHost: PRODUCTION_HOST,
 
   shortName: "Paddle Power Cebu",
-  longName: "Paddle Power Cebu: Book a Court, 24/7",
+  longName: "Paddle Power Cebu: Book a Court",
   description:
-    "Premium indoor pickleball in Talisay, Cebu. Open around the clock. Book in one tap.",
+    "Premium indoor pickleball in Talisay, Cebu. Book your court in one tap.",
   bookingUrl: BOOKING_URL,
 
   branch: TALISAY,
-
-  /** Open every day, all day — matches the hero ribbon and the FAQ answer. */
-  opensAt: "00:00",
-  closesAt: "23:59",
 
   /*
    * Only profiles we can point at with confidence. The Facebook page URL is

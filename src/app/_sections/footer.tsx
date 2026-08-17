@@ -44,8 +44,8 @@ export function DemoFooter() {
               />
             </a>
             <p className="text-pp-tan/70 m-0 max-w-[38ch] text-sm leading-relaxed font-medium">
-              Premium indoor pickleball in Cebu. Open 24/7 in Talisay — a new
-              branch is coming soon near you.
+              Premium indoor pickleball in Cebu. Now open in Talisay — a new
+              branch is coming soon in Mandaue.
             </p>
           </div>
 

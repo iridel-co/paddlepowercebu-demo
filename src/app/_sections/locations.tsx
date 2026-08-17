@@ -6,16 +6,16 @@ import Image from "next/image"
 import { useInView, useReducedMotion } from "motion/react"
 
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
-import { BOOKING_URL } from "@/config/links.config"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { BOOKING_URL, TALISAY_MAPS_URL } from "@/config/links.config"
 import { localClientImg } from "@/lib/images"
 import { useMediaQuery } from "@/lib/use-media-query"
 
 import { LiquidGlass } from "../_ui/liquid-glass"
-
-/* Same directions-mode link Visit uses, so this "Get directions" also drops
-   the visitor straight into turn-by-turn rather than a plain place page. */
-const mapDirections = (q: string) =>
-  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`
 
 /* Same chunk the paddle showcase pulls in further down the page, so whichever
    section the visitor reaches first warms it for the other. */
@@ -51,18 +51,18 @@ const BRANCHES = [
     /* Sits below the net on mobile, left of it on desktop. Talisay leads on
        mobile — it's the one branch that's actually bookable today. */
     side: "",
-    meta: "A new court is coming soon, opening near you. Book Talisay for now.",
+    meta: "Our Mandaue court is on the way. Talisay is open now.",
     comingSoon: true,
-    bookingUrl: BOOKING_URL,
-    mapsUrl: "#",
+    bookingUrl: null,
+    mapsUrl: null,
   },
   {
     name: "Talisay",
     side: "Now Open",
-    meta: "24/7 · Indoor · Maghaway Rd, Talisay",
+    meta: "Indoor · Maghaway Rd, Talisay",
     comingSoon: false,
     bookingUrl: BOOKING_URL,
-    mapsUrl: mapDirections("7R59+W5 Talisay, Cebu"),
+    mapsUrl: TALISAY_MAPS_URL,
   },
 ] as const
 
@@ -76,16 +76,17 @@ const BRANCHES = [
  *
  * At `lg` the card centres in that half's outer service box: 34.1% in from the
  * baseline, which from the half's own left edge is 34.1% for the near side and
- * 65.9% for the far one. Below `lg` there's no paddle in the corner to sit
- * clear of and the halves are short, so the card just centres in its own half —
- * the two then read as evenly mirrored across the net on a phone.
+ * 65.9% for the far one. On phones each card gets a small optical correction
+ * toward the net because the photographed court's perspective and transparent
+ * margins make exact geometric centring look slightly off. The correction
+ * disappears from `sm` upward.
  *
  * Whole strings, never interpolated fragments — Tailwind only sees literals.
  */
 const HALVES = {
   "Paddle Power Cebu": {
     frame: "bottom-0 lg:inset-y-0 lg:right-auto lg:left-0",
-    card: "top-1/2 lg:left-[34.1%]",
+    card: "top-[calc(50%-clamp(8px,4vw,16px))] sm:top-1/2 lg:left-[34.1%]",
     /* Near side comes forward: rotateX(-) lifts the top edge out of the
        screen, rotateY(+) swings the left edge out. Axis follows the layout —
        the mobile rotateX here follows this branch's own frame (bottom, so
@@ -95,12 +96,30 @@ const HALVES = {
   },
   Talisay: {
     frame: "top-0 lg:inset-y-0 lg:right-0 lg:left-auto",
-    card: "top-1/2 lg:left-[65.9%]",
+    card: "top-[calc(50%+clamp(8px,4vw,16px))] sm:top-1/2 lg:left-[65.9%]",
     tilt: "-rotate-x-3 lg:rotate-x-0 lg:-rotate-y-4",
   },
 } as const
 
 type BranchName = (typeof BRANCHES)[number]["name"]
+
+function LocationPinIcon() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      className="h-3.5 w-3.5 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  )
+}
 
 /* Fast enough to land as a single gesture rather than a per-letter crawl.
    Module-level so the object keeps one identity across renders. */
@@ -311,11 +330,9 @@ export function DemoLocations() {
         </div>
 
         {/* ── The court ──────────────────────────────────────────────────── */}
-        {/* Aspect is picked so a service zone (34.09% of the court) is always
-            taller than the card sitting in it, with the hover scale applied —
-            at 390px that needs ~17 units of height per 10 of width, and the
-            narrow end of `sm` (640px) needs a square. A real 44:20 court only
-            fits at `lg`, where the zone is wide enough for the card too. */}
+        {/* The portrait court retains enough room for both compact cards at
+            320px. Each panel is centred within its own half. At `sm` the
+            court is square, while the real 44:20 ratio only fits at `lg`. */}
         {/* Perspective lives on the wrapper so the court can tilt inside it
             without the vanishing point moving with the rotation. Distance is
             long enough that a 4° swing reads as depth, not as a fisheye. */}
@@ -525,16 +542,13 @@ export function DemoLocations() {
               )}
             </div>
 
-            {/* Two halves, two links. Each card sits in the centre of its own
+            {/* Two halves, two cards. Each card sits in the centre of its own
               service box (34.1% in from the baseline), so the pair reads as
-              mirrored across the net. The new court isn't bookable yet, so
-              its half redirects to Talisay's booking link instead of its
-              own, but keeps the same hover/paddle choreography. */}
+              mirrored across the net. The new court keeps the same
+              hover/paddle choreography but does not navigate until its
+              booking and directions destinations exist. */}
             {BRANCHES.map((branch) => {
               const half = HALVES[branch.name]
-              /* The new court has nothing bookable yet, so its card redirects
-                 to the one branch that is: Talisay. */
-              const talisay = BRANCHES.find((b) => b.name === "Talisay")!
               const isActive = hovered === branch.name
               return (
                 /* The half is a passive visual region. Book and directions
@@ -559,19 +573,19 @@ export function DemoLocations() {
                     blurIntensity="xl"
                     shadowIntensity="xs"
                     glowIntensity="sm"
-                    className={`absolute left-1/2 z-20 w-[290px] max-w-[90%] origin-center -translate-x-1/2 -translate-y-1/2 bg-black/65 transition-[scale] duration-300 ease-out motion-reduce:transition-none lg:w-[306px] xl:w-[348px] ${isActive ? "scale-100" : "scale-[0.95]"} ${half.card}`}
+                    className={`absolute left-1/2 z-20 w-[270px] max-w-[88%] origin-center -translate-x-1/2 -translate-y-1/2 bg-black/65 transition-[scale] duration-300 ease-out motion-reduce:transition-none sm:w-[290px] sm:max-w-[90%] lg:w-[306px] xl:w-[348px] ${isActive ? "scale-100" : "scale-[0.95]"} ${half.card}`}
                   >
-                    <div className="flex flex-col items-center gap-3 px-6 py-[18px] sm:gap-3.5 sm:py-5 lg:gap-4 lg:px-7 lg:py-6">
+                    <div className="flex flex-col items-center gap-2 px-5 py-4 sm:gap-3.5 sm:px-6 sm:py-5 lg:gap-4 lg:px-7 lg:py-6">
                       <span
                         aria-hidden={!branch.side}
-                        className={`text-pp-lime-light text-[11px] font-bold tracking-[0.18em] uppercase lg:text-xs ${branch.side ? "" : "invisible"}`}
+                        className={`text-pp-lime-light text-[10px] font-bold tracking-[0.18em] uppercase sm:text-[11px] lg:text-xs ${branch.side ? "" : "invisible"}`}
                       >
                         {branch.side || "Status"}
                       </span>
-                      <span className="flex min-h-[2.5em] items-center text-center text-[25px] leading-tight font-black tracking-[-0.015em] text-white lg:text-[29px]">
+                      <span className="flex min-h-[2.35em] items-center text-center text-[22px] leading-tight font-black tracking-[-0.015em] text-white sm:min-h-[2.5em] sm:text-[25px] lg:text-[29px]">
                         {branch.comingSoon ? (
                           <>
-                            New Court
+                            Mandaue
                             <br />
                             Coming Soon
                           </>
@@ -579,50 +593,53 @@ export function DemoLocations() {
                           branch.name
                         )}
                       </span>
-                      <span className="flex min-h-[2.75em] items-center justify-center text-center text-xs font-medium text-white/85 lg:text-[13px]">
+                      <span className="flex min-h-[2.5em] items-center justify-center text-center text-[11px] leading-snug font-medium text-white/85 sm:min-h-[2.75em] sm:text-xs lg:text-[13px]">
                         {branch.meta}
                       </span>
-                      {/* The new court has nothing bookable yet, so its card
-                          points both links at Talisay instead of its own. */}
-                      <a
-                        href={
-                          branch.comingSoon
-                            ? talisay.bookingUrl
-                            : branch.bookingUrl
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={
-                          branch.comingSoon
-                            ? "focus-visible:outline-pp-olive mt-1 flex h-14 w-full items-center justify-center rounded-full border-2 border-dashed border-white/60 px-5 text-center text-[15px] font-bold text-white/80 transition-colors duration-200 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-base"
-                            : "bg-pp-lime-light text-pp-ink hover:bg-pp-cream focus-visible:outline-pp-olive mt-1 flex h-14 w-full items-center justify-center rounded-full px-5 text-center text-[15px] font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-base"
-                        }
-                      >
-                        Book {branch.comingSoon ? "Mandaue" : branch.name}
-                      </a>
-                      <a
-                        href={
-                          branch.comingSoon ? talisay.mapsUrl : branch.mapsUrl
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="focus-visible:outline-pp-olive inline-flex items-center gap-1.5 text-xs font-medium text-white/85 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 lg:text-[13px]"
-                      >
-                        <svg
-                          aria-hidden
-                          viewBox="0 0 24 24"
-                          className="h-3.5 w-3.5 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                      {branch.comingSoon ? (
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="focus-visible:outline-pp-olive mt-1 flex h-12 w-full items-center justify-center rounded-full border-2 border-dashed border-white/60 px-4 text-center text-sm font-bold text-white/80 transition-colors duration-200 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-14 sm:px-5 sm:text-[15px] lg:text-base"
+                            >
+                              Opening Soon
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent
+                            side="top"
+                            sideOffset={10}
+                            className="bg-pp-ink w-64 rounded-2xl border-white/15 px-4 py-3 text-center text-sm font-semibold text-white shadow-xl"
+                          >
+                            Mandaue isn’t bookable yet — book Talisay for now.
+                          </PopoverContent>
+                        </Popover>
+                      ) : (
+                        <a
+                          href={branch.bookingUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-pp-lime-light text-pp-ink hover:bg-pp-cream focus-visible:outline-pp-olive mt-1 flex h-12 w-full items-center justify-center rounded-full px-4 text-center text-sm font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-14 sm:px-5 sm:text-[15px] lg:text-base"
                         >
-                          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                          <circle cx="12" cy="10" r="3" />
-                        </svg>
-                        Get directions
-                      </a>
+                          Book {branch.name}
+                        </a>
+                      )}
+                      {branch.comingSoon ? (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-white/80 sm:text-xs lg:text-[13px]">
+                          <LocationPinIcon />
+                          Directions coming soon
+                        </span>
+                      ) : (
+                        <a
+                          href={branch.mapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="focus-visible:outline-pp-olive inline-flex items-center gap-1.5 text-[11px] font-medium text-white/85 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-xs lg:text-[13px]"
+                        >
+                          <LocationPinIcon />
+                          Get directions
+                        </a>
+                      )}
                     </div>
                   </LiquidGlass>
                 </div>

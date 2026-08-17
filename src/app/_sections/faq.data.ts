@@ -27,9 +27,9 @@ export const FAQS: FaqEntry[] = [
   },
   {
     id: "hours",
-    question: "What are your opening hours?",
+    question: "Which locations are open?",
     answer:
-      "The Talisay branch is open 24/7, including weekends and holidays. A new branch is coming soon near you.",
+      "Talisay is currently accepting bookings. Mandaue is coming soon. Check Onda for available court times.",
   },
   {
     id: "gear",
@@ -53,7 +53,7 @@ export const FAQS: FaqEntry[] = [
     id: "branches",
     question: "Do you only have one branch?",
     answer:
-      "For now, yes, Talisay is our only branch. A new branch is opening soon, so keep an eye out for updates! 👀",
+      "For now, Talisay is our only open branch. Mandaue is coming soon, so keep an eye out for updates! 👀",
   },
   {
     id: "partnerships",

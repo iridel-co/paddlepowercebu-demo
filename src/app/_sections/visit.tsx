@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useInView } from "motion/react"
 import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react"
 
+import { TALISAY_MAPS_URL } from "@/config/links.config"
 import { localClientImg } from "@/lib/images"
 import { VariableWeightText } from "@/components/ui/variable-weight-text"
 
@@ -65,12 +66,11 @@ const BRANCH = {
   mapQuery: "7R59+W5 Talisay, Cebu",
 } as const
 
-/* Keyless Google Maps — the `output=embed` form needs no API key, and the same
-   query drives the directions link so the pin and the route always agree. */
+/* Keyless Google Maps — the `output=embed` form needs no API key. The Plus
+   Code keeps its embedded pin exact, while the external directions action
+   opens the verified Paddle Power listing supplied by the client. */
 const mapEmbed = (q: string) =>
   `https://www.google.com/maps?q=${encodeURIComponent(q)}&z=14&output=embed`
-const mapLink = (q: string) =>
-  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`
 
 const LABEL = "text-pp-tan/60 text-[10px] font-bold tracking-[0.16em] uppercase"
 const RULE = "border-pp-tan/15"
@@ -123,9 +123,9 @@ export function DemoVisit() {
               />
             </h2>
             <p className="text-pp-tan/70 m-0 max-w-[46ch] text-base leading-relaxed font-medium lg:text-lg">
-              Reservations run through Ondafit, any hour, no account needed. For
-              coaching, events, or brand collabs, Instagram is the fastest way
-              to reach us.
+              Reservations run through Ondafit, no account needed. For coaching,
+              events, or brand collabs, Instagram is the fastest way to reach
+              us.
             </p>
           </div>
 
@@ -179,11 +179,11 @@ export function DemoVisit() {
           </figure>
 
           <div className={`flex flex-col gap-4 border-t pt-8 ${RULE}`}>
-            <span className={LABEL}>Hours</span>
+            <span className={LABEL}>Availability</span>
             <dl className="m-0 flex flex-col">
               {[
-                { term: "Courts", detail: "Open 24 / 7" },
-                { term: "Bookings", detail: "Daily · all hours" },
+                { term: "Courts", detail: "Talisay open" },
+                { term: "Bookings", detail: "Check Onda" },
                 { term: "Café", detail: "Coming soon" },
               ].map((row) => (
                 <div
@@ -221,7 +221,7 @@ export function DemoVisit() {
                 ))}
               </address>
               <a
-                href={mapLink(BRANCH.mapQuery)}
+                href={TALISAY_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-pp-cream hover:text-pp-lime-light focus-visible:outline-pp-lime-light group inline-flex items-center gap-2 self-start text-[10px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"

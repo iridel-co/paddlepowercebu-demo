@@ -7,9 +7,9 @@
  */
 export const PAGE_METADATA_CONFIG = {
   home: {
-    title: "Paddle Power Cebu: Book a Court, 24/7",
+    title: "Paddle Power Cebu: Book a Court",
     description:
-      "Premium indoor pickleball courts in Talisay, Cebu. Open 24/7, rain or shine. Book your court in one tap.",
+      "Premium indoor pickleball courts in Talisay, Cebu. Book your court in one tap.",
     pathname: "/",
   },
 } as const

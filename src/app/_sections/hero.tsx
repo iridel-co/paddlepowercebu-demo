@@ -419,14 +419,14 @@ export function DemoHero() {
             <div className="absolute top-0 right-0 h-20 w-20 overflow-hidden">
               <div className="bg-pp-lime-light absolute top-[15px] -right-8 w-[130px] rotate-45 py-[3px] text-center shadow-[0_1px_3px_rgba(0,0,0,0.25)]">
                 <span className="text-pp-ink text-[10px] font-bold tracking-[0.08em] uppercase">
-                  Open 24/7
+                  Now Open
                 </span>
               </div>
             </div>
 
             <div className="flex flex-col gap-3.5 pt-9 pr-8 pb-4 pl-5">
               <p className="m-0 text-center text-[13.5px] leading-relaxed font-medium text-pretty text-white/90 sm:text-left">
-                Premium indoor pickleball in Cebu, open around the clock.
+                Premium indoor pickleball in Cebu, now open in Talisay.
               </p>
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=Paddle+Power%2C+Maghaway+Rd%2C+Talisay%2C+6045+Cebu"

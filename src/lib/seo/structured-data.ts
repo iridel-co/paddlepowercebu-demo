@@ -61,23 +61,6 @@ export function buildVenueJsonLd(): JsonLdObject {
     hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       branch.plusCode
     )}`,
-    /* Open every day, all day. */
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: APP_CONFIG.opensAt,
-        closes: APP_CONFIG.closesAt,
-      },
-    ],
     sameAs: [APP_CONFIG.socials.instagram],
     potentialAction: {
       "@type": "ReserveAction",

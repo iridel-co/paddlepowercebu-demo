@@ -20,6 +20,10 @@ const SOCIALS = [
     href: "https://facebook.com/paddlepowercebu",
     label: "Facebook",
   },
+  {
+    href: "https://www.tiktok.com/@paddlepowercebu",
+    label: "TikTok",
+  },
 ]
 
 export function DemoFooter() {

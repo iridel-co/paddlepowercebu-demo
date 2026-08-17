@@ -47,6 +47,11 @@ const CHANNELS: {
     href: "https://facebook.com/paddlepowercebu",
   },
   {
+    label: "TikTok",
+    value: "@paddlepowercebu",
+    href: "https://www.tiktok.com/@paddlepowercebu",
+  },
+  {
     label: "Book",
     value: "Book your court",
     href: "#locations",
@@ -58,19 +63,17 @@ const BRANCH = {
   name: "Talisay",
   region: "Cebu",
   address: ["Maghaway Rd", "Talisay City, 6045 Cebu", "Philippines"],
-  /* Plus Code, not a business-name search — the embed's `q=` param treats
-     bare text as a fuzzy place search, and "Paddle Power" isn't a verified
-     Google listing at this address, so it was surfacing a second pin for a
-     similarly-named nearby business. A Plus Code geocodes to exactly one
-     point, so only one pin renders. */
-  mapQuery: "7R59+W5 Talisay, Cebu",
+  /* Exact CID resolved from the client-supplied Google Maps listing. Unlike a
+     fuzzy name or address query, it keeps the embed on the verified Paddle
+     Power place while letting Google display the business name. */
+  googleMapsCid: "13920194472426754030",
 } as const
 
-/* Keyless Google Maps — the `output=embed` form needs no API key. The Plus
-   Code keeps its embedded pin exact, while the external directions action
-   opens the verified Paddle Power listing supplied by the client. */
-const mapEmbed = (q: string) =>
-  `https://www.google.com/maps?q=${encodeURIComponent(q)}&z=14&output=embed`
+/* Keyless Google Maps embed for the exact listing. `iwloc=0` suppresses
+   Google's place-details card (including its rating) while retaining the
+   Paddle Power pin; the external directions action uses the client share URL. */
+const mapEmbed = (cid: string) =>
+  `https://maps.google.com/maps?cid=${encodeURIComponent(cid)}&z=14&iwloc=0&output=embed`
 
 const LABEL = "text-pp-tan/60 text-[10px] font-bold tracking-[0.16em] uppercase"
 const RULE = "border-pp-tan/15"
@@ -244,7 +247,7 @@ export function DemoVisit() {
             >
               {mapNear && (
                 <iframe
-                  src={mapEmbed(BRANCH.mapQuery)}
+                  src={mapEmbed(BRANCH.googleMapsCid)}
                   title={`Map of Paddle Power Cebu: ${BRANCH.name}`}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
